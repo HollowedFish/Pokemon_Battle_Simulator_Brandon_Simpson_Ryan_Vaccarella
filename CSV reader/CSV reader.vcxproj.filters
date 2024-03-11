@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CSV reader.cpp">
+    <ClCompile Include="Pokemon_Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
