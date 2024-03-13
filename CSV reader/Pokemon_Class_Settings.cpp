@@ -36,7 +36,7 @@ Pokemon::Pokemon(std::string pkmn) {
 				spDef = stoi(content);
 				getline(input, content, ',');
 				spd = stoi(content);
-				//Block of getlines over
+				//Block of getlines above is the only way I can think of
 				for (int i = 0;i < 20 && getline(input,content,',');i++) {
 					possibleMoves[i] = content;
 				}
