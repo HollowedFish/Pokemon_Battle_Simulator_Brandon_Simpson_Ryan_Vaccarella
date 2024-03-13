@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Pokemon_Main.cpp" />
+    <ClCompile Include="Pokemon_Class_Settings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pokemon_Team.h" />
