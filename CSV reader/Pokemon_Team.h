@@ -1,6 +1,5 @@
 #pragma once
 //Header file for the Pokemon class
-#pragma once
 #include <string>
 //Functions are in camel case
 class Pokemon {
@@ -15,6 +14,7 @@ private:
 	std::string type1;
 	std::string type2;
 	bool KO;
+	std::string moves[4]; //A container for the move names (string for now but could be the moves class which will be added later?)
 
 	//create an array for moves somewhere
 
@@ -41,5 +41,5 @@ public:
 	std::string getType2() {}
 	//Misc functions
 	bool isKO() {}
-	void setKO() {}
+	void setKO(bool KO_Value) {}
 };
