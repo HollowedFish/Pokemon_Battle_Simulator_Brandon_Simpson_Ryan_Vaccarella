@@ -28,8 +28,5 @@
     <None Include="Pokedex first 8 basic eveolutions.csv">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="E.csv">
-      <Filter>Resource Files</Filter>
-    </None>
   </ItemGroup>
 </Project>
