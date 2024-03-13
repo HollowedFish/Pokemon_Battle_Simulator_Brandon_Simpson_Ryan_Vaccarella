@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Pkmn_Class_Settings.cpp" />
     <ClCompile Include="Pokemon_Main.cpp" />
   </ItemGroup>
   <ItemGroup>

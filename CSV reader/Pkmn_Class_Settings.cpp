@@ -1,0 +1,1 @@
+//Class settings file for the Pokemon class
