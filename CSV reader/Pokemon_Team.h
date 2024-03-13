@@ -17,7 +17,7 @@ private:
 	std::string type2;
 
 	//create an array for moves somewhere
-
+	//asdf
 public:
 	Pokemon() {}
 	Pokemon(std::string pkmn) {}
