@@ -145,9 +145,6 @@
   <ItemGroup>
     <ClInclude Include="Pokemon_Team.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\..\..\Downloads\Pokedex first 8 basic eveolutions .csv - Sheet1.csv" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
