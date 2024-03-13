@@ -25,7 +25,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\..\Downloads\Pokedex first 8 basic eveolutions.csv">
+    <None Include="Pokedex first 8 basic eveolutions.csv">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
