@@ -39,6 +39,7 @@ int main()
             system("CLS");
             std::cout << "Thanks for playing!" << std::endl;
 #pragma region
+            //Funny pikacu took an hour well spent
             std::cout << R"(
 quu..__
  $$$b  `---.__
