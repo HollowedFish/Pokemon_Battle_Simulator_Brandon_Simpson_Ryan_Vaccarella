@@ -3,10 +3,15 @@
 
 #include <iostream>
 #include "Pokemon_Team.h"
+#include <cstdlib>
+#include <time.h>
+#include <vector>
 
 int main()
 {
-    std::cout << "Hello Worldabc!\n";
+    std::string name = "Squirtle";
+    Pokemon myMon(name);
+    myMon.printMoveset();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

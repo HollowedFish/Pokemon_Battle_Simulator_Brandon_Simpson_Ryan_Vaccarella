@@ -16,7 +16,7 @@ private:
 	std::string type2;*/
 	bool KO;
 	std::string possibleMoves[20]; //A container for the move names (string for now but could be the moves class which will be added later?)
-
+	std::string moveset[4];
 	//create an array for moves somewhere
 
 public:
@@ -43,4 +43,5 @@ public:
 	//Misc functions
 	bool isKO();
 	void setKO(bool KO_Value);
+	void printMoveset();
 };

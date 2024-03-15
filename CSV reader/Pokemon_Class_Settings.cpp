@@ -3,6 +3,8 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <cstdlib>
+#include <time.h>
 //Constructor functions
 Pokemon::Pokemon() {
 	atk = 0;
@@ -16,12 +18,13 @@ Pokemon::Pokemon() {
 }
 Pokemon::Pokemon(std::string pkmn) {
 	std::ifstream input;
+	srand(time(0));
 	input.open("Pokedex first 8 basic eveolutions.csv");
 
 	if (input.is_open()) {
 		std::string content;
 		while (getline(input, content, ',')) {
-			std::cout << content; //Debug message
+			//std::cout << content; //Debug output
 			if (content == pkmn) { //This checks to see if we are on the right pokemon
 				name = content;
 				getline(input, content, ',');
@@ -37,14 +40,38 @@ Pokemon::Pokemon(std::string pkmn) {
 				getline(input, content, ',');
 				spd = stoi(content);
 				//Block of getlines above is the only way I can think of
-				for (int i = 0;i < 20 && getline(input,content,',');i++) {
+				for (int i = 0;i < 19 && getline(input, content, ',');i++) {
 					possibleMoves[i] = content;
+					//std::cout << content << " " << i; Debug
+				}
+				break;
+			}
+			else{
+				getline(input, content); //This moves the cursor one line down while skipping the rest of the commas
+				if (input.eof()) {
+					std::cout << "Pokemon not found" << std::endl;
+					exit(3);
 				}
 			}
-			else
-				getline(input, content); //This moves the cursor one line down while skipping the rest of the commas
+			
 		}
-		std::cout << "Pokemon not found" << std::endl;
+		
+		//I am going to put the random moveset generation here, because I think it makes sense
+		srand(time(0));
+		for (int i = 0;moveset[3] == "" || moveset[2] == "" || moveset[1] == "" || moveset[0] == ""; i++) //Keeps going until all moves are filled
+		{
+			int moveNumber = rand() % 20; //gives a random number
+			//std::cout << "Move number:" << moveNumber <<std::endl; //Debug
+			if (moveset[i % 4] == "") {
+				//std::cout << i << "=>" << i % 4; //Debug
+				moveset[i % 4] = possibleMoves[moveNumber];
+				//std::cout << "move set to: " << possibleMoves[moveNumber] << std::endl; //Debug
+			}
+			if (moveset[i%4] == moveset[(i+1)%4] || moveset[i%4] == moveset[(i-1)%4] || moveset[i%4] == moveset[(i+2)%4]) { //This should hopefully not allow duplicate moves
+				moveset[(i%4)] = ""; //using i and modulo should save some space and allow wraparound of numbers when looping
+				//std::cout << "Duplicate move triggered" << std::endl; //Debug
+			}
+		} 
 	}
 	else {
 		std::cout << "File failed to open" <<std::endl;
@@ -112,5 +139,11 @@ bool Pokemon::isKO() {
 }
 void Pokemon::setKO(bool KO_Value) {
 	KO = KO_Value;
+}
+void Pokemon::printMoveset() {
+	std::cout << name;
+	for (int i = 0;i < 4;i++) {
+		std::cout << std::endl << moveset[i];
+	}
 }
 #pragma endregion
