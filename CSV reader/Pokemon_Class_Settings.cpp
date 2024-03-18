@@ -7,7 +7,7 @@
 #include <time.h>
 //Constructor functions
 Pokemon::Pokemon() {
-	pkmnName = "POP";
+	pkmnName = "";
 	atk = 0;
 	def = 0;
 	spAtk = 0;

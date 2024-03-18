@@ -74,6 +74,9 @@
      int* pokemonNums = new int[teamSize*2];
      for (int i = 0; i < teamSize * 2;i++) {
          pokemonNums[i] = rand() % 7;//Make this the number of lines in the pokemon csv
+         std::cout << pokemonNums[i];
+         //std::cin.get();
+         //std::cin.ignore();
          for (int j = 0; j < i; j++) {
              if (pokemonNums[i] == pokemonNums[j]) {
                  pokemonNums[i] = rand() % 7; //There may still be duplicates with this method (check later)
@@ -85,17 +88,17 @@
      input.open("Pokedex first 8 basic eveolutions.csv");
      std::string* pokemonNames = new std::string[teamSize*2];
      std::string storage;
-         for (int k = 0;k < teamSize*2; k++) { //only stops when all names are filled
-             for (int i = 0; i != pokemonNums[k] && getline(input,storage);i++){} //Iterates until the required line number
+         for (int k = 0;pokemonNames[(teamSize*2)-1] == ""; k++) { //only stops when all names are filled
+             for (int i = 0; i != pokemonNums[k];i++) { getline(input, storage); } //Iterates until the required line number
              getline(input, pokemonNames[k], ','); 
              std::cout << pokemonNames[k]; //Debug
          }
      int choice;
      std::cout << "Your choices are:" << std::endl;
      for (int k = 0;k < teamSize*2;k++) {
-         std::cout << k+1 << pokemonNames[k] << std::endl;
+         std::cout << k+1 << " " << pokemonNames[k]  << std::endl;
      }
-     int teamPickNum =1;
+     int teamPickNum =1; 
      int team1Mons = 0;
      int team2Mons = 0;
          while (team2Mons !=teamSize) {
@@ -118,6 +121,7 @@
              }
          }
          std::cout << "Team successfully generated \n Press enter to continue...";
+         std::cin.get();
          std::cin.ignore();
 
  }
@@ -132,6 +136,7 @@
      case 1:
          if (team1[0].getName() == "" || team2[0].getName() == "") {
              std::cout << "Generate your teams first\n" << "Press enter to continue...";
+             std::cin.get();
              std::cin.ignore();
          }
          else
@@ -139,8 +144,9 @@
          break;
      case 2:
          if (team1[0].getName() != "" || team2[0].getName() != "") {
-             std::cout << "Teams already generated\n" << "Press enter to continue...";
-             std::cin.ignore();
+             std::cout << "Teams already generated" <<std::endl << "Press enter to continue...";
+             std::cin.get();
+             std::cin.ignore(); //Both of these are needed for this to work
          }
          else
              generateTeams(team1, team2, teamSize);
@@ -154,6 +160,8 @@
          break;
      case 4:
          std::cout << "This function is not impemented yet";
+         std::cin.get();
+         std::cin.ignore();
          break;
      case 5:
          std::cout << "This function is not implemented yet";
@@ -209,7 +217,10 @@ quu..__
          delete[] team2;
          exit(0);
          break;
+     default:
+         std::cout << "invalid input" <<std::endl << "Press enter to continue";
      }
+     displayMenu(team1, team2, teamSize); //Calls itself for an infinite loop
  }
     int main() {
     //std::string name = "Squirtle";
@@ -225,9 +236,9 @@ quu..__
 
        Pokemon* team1 = new Pokemon[teamSize];
        Pokemon* team2 = new Pokemon[teamSize];
-    while (true) {
+
         displayMenu(team1,team2,teamSize);
-    }//The below will never actually run
+    //The below will never actually run
     delete[] team1;
     delete[] team2;
 }
