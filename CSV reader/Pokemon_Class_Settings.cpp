@@ -42,7 +42,7 @@ Pokemon::Pokemon(std::string pkmn) {
 				//Block of getlines above is the only way I can think of
 				for (int i = 0;i < 19 && getline(input, content, ',');i++) {
 					possibleMoves[i] = content;
-					//std::cout << content << " " << i; Debug
+					std::cout << content << " " << i; //Debug
 				}
 				break;
 			}
@@ -75,8 +75,10 @@ Pokemon::Pokemon(std::string pkmn) {
 	}
 	else {
 		std::cout << "File failed to open" <<std::endl;
+		input.close();
 		exit(2);
 	}
+	input.close();
 }
 //Setter functions
 #pragma region
