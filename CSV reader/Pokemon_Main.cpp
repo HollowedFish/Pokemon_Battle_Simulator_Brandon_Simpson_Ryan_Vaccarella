@@ -123,6 +123,7 @@
  }
  void displayMenu(Pokemon *team1,Pokemon *team2,int teamSize) {
      system("CLS");
+     std::string enter;
      int choice;
      std::cout << "Welcome to the Pokoman™ Battler V0.6.0 " << std::endl << "Please Choose an option:" << std::endl;
      std::cout << "[1] Start Battle(WIP)\n" << "[2]Set Up Teams(WIP) \n" << "[3]View Teams(WIP) \n" << "[4]View all Pokemon(Maybe) \n" << "[5]View all Moves(Maybe) \n" << "[0]Exit \n";
@@ -145,10 +146,11 @@
              generateTeams(team1, team2, teamSize);
          break;
      case 3:
-         std::cout << team1[0].getName() << std::endl << team1[1].getName() << std::endl << team1[2].getName();
-         std::cout << team2[2].getName() << std::endl << team2[1].getName() << team2[0].getName();
+         std::cout << team1[0].getName() << std::endl << team1[1].getName() << std::endl << team1[2].getName()<<std::endl;
+         std::cout << team2[2].getName() << std::endl << team2[1].getName() << std::endl<<team2[0].getName()<<std::endl;
          std::cout << "Hit enter to continue";
          std::cin.ignore();
+         getline(std::cin,enter);
          break;
      case 4:
          std::cout << "This function is not impemented yet";
