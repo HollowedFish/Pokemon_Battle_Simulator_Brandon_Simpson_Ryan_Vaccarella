@@ -70,7 +70,7 @@
      std::cout << "Function not implemented yet";
  }
  void generateTeams(Pokemon *team1, Pokemon *team2, int teamSize) {
-     srand(time(NULL));
+     /*srand(time(NULL));
      int* pokemonNums = new int[teamSize*2];
      for (int i = 0; i < teamSize * 2;i++) {
          pokemonNums[i] = rand() % 7;//Make this the number of lines in the pokemon csv
@@ -123,7 +123,13 @@
          std::cout << "Team successfully generated \n Press enter to continue...";
          std::cin.get();
          std::cin.ignore();
-
+         */ //Come back to this later
+     //Temporary hardcoding teams
+     std::ifstream input;
+     input.open("Pokedex first 8 basic eveolutions.csv");
+     for (int i = 0; i < teamSize;i++) {
+         //getline(input, team1[i], ',');
+     }
  }
  void displayMenu(Pokemon *team1,Pokemon *team2,int teamSize) {
      system("CLS");
