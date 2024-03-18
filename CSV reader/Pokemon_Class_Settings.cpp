@@ -26,24 +26,21 @@ Pokemon::Pokemon(std::string pkmnName, int atk, int def, int spDef, int spAtk, i
 	this->hp = hp;
 	this ->spd = spd;
 }
-//doesn't work...Moved to Pokemon_Main in case this does
-//it did but now memory location error
-/*Pokemon::Pokemon(std::string pkmnName,int atk,int def,int spDef,int spAtk,int hp,int spd) {
+//This only needs to have the name as input, for simplicity
+Pokemon::Pokemon(std::string pkmnName) {
 	std::ifstream input;
 	srand(time(NULL));
-	int pkmnR = rand()%8;
+	/*int pkmnR = rand() % 8;
 	if (pkmnR == 0) {
 		pkmnR = 1;
-	}
+	}*/
 	input.open("Pokedex first 8 basic eveolutions.csv");
 	if (input.is_open()) {
 		std::string content;
-		//for (int i = 1; i <= pkmnR; i++) {
-			//if (i == pkmnR) {
 				while (getline(input, content, ',')) {
 					std::cout << content; //Debug output
 					if (content == pkmnName) { //This checks to see if we are on the right pokemon
-						pkmnName = content;
+						pkmnName = content; //If we are, read all other data from the pokemon line
 						getline(input, content, ',');
 						atk = stoi(content);
 						getline(input, content, ',');
@@ -59,7 +56,7 @@ Pokemon::Pokemon(std::string pkmnName, int atk, int def, int spDef, int spAtk, i
 						//Block of getlines above is the only way I can think of
 						for (int i = 0; i < 19 && getline(input, content, ','); i++) {
 							possibleMoves[i] = content;
-							std::cout << content << " " << i; //Debug
+							//std::cout << content << " " << i; //Debug
 						}
 						break;
 					}
@@ -72,8 +69,6 @@ Pokemon::Pokemon(std::string pkmnName, int atk, int def, int spDef, int spAtk, i
 					}
 
 				}
-			//}
-		//}
 		
 		//I am going to put the random moveset generation here, because I think it makes sense
 		srand(time(0));
@@ -99,7 +94,7 @@ Pokemon::Pokemon(std::string pkmnName, int atk, int def, int spDef, int spAtk, i
 	}
 	input.close();
 }
-*/
+
 //Setter functions
 #pragma region
 void Pokemon::setAtk(int atk) {
