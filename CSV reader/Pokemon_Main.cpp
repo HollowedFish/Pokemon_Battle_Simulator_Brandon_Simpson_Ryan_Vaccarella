@@ -199,6 +199,9 @@ quu..__
               `',:                 :    .'
                                    `:.:' )" << std::endl;
 #pragma endregion
+         //All deletes need to go here
+         delete[] team1;
+         delete[] team2;
          exit(0);
          break;
      }
@@ -219,7 +222,7 @@ quu..__
        Pokemon* team2 = new Pokemon[teamSize];
     while (true) {
         displayMenu(team1,team2,teamSize);
-    }
+    }//The below will never actually run
     delete[] team1;
     delete[] team2;
 }
