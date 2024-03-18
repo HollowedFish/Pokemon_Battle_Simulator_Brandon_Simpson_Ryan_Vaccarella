@@ -145,13 +145,16 @@
              generateTeams(team1, team2, teamSize);
          break;
      case 3:
-         std::cout << "This function is not impemented yet";
+         std::cout << team1[0].getName() << std::endl << team1[1].getName() << std::endl << team1[2].getName();
+         std::cout << team2[2].getName() << std::endl << team2[1].getName() << team2[0].getName();
+         std::cout << "Hit enter to continue";
+         std::cin.ignore();
          break;
      case 4:
          std::cout << "This function is not impemented yet";
          break;
      case 5:
-         std::cout << "This function is not impemented yet";
+         std::cout << "This function is not implemented yet";
          break;
      case 0:
          system("CLS");
