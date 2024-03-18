@@ -28,7 +28,6 @@ int main()
         switch (choice) {
         case 1:
             std::cout << "This function is not impemented yet";
-           Pokemon();
             break;
         case 2:
             std::cout << "This function is not impemented yet";
