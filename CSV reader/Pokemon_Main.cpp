@@ -165,6 +165,8 @@
          break;
      case 5:
          std::cout << "This function is not implemented yet";
+         std::cin.get();
+         std::cin.ignore();
          break;
      case 0:
          system("CLS");
