@@ -6,15 +6,15 @@
 #include <cstdlib>
 #include <time.h>
 #include <vector>
-//This works...Need to find better way
-void generateRandom() {
-    std::string pkmnName = "POP";
-    int atk = 0;
-    int def = 0;
-    int spAtk = 0;
-    int spDef = 0;
-    int hp = 0;
-    int spd = 0;
+//This works...Need to find better way hmmm
+ void generateRandom() {
+    std::string pkmnName;
+    int atk;
+    int def;
+    int spAtk;
+    int spDef;
+    int hp;
+    int spd;
     std::string possibleMoves[20];
     std::ifstream input;
     srand(time(NULL));
@@ -59,10 +59,15 @@ void generateRandom() {
         }
     }
     //Testing
-   // Pokemon p1(pkmnName, atk, def, spDef,spAtk, hp, spd);
-    //std::cout << p1.getName();
+    Pokemon p1(pkmnName, atk, def, spDef,spAtk, hp, spd);
     input.close();
 }
+ void startBattle() {
+     int total;
+     std::cout << "How many pokemon on each roster?(Max:3)";
+     std::cin >> total;
+     generateRandom();
+ }
     int main() {
     //std::string name = "Squirtle";
     //Pokemon myMon(name);
@@ -70,13 +75,13 @@ void generateRandom() {
     int choice;
     while (true) {
         system("CLS");
-        generateRandom();
+        //Testing generateRandom();
         std::cout << "Welcome to the Pokoman™ Battler V0.5.1 " << std::endl << "Please Choose an option:" << std::endl;
         std::cout << "[1] Start Battle(WIP)\n" << "[2]Set Up Teams(WIP) \n" << "[3]View Teams(WIP) \n" << "[4]TBD \n" << "[5]TBD \n" << "[0]Exit \n";
         std::cin >> choice;
         switch (choice) {
         case 1:
-            std::cout << "This function is not impemented yet";
+            startBattle();
             break;
         case 2:
             std::cout << "This function is not impemented yet";
