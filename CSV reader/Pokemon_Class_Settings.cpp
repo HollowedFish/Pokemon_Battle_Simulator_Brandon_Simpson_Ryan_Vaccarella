@@ -17,9 +17,18 @@ Pokemon::Pokemon() {
 	/*type1 = "";
 	type2 = "";*/ //These are for later
 }
+Pokemon::Pokemon(std::string pkmnName, int atk, int def, int spDef, int spAtk, int hp, int spd) {
+	this->pkmnName =pkmnName;
+	this->atk = atk;
+	this->def = def;
+	this->spDef = spDef;
+	this->spAtk = spAtk;
+	this->hp = hp;
+	this ->spd = spd;
+}
 //doesn't work...Moved to Pokemon_Main in case this does
 //it did but now memory location error
-/*Pokemon::Pokemon(std::string pkmnName, int atk, int def, int dpDef, int hp, int spd) {
+/*Pokemon::Pokemon(std::string pkmnName,int atk,int def,int spDef,int spAtk,int hp,int spd) {
 	std::ifstream input;
 	srand(time(NULL));
 	int pkmnR = rand()%8;
@@ -99,8 +108,11 @@ void Pokemon::setAtk(int atk) {
 void Pokemon::setDef(int def) {
 	this->def = def;
 }
-void Pokemon::setSpAtk(int spDef) {
+void Pokemon::setSpAtk(int spAtk) {
 	this->spAtk = spAtk;
+}
+void Pokemon::setspDef(int spDef) {
+	this->spDef = spDef;
 }
 void Pokemon::setHp(int hp) {
 	this->hp = hp;

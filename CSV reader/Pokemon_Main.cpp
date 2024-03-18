@@ -52,11 +52,16 @@ void generateRandom() {
           getline(input, content); //This moves the cursor one line down while skipping the rest of the commas
            if (input.eof()) {
             std::cout << "Pokemon not found" << std::endl;
+            input.close();
             exit(3);
            }
          }
         }
     }
+    //Testing
+   // Pokemon p1(pkmnName, atk, def, spDef,spAtk, hp, spd);
+    //std::cout << p1.getName();
+    input.close();
 }
     int main() {
     //std::string name = "Squirtle";

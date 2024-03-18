@@ -21,12 +21,13 @@ private:
 
 public:
 	Pokemon();
-	Pokemon(std::string pkmnName,int atk,int def,int dpDef,int hp,int spd);
+	Pokemon(std::string pkmnName,int atk,int def,int spDef,int spAtk,int hp,int spd);
 	//Setter functions
 	void setName(std::string pkmnName);
 	void setAtk(int atk);
 	void setDef(int def);
-	void setSpAtk(int spDef);
+	void setSpAtk(int spAtk);
+	void setspDef(int spDef);
 	void setHp(int hp);
 	void setSpd(int spd);
 	//void setType1(std::string type1);
