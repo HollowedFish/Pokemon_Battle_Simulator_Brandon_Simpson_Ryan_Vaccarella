@@ -6,22 +6,66 @@
 #include <cstdlib>
 #include <time.h>
 #include <vector>
-
-void Guarenteed_hit() {
-
+//This works...Need to find better way
+void generateRandom() {
+    std::string pkmnName = "POP";
+    int atk = 0;
+    int def = 0;
+    int spAtk = 0;
+    int spDef = 0;
+    int hp = 0;
+    int spd = 0;
+    std::string possibleMoves[20];
+    std::ifstream input;
+    srand(time(NULL));
+    int pkmnR = rand() % 7;
+    if (pkmnR == 0) {
+        pkmnR = 1;
+    }
+    std::cout << pkmnR;
+    input.open("Pokedex first 8 basic eveolutions.csv");
+    if (input.is_open()) {
+        std::string content;
+        for (int i = 1; i <= pkmnR; i++) {
+            if (i == pkmnR) {//This checks to see if we are on the right pokemon
+                getline(input, content, ',');
+                pkmnName = content;
+                getline(input, content, ',');
+                atk = stoi(content);
+                getline(input, content, ',');
+                def = stoi(content);
+                getline(input, content, ',');
+                hp = stoi(content);
+                getline(input, content, ',');
+                spAtk = stoi(content);
+                getline(input, content, ',');
+                spDef = stoi(content);
+                getline(input, content, '\r');
+                spd = stoi(content);
+                //Block of getlines above is the only way I can think of
+                for (int j = 0; j <= 19 && getline(input, content, ','); j++) {
+                    possibleMoves[j] = content;
+                    //std::cout << content << " " << i; //Debug
+                }
+            }
+         else {
+          getline(input, content); //This moves the cursor one line down while skipping the rest of the commas
+           if (input.eof()) {
+            std::cout << "Pokemon not found" << std::endl;
+            exit(3);
+           }
+         }
+        }
+    }
 }
-void Hit_chance() {
-}
-void Dodge_chance() {
-}
-int main()
-{
-    std::string name = "Squirtle";
-    Pokemon myMon(name);
+    int main() {
+    //std::string name = "Squirtle";
+    //Pokemon myMon(name);
     //myMon.printMoveset(); //Debug
     int choice;
     while (true) {
         system("CLS");
+        generateRandom();
         std::cout << "Welcome to the Pokoman™ Battler V0.5.1 " << std::endl << "Please Choose an option:" << std::endl;
         std::cout << "[1] Start Battle(WIP)\n" << "[2]Set Up Teams(WIP) \n" << "[3]View Teams(WIP) \n" << "[4]TBD \n" << "[5]TBD \n" << "[0]Exit \n";
         std::cin >> choice;
@@ -32,7 +76,6 @@ int main()
         case 2:
             std::cout << "This function is not impemented yet";
             break;
-
         case 3:
             std::cout << "This function is not impemented yet";
             break;

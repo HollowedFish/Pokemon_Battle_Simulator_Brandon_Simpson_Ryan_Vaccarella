@@ -11,7 +11,7 @@ private:
 	int spDef;
 	int hp;
 	int spd;
-	std::string name;
+	std::string pkmnName;
 	/*std::string type1;
 	std::string type2;*/
 	bool KO;
@@ -21,16 +21,16 @@ private:
 
 public:
 	Pokemon();
-	Pokemon(std::string pkmn);
+	Pokemon(std::string pkmnName,int atk,int def,int dpDef,int hp,int spd);
 	//Setter functions
+	void setName(std::string pkmnName);
 	void setAtk(int atk);
 	void setDef(int def);
 	void setSpAtk(int spDef);
 	void setHp(int hp);
 	void setSpd(int spd);
-	void setName(std::string name);
-	void setType1(std::string type1);
-	void setType2(std::string type2);
+	//void setType1(std::string type1);
+	//void setType2(std::string type2);
 	//Getter functions
 	int getAtk();
 	int getDef();
@@ -38,10 +38,11 @@ public:
 	int getSpDef();
 	int getSpd();
 	std::string getName();
-	std::string getType1();
-	std::string getType2();
+	//std::string getType1();
+	//std::string getType2();
 	//Misc functions
 	bool isKO();
 	void setKO(bool KO_Value);
 	void printMoveset();
+	void printName();
 };
