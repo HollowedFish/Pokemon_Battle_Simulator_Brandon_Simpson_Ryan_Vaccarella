@@ -7,7 +7,8 @@
 #include <time.h>
 #include <vector>
 //This works...Need to find better way hmmm
- void generateRandom() {
+//Need to use a vector to store pokemon or a pointer
+ void generateRandom(int total) {
     std::string pkmnName;
     int atk;
     int def;
@@ -15,9 +16,12 @@
     int spDef;
     int hp;
     int spd;
+   // int pTotal = total * 2;
+    //Pokemon p[pTotal];
     std::string possibleMoves[20];
     std::ifstream input;
     srand(time(NULL));
+   // for (int c = 0; c < total; c++) {
     int pkmnR = rand() % 7;
     if (pkmnR == 0) {
         pkmnR = 1;
@@ -58,15 +62,18 @@
          }
         }
     }
+       // p[c]= Pokemon (pkmnName, atk, def, spDef, spAtk, hp, spd);
+   // }
     //Testing
-    Pokemon p1(pkmnName, atk, def, spDef,spAtk, hp, spd);
+   // Pokemon p1(pkmnName, atk, def, spDef,spAtk, hp, spd);
+    //std::cout << p1.getName();
     input.close();
 }
  void startBattle() {
      int total;
      std::cout << "How many pokemon on each roster?(Max:3)";
      std::cin >> total;
-     generateRandom();
+     generateRandom(total*2);
  }
     int main() {
     //std::string name = "Squirtle";
