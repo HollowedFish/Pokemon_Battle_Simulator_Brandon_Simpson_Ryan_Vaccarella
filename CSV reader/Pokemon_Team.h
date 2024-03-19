@@ -21,7 +21,7 @@ private:
 
 public:
 	Pokemon();
-	Pokemon(std::string pkmnName,int atk,int def,int hp,int spDef,int spAtk,int spd);
+	Pokemon(std::string pkmnName, int atk, int def, int hp, int spDef, int spAtk, int spd);
 	//Pokemon(std::string pkmnName);
 	//Setter functions
 	void setName(std::string pkmnName);

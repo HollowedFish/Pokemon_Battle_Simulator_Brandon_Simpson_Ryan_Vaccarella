@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <time.h>
 #include <vector>
+
 //This works...Need to find better way hmmm
 //Need to use a vector to store pokemon or a pointer
 /* void generateRandom(int total) {
@@ -19,8 +20,6 @@
      std::cout << "Function not implemented yet";
  }
  void generateTeams(Pokemon *team1, Pokemon *team2, int teamSize) {
-     srand(time(NULL));
-     Pokemon pt(std::string pkmnName, int atk, int def, int hp, int spDef, int spAtk, int spd);
      std::ifstream input;
      std::string pkmnName;
      int atk;
@@ -29,13 +28,12 @@
      int spDef;
      int hp;
      int spd;
-     int countTeam1 = 0;
-     int countTeam2 = 0;
      std::string possibleMoves[20];
-      for (int c = 0; c < teamSize*2; c++) {
-     int pkmnR = (rand() % 7) + 1;
+     srand(time(0));
+      for (int c = 0; c < teamSize; c++) {
+          input.open("Pokedex first 8 basic eveolutions.csv");
+     int pkmnR = rand() % 7+1;
      std::cout << pkmnR;
-     input.open("Pokedex first 8 basic eveolutions.csv");
      if (input.is_open()) {
          std::string content;
              for (int i = 1; i <= pkmnR; i++) {
@@ -55,20 +53,13 @@
                      getline(input, content, ',');
                      spd = stoi(content);
                      //This will sort it for every other one
-                     if (c % 2 == 0) {
-                     team1[countTeam1] = pt(pkmnName, atk, def, hp,spAtk, spDef,spd);
-                     countTeam1++;
-                 }
-                     else {
-                         team2[countTeam2] = pt(pkmnName, atk, def,hp, spAtk, spDef, spd);
-                         countTeam2++;
-                     }
-
+                    team1[c] = Pokemon(pkmnName, atk, def, hp, spAtk, spDef, spd);
                      //Block of getlines above is the only way I can think of
                      for (int j = 0; j <= 19 && getline(input, content, ','); j++) {
                          possibleMoves[j] = content;
                          //std::cout << content << " " << i; //Debug
                      }
+                     input.close();
                  }
                  else {
                      getline(input, content); //This moves the cursor one line down while skipping the rest of the commas
@@ -81,6 +72,48 @@
              }
          }
      }
+      for (int c = 0; c < teamSize; c++) {
+          input.open("Pokedex first 8 basic eveolutions.csv");
+          int pkmnR = rand() % 7 + 1;
+          std::cout << pkmnR;
+          if (input.is_open()) {
+              std::string content;
+              for (int i = 1; i <= pkmnR; i++) {
+                  if (i == pkmnR) {//This checks to see if we are on the right pokemon
+                      getline(input, content, ',');
+                      pkmnName = content;
+                      getline(input, content, ',');
+                      atk = stoi(content);
+                      getline(input, content, ',');
+                      def = stoi(content);
+                      getline(input, content, ',');
+                      hp = stoi(content);
+                      getline(input, content, ',');
+                      spAtk = stoi(content);
+                      getline(input, content, ',');
+                      spDef = stoi(content);
+                      getline(input, content, ',');
+                      spd = stoi(content);
+                      //This will sort it for every other one
+                      team2[c] = Pokemon(pkmnName, atk, def, hp, spAtk, spDef, spd);
+                      //Block of getlines above is the only way I can think of
+                      for (int j = 0; j <= 19 && getline(input, content, ','); j++) {
+                          possibleMoves[j] = content;
+                          //std::cout << content << " " << i; //Debug
+                      }
+                      input.close();
+                  }
+                  else {
+                      getline(input, content); //This moves the cursor one line down while skipping the rest of the commas
+                      if (input.eof()) {
+                          std::cout << "Pokemon not found" << std::endl;
+                          input.close();
+                          exit(3);
+                      }
+                  }
+              }
+          }
+      }
  }
      /*srand(time(NULL));
      int* pokemonNums = new int[teamSize*2];
