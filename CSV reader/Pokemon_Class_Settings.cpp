@@ -17,7 +17,7 @@ Pokemon::Pokemon() {
 	/*type1 = "";
 	type2 = "";*/ //These are for later
 }
-Pokemon::Pokemon(std::string pkmnName, int atk, int def, int spDef, int spAtk, int hp, int spd) {
+Pokemon::Pokemon(std::string pkmnName, int atk, int def,int hp, int spDef, int spAtk, int spd) {
 	this->pkmnName =pkmnName;
 	this->atk = atk;
 	this->def = def;
@@ -27,13 +27,13 @@ Pokemon::Pokemon(std::string pkmnName, int atk, int def, int spDef, int spAtk, i
 	this ->spd = spd;
 }
 //This only needs to have the name as input, for simplicity
-Pokemon::Pokemon(std::string pkmnName) {
+/*Pokemon::Pokemon(std::string pkmnName) {
 	std::ifstream input;
 	srand(time(NULL));
 	/*int pkmnR = rand() % 8;
 	if (pkmnR == 0) {
 		pkmnR = 1;
-	}*/
+	}
 	input.open("Pokedex first 8 basic eveolutions.csv");
 	if (input.is_open()) {
 		std::string content;
@@ -93,7 +93,7 @@ Pokemon::Pokemon(std::string pkmnName) {
 		exit(2);
 	}
 	input.close();
-}
+}*/
 
 //Setter functions
 #pragma region

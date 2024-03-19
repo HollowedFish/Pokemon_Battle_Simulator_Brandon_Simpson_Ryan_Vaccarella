@@ -9,58 +9,7 @@
 //This works...Need to find better way hmmm
 //Need to use a vector to store pokemon or a pointer
 /* void generateRandom(int total) {
-    std::string pkmnName;
-    int atk;
-    int def;
-    int spAtk;
-    int spDef;
-    int hp;
-    int spd;
-   // int pTotal = total * 2;
-    //Pokemon p[pTotal];
-    std::string possibleMoves[20];
-    std::ifstream input;
-    srand(time(NULL));
-   // for (int c = 0; c < total; c++) {
-    int pkmnR = (rand() % 7)+1;
-    std::cout << pkmnR;
-    input.open("Pokedex first 8 basic eveolutions.csv");
-    if (input.is_open()) {
-        std::string content;
-        for (int i = 1; i <= pkmnR; i++) {
-            if (i == pkmnR) {//This checks to see if we are on the right pokemon
-                getline(input, content, ',');
-                pkmnName = content;
-                getline(input, content, ',');
-                atk = stoi(content);
-                getline(input, content, ',');
-                def = stoi(content);
-                getline(input, content, ',');
-                hp = stoi(content);
-                getline(input, content, ',');
-                spAtk = stoi(content);
-                getline(input, content, ',');
-                spDef = stoi(content);
-                getline(input, content, ',');
-                spd = stoi(content);
-                //Block of getlines above is the only way I can think of
-                for (int j = 0; j <= 19 && getline(input, content, ','); j++) {
-                    possibleMoves[j] = content;
-                    //std::cout << content << " " << i; //Debug
-                }
-            }
-         else {
-          getline(input, content); //This moves the cursor one line down while skipping the rest of the commas
-           if (input.eof()) {
-            std::cout << "Pokemon not found" << std::endl;
-            input.close();
-            exit(3);
-           }
-         }
-        }
-    }
-       // p[c]= Pokemon (pkmnName, atk, def, spDef, spAtk, hp, spd);
-   // }
+  
     //Testing
    // Pokemon p1(pkmnName, atk, def, spDef,spAtk, hp, spd);
     //std::cout << p1.getName();
@@ -70,6 +19,69 @@
      std::cout << "Function not implemented yet";
  }
  void generateTeams(Pokemon *team1, Pokemon *team2, int teamSize) {
+     srand(time(NULL));
+     Pokemon pt(std::string pkmnName, int atk, int def, int hp, int spDef, int spAtk, int spd);
+     std::ifstream input;
+     std::string pkmnName;
+     int atk;
+     int def;
+     int spAtk;
+     int spDef;
+     int hp;
+     int spd;
+     int countTeam1 = 0;
+     int countTeam2 = 0;
+     std::string possibleMoves[20];
+      for (int c = 0; c < teamSize*2; c++) {
+     int pkmnR = (rand() % 7) + 1;
+     std::cout << pkmnR;
+     input.open("Pokedex first 8 basic eveolutions.csv");
+     if (input.is_open()) {
+         std::string content;
+             for (int i = 1; i <= pkmnR; i++) {
+                 if (i == pkmnR) {//This checks to see if we are on the right pokemon
+                     getline(input, content, ',');
+                     pkmnName = content;
+                     getline(input, content, ',');
+                     atk = stoi(content);
+                     getline(input, content, ',');
+                     def = stoi(content);
+                     getline(input, content, ',');
+                     hp = stoi(content);
+                     getline(input, content, ',');
+                     spAtk = stoi(content);
+                     getline(input, content, ',');
+                     spDef = stoi(content);
+                     getline(input, content, ',');
+                     spd = stoi(content);
+                     //This will sort it for every other one
+                     if (c % 2 == 0) {
+                     team1[countTeam1] = pt(pkmnName, atk, def, hp,spAtk, spDef,spd);
+                     countTeam1++;
+                 }
+                     else {
+                         team2[countTeam2] = pt(pkmnName, atk, def,hp, spAtk, spDef, spd);
+                         countTeam2++;
+                     }
+
+                     //Block of getlines above is the only way I can think of
+                     for (int j = 0; j <= 19 && getline(input, content, ','); j++) {
+                         possibleMoves[j] = content;
+                         //std::cout << content << " " << i; //Debug
+                     }
+                 }
+                 else {
+                     getline(input, content); //This moves the cursor one line down while skipping the rest of the commas
+                     if (input.eof()) {
+                         std::cout << "Pokemon not found" << std::endl;
+                         input.close();
+                         exit(3);
+                     }
+                 }
+             }
+         }
+     }
+ }
      /*srand(time(NULL));
      int* pokemonNums = new int[teamSize*2];
      for (int i = 0; i < teamSize * 2;i++) {
@@ -125,18 +137,18 @@
          std::cin.ignore();
          */ //Come back to this later
      //Temporary hardcoding teams
-     std::ifstream input;
+     /*std::ifstream input;
      input.open("Pokedex first 8 basic eveolutions.csv");
      for (int i = 0; i < teamSize;i++) {
          //getline(input, team1[i], ',');
      }
- }
+     }*/
  void displayMenu(Pokemon *team1,Pokemon *team2,int teamSize) {
      system("CLS");
      std::string enter;
      int choice;
      std::cout << "Welcome to the Pokoman™ Battler V0.6.0 " << std::endl << "Please Choose an option:" << std::endl;
-     std::cout << "[1] Start Battle(WIP)\n" << "[2]Set Up Teams(WIP) \n" << "[3]View Teams(WIP) \n" << "[4]View all Pokemon(Maybe) \n" << "[5]View all Moves(Maybe) \n" << "[0]Exit \n";
+     std::cout << "[1] Start Battle(WIP)\n" << "[2]Generate Pokemon teams(WIP) \n" << "[3]View Teams(WIP) \n" << "[4]View all Pokemon(Maybe) \n" << "[5]View all Moves(Maybe) \n" << "[0]Exit \n";
      std::cin >> choice;
      switch (choice) {
      case 1:
@@ -160,9 +172,8 @@
      case 3:
          std::cout << team1[0].getName() << std::endl << team1[1].getName() << std::endl << team1[2].getName()<<std::endl;
          std::cout << team2[2].getName() << std::endl << team2[1].getName() << std::endl<<team2[0].getName()<<std::endl;
-         std::cout << "Hit enter to continue";
+         std::cin.get(); 
          std::cin.ignore();
-         getline(std::cin,enter);
          break;
      case 4:
          std::cout << "This function is not impemented yet";
