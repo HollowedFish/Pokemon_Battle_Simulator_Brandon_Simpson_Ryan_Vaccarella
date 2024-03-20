@@ -23,8 +23,73 @@ void viewMoves(std::string*pMoves) {
         }
     }
 }
- void startBattle(Pokemon* team1, Pokemon* team2, int teamSize) { //TODO NEXT
-     std::cout << "Function not implemented yet";
+ void startBattle(Pokemon* team1, Pokemon* team2, int teamSize) { //Ok, here we go on the main bit
+     Pokemon t1Active; //Creates the objects for the active pokemon
+     Pokemon t2Active;
+     std::string p1;//Player names
+     std::string p2;
+     system("CLS"); //Clears screen
+     std::cout << "Enter the name for player 1:" << std::endl;
+     std::cin.ignore(); //This needs to be here otherwise it skips
+     std::getline(std::cin, p1);
+     std::cout << "Enter the name for player 2:" << std::endl;
+     std::getline(std::cin, p2);
+     system("CLS");
+     std::cout << "Trainer " << p1 << " challenges Trainer " << p2 << " to a Battle!" << std::endl;
+     std::cout << "Press Enter to continue...";
+     std::cin.get();
+     std::cin.ignore();
+     //1st team initial pokemon choosing
+     while (t1Active.getName() == "") {
+         system("CLS");
+         std::cout << "Trainer " << p1 << ": Choose who to send out first!\n";
+         std::cout << "--------------------------------------------------\n"; //<--Copy paste this for formatting consistency later
+         for (int i = 0; i < teamSize; i++) {
+             std::cout << i + 1 << ". " << team1[i].getName() << std::endl;
+         }
+         int choice = 0;
+         std::cout << "Please enter the number of the pokemon:";
+         std::cin >> choice;
+         //std::cout << choice; //Debug
+         if (choice >= 1 && choice <= teamSize) { //Makes the active pokemon the chosen pokemon + Input validation
+             t1Active = team1[choice - 1];
+         }
+         else {
+             std::cout << "Invalid selection" << std::endl << "Try again";
+             std::cin.ignore();
+         }
+     }
+     //2nd team initial pokemon choosing
+     while (t2Active.getName() == "") {
+         system("CLS");
+         std::cout << "Trainer " << p2 << ": Choose who to send out first!\n";
+         std::cout << "--------------------------------------------------\n"; //<--Copy paste this for formatting consistency later
+         for (int i = 0; i < teamSize; i++) {
+             std::cout << i + 1 << ". " << team2[i].getName() << std::endl;
+         }
+         int choice = 0;
+         std::cout << "Please enter the number of the pokemon:";
+         std::cin >> choice;
+         //std::cout << choice; //Debug
+         if (choice >= 1 && choice <= teamSize) { //Makes the active pokemon the chosen pokemon + Input validation
+             t2Active = team2[choice - 1];
+         }
+         else {
+             std::cout << "Invalid selection" << std::endl << "Try again";
+             std::cin.ignore();
+         }
+     }
+     /*std::cout << "Starting active pokemon are: " << T1Active.getName() << " " << T2Active.getName(); //Debug
+     std::cin.get(); //Debug
+     std::cin.ignore();//Debug */
+
+     //Actual battle loop time, here we go!
+     std::cout << "" << "" << std::endl;
+     bool p1Win = false;
+     bool p2Win = false;
+     while (p1Win == false && p2Win == false) {
+         //Come back to this later
+     }
  }
  void generateTeams(Pokemon* team1, Pokemon* team2, int teamSize,std::string *tMoves) {
      std::ifstream input;
@@ -170,6 +235,7 @@ void viewMoves(std::string*pMoves) {
              for (int i = 0; i < teamSize; i++) {
                  std::cout << i + 1 << ". " << team2[i].getName() << std::endl;
              }
+             std::cout << "\n Press Enter to Continue...";
              std::cin.get();  
              std::cin.ignore();
          }
