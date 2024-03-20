@@ -73,6 +73,7 @@ public:
 	void setcategoryMoves(std::string categoryMoves);
 	void setpowerMoves(float powerMoves);
 	void setaccuracyMoves(int accuracyMoves);
+	void setpowerPointsMoves(int powerPointsMoves);
 	void sethealMoves(float healMoves);
 	void sethitTimeMoves(int hitTimesMoves);
 	void setfirstMoves(bool firstMoves);
