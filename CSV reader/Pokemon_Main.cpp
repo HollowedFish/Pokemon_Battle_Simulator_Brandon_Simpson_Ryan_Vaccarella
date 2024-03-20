@@ -25,7 +25,7 @@ void viewMoves(std::string*pMoves) {
 }
  void startBattle(Pokemon* team1, Pokemon* team2, int teamSize) { //Ok, here we go on the main bit
      Pokemon t1Active; //Creates the objects for the active pokemon
-     Pokemon t2Active;
+     Pokemon t2Active; //Maybe make into pointers for direct value editing?
      std::string p1;//Player names
      std::string p2;
      system("CLS"); //Clears screen
