@@ -68,8 +68,8 @@ public:
 	Moves();
 	Moves(std::string nameMoves, std::string typeMoves, std::string categoryMoves, float powerMoves, int accuracyMoves, int powerPointsMoves, float healMoves, int hitTimesMoves, bool firstMoves,bool critMoves,bool instaMoves,bool dodgeMoves, bool flinchMoves, bool chargeMoves);
 
-	void setNameMoves(std::string nameMoves);
-	void setTypeMoves(std::string typeMoves);
+	void setnameMoves(std::string nameMoves);
+	void settypeMoves(std::string typeMoves);
 	void setcategoryMoves(std::string categoryMoves);
 	void setpowerMoves(float powerMoves);
 	void setaccuracyMoves(int accuracyMoves);
@@ -83,8 +83,8 @@ public:
 	void setflinchMoves(bool flinchMoves);
 	void setchargeMoves(bool chargeMoves);
 
-	std::string getNameMoves();
-	std::string getTypeMoves();
+	std::string getnameMoves();
+	std::string gettypeMoves();
 	std::string getcategoryMoves();
 	float getpowerMoves();
 	int getaccuracyMoves();

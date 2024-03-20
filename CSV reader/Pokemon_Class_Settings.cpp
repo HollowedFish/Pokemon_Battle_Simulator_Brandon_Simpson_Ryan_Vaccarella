@@ -139,10 +139,10 @@ void Pokemon::printName() {
 #pragma endregion
 }
 #pragma region
-void Moves::setNameMoves(std::string nameMoves) {
+void Moves::setnameMoves(std::string nameMoves) {
 	this->nameMoves = nameMoves;
 }
-void Moves::setTypeMoves(std::string typeMoves) {
+void Moves::settypeMoves(std::string typeMoves) {
 	this->typeMoves = typeMoves;
 }
 void Moves::setcategoryMoves(std::string categoryMoves) {
@@ -182,18 +182,14 @@ void Moves::setchargeMoves(bool chargeMoves) {
 	this->chargeMoves = chargeMoves;
 }
 
-std::string Moves::getNameMoves() {
+std::string Moves::getnameMoves() {
 	return nameMoves;
 }
-std::string Moves::getTypeMoves() {
+std::string Moves::gettypeMoves() {
 	return typeMoves;
 }
 std::string Moves::getcategoryMoves() {
 	return categoryMoves;
-}
-int Moves::accuracyMoves()
-{
-	return 0;
 }
 float Moves::getpowerMoves() {
 	return powerMoves;
