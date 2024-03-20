@@ -9,8 +9,18 @@
 //This works...Need to find better way hmmm
 //Need to use a vector to store pokemon or a pointer
 void viewMoves(std::string*pMoves) {
+    system("CLS");
     for (int i = 0; i <= 546; i++) {
         std::cout <<i+1<<". "<< pMoves[i] << std::endl;
+        if (i == 249) { //Rudimentary page system so it actually displays all moves properly
+            std::cout << "Page 1/2" << std::endl << "Press enter to move to next page when ready...";
+            std::cin.get();
+            std::cin.ignore();
+            system("CLS");
+        }
+        if (i == 546) {
+            std::cout << "Page 2/2" << std::endl << "Press enter to continue...";
+        }
     }
 }
  void startBattle(Pokemon* team1, Pokemon* team2, int teamSize) { //TODO NEXT
@@ -160,7 +170,7 @@ void viewMoves(std::string*pMoves) {
              for (int i = 0; i < teamSize; i++) {
                  std::cout << i + 1 << ". " << team2[i].getName() << std::endl;
              }
-             std::cin.get();
+             std::cin.get();  
              std::cin.ignore();
          }
          else {
@@ -176,7 +186,7 @@ void viewMoves(std::string*pMoves) {
          break;
      case 5:
          viewMoves(tMoves);
-         std::cin.get();
+         //std::cin.get(); //Maybe don't need this this one time?
          std::cin.ignore();
          break;
      case 0:
