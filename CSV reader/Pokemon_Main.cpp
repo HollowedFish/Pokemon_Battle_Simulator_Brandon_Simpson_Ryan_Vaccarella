@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <time.h>
 #include <vector>
-
+//Got tired lines 60-66 contain the ensenece for how it should go need to filter it to nested classes to work
 //This works...Need to find better way hmmm
 //Need to use a vector to store pokemon or a pointer
 void viewMoves(std::string*pMoves) {
