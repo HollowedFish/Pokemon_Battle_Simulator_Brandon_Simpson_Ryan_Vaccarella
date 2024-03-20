@@ -48,3 +48,52 @@ public:
 	void printMoveset();
 	void printName();
 };
+class Moves {
+private:
+	std::string nameMoves;
+	std::string typeMoves;
+	std::string categoryMoves;
+	float powerMoves;
+	int accuracyMoves;
+	int powerPointsMoves;
+	float healMoves;
+	int hitTimesMoves;
+	bool firstMoves;
+	bool critMoves;
+	bool instaMoves;
+	bool dodgeMoves;
+	bool flinchMoves;
+	bool chargeMoves;
+public:
+	Moves();
+	Moves(std::string nameMoves, std::string typeMoves, std::string categoryMoves, float powerMoves, int accuracyMoves, int powerPointsMoves, float healMoves, int hitTimesMoves, bool firstMoves,bool critMoves,bool instaMoves,bool dodgeMoves, bool flinchMoves, bool chargeMoves);
+
+	void setNameMoves(std::string nameMoves);
+	void setTypeMoves(std::string typeMoves);
+	void setcategoryMoves(std::string categoryMoves);
+	void setpowerMoves(float powerMoves);
+	void setaccuracyMoves(int accuracyMoves);
+	void sethealMoves(float healMoves);
+	void sethitTimeMoves(int hitTimesMoves);
+	void setfirstMoves(bool firstMoves);
+	void setcritMoves(bool critMoves);
+	void setinstaMoves(bool instaMoves);
+	void setdodgeMoves(bool dodgeMoves);
+	void setflinchMoves(bool flinchMoves);
+	void setchargeMoves(bool chargeMoves);
+
+	std::string getNameMoves();
+	std::string getTypeMoves();
+	std::string getcategoryMoves();
+	float getpowerMoves();
+	int getaccuracyMoves();
+	float gethealMoves();
+	int gethitTimesMoves();
+	bool getfirstMoves();
+	bool getcritMoves();
+	bool getinstaMoves();
+	bool getdodgeMoves();
+	bool getflinchMoves();
+	bool getchargeMoves();
+	
+};
