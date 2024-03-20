@@ -1,5 +1,4 @@
-Name,Type,Category,Power,Acc.,PP,Heal,Times Hit,First,Crit,Insta,Dodge,Flinch,Charge
-Asorb,Grass,Special,0.2,100,25,0.5,1,FALSE,FALSE,FALSE,TRUE,FALSE,
+Absorb,Grass,Special,0.2,100,25,0.5,1,FALSE,FALSE,FALSE,TRUE,FALSE,
 Accelerock,Rock,Physical,0.4,100,20,0,1,TRUE,FALSE,FALSE,TRUE,FALSE,
 Acid,Poison,Special,0.4,100,30,0,1,FALSE,FALSE,FALSE,TRUE,FALSE,
 Acid Spray,Poison,Special,0.4,100,20,0,1,FALSE,FALSE,FALSE,TRUE,FALSE,
