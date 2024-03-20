@@ -37,8 +37,8 @@ void viewMoves(std::string*pMoves) {
      int hp;
      int spd;
      int pkmnR;
-     std::string potentialMoves[25];
-     std::string possibleMoves[25];
+     std::string potentialMoves[30];
+     std::string possibleMoves[30];
      std::string content;
     srand(time(0));
       for (int c = 0; c < teamSize; c++) {
