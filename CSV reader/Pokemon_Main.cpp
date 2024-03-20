@@ -16,27 +16,15 @@
     //std::cout << p1.getName();
     input.close();
 }*/
-void viewMoves() {
-    std::ifstream moves;
-    moves.open("PokemonMoves - Sheet1.csv");
-    std::string content;
-    std::string pMoves[547] = {};
-    if (moves.is_open()) {
-        for (int mp = 0; mp <= 546; mp++) {
-            getline(moves, content,',');
-            pMoves[mp] = content;
-            getline(moves, content);
-        }
+void viewMoves(std::string*pMoves) {
+    for (int i = 0; i <= 546; i++) {
+        std::cout << pMoves[i]<<std::endl;
     }
-    for (int mp = 0; mp <= 546; mp++) {
-        std::cout << pMoves[mp]<<std::endl;
-    }
-    moves.close();
 }
  void startBattle(Pokemon* team1, Pokemon* team2, int teamSize) {
      std::cout << "Function not implemented yet";
  }
- void generateTeams(Pokemon* team1, Pokemon* team2, int teamSize) {
+ void generateTeams(Pokemon* team1, Pokemon* team2, int teamSize,std::string *tMoves) {
      std::ifstream input;
      std::ifstream moves;
      std::string pkmnName;
@@ -48,7 +36,7 @@ void viewMoves() {
      int spd;
      std::string possibleMoves[20];
      std::string content;
-     srand(time(NULL));
+    srand(time(0));
       for (int c = 0; c < teamSize; c++) {
           input.open("Pokedex first 8 basic eveolutions.csv");
      int pkmnR = rand() % 7+1;
@@ -194,12 +182,12 @@ void viewMoves() {
          //getline(input, team1[i], ',');
      }
      }*/
- void displayMenu(Pokemon *team1,Pokemon *team2,int teamSize) {
+ void displayMenu(Pokemon *team1,Pokemon *team2,int teamSize,std::string *tMoves) {
      system("CLS");
      std::string enter;
      int choice;
      std::cout << "Welcome to the Pokoman™ Battler V0.6.0 " << std::endl << "Please Choose an option:" << std::endl;
-     std::cout << "[1] Start Battle(WIP)\n" << "[2]Generate Pokemon teams(WIP) \n" << "[3]View Teams(WIP) \n" << "[4]View all Pokemon(Maybe) \n" << "[5]View all Moves(Maybe) \n" << "[0]Exit \n";
+     std::cout << "[1] Start Battle(WIP)\n" << "[2]Generate Pokemon teams(WIP) \n" << "[3]View Teams(WIP) \n" << "[4]View all Pokemon(Maybe) \n" << "[5]View all Moves possible \n" << "[0]Exit \n";
      std::cin >> choice;
      switch (choice) {
      case 1:
@@ -218,13 +206,26 @@ void viewMoves() {
              std::cin.ignore(); //Both of these are needed for this to work
          }
          else
-             generateTeams(team1, team2, teamSize);
+             generateTeams(team1, team2, teamSize,tMoves);
          break;
      case 3:
-         std::cout << team1[0].getName() << std::endl << team1[1].getName() << std::endl << team1[2].getName()<<std::endl;
-         std::cout << team2[2].getName() << std::endl << team2[1].getName() << std::endl<<team2[0].getName()<<std::endl;
-         std::cin.get(); 
-         std::cin.ignore();
+         if (team1[0].getName() != "" || team2[0].getName() != "") {
+             std::cout << "On team 1 we have..." << std::endl;
+             for (int i = 0; i < teamSize; i++) {
+                 std::cout << i + 1 << ". " << team1[i].getName() << std::endl;
+             }
+             std::cout << "On team 2 we have.." << std::endl;
+             for (int i = 0; i < teamSize; i++) {
+                 std::cout << i + 1 << ". " << team2[i].getName() << std::endl;
+             }
+             std::cin.get();
+             std::cin.ignore();
+         }
+         else {
+             std::cout << "You still need to generate your teams! Go catch em!";
+             std::cin.get();
+             std::cin.ignore();
+         }
          break;
      case 4:
          std::cout << "This function is not impemented yet";
@@ -232,7 +233,7 @@ void viewMoves() {
          std::cin.ignore();
          break;
      case 5:
-         viewMoves();
+         viewMoves(tMoves);
          std::cin.get();
          std::cin.ignore();
          break;
@@ -285,12 +286,13 @@ quu..__
          //All deletes need to go here
          delete[] team1;
          delete[] team2;
+         delete[] tMoves;
          exit(0);
          break;
      default:
          std::cout << "invalid input" <<std::endl << "Press enter to continue";
      }
-     displayMenu(team1, team2, teamSize); //Calls itself for an infinite loop
+     displayMenu(team1, team2, teamSize,tMoves); //Calls itself for an infinite loop
  }
     int main() {
     //std::string name = "Squirtle";
@@ -302,14 +304,28 @@ quu..__
         std::cin >> teamSize;
         if (teamSize > 3 || teamSize <= 0) {
             std::cout << "Nice try. The size of each team is now 3.";
+            std::cin.get();
+            std::cin.ignore();
             teamSize = 3;
         }
 
        Pokemon* team1 = new Pokemon[teamSize];
        Pokemon* team2 = new Pokemon[teamSize];
-
-        displayMenu(team1,team2,teamSize);
+       std::string* tMoves = new std::string[547];
+       std::ifstream moves;
+       moves.open("PokemonMoves - Sheet1.csv");
+       std::string content;
+       if (moves.is_open()) {
+           for (int i = 0; i <= 546; i++) {
+               getline(moves, content, ',');
+               tMoves[i] = content;
+               getline(moves, content);
+           }
+       }
+       moves.close();
+        displayMenu(team1,team2,teamSize,tMoves);
     //The below will never actually run
     delete[] team1;
     delete[] team2;
+    delete[] tMoves;
 }
