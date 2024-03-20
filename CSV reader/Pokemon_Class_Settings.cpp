@@ -191,6 +191,10 @@ std::string Moves::getTypeMoves() {
 std::string Moves::getcategoryMoves() {
 	return categoryMoves;
 }
+int Moves::accuracyMoves()
+{
+	return 0;
+}
 float Moves::getpowerMoves() {
 	return powerMoves;
 }

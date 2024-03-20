@@ -9,16 +9,9 @@
 
 //This works...Need to find better way hmmm
 //Need to use a vector to store pokemon or a pointer
-/* void generateRandom(int total) {
-  
-    //Testing
-   // Pokemon p1(pkmnName, atk, def, spDef,spAtk, hp, spd);
-    //std::cout << p1.getName();
-    input.close();
-}*/
 void viewMoves(std::string*pMoves) {
     for (int i = 0; i <= 546; i++) {
-        std::cout << pMoves[i]<<std::endl;
+        std::cout <<i+1<<". "<< pMoves[i] << std::endl;
     }
 }
  void startBattle(Pokemon* team1, Pokemon* team2, int teamSize) {
@@ -34,12 +27,13 @@ void viewMoves(std::string*pMoves) {
      int spDef;
      int hp;
      int spd;
+     int pkmnR;
      std::string possibleMoves[20];
      std::string content;
     srand(time(0));
       for (int c = 0; c < teamSize; c++) {
           input.open("Pokedex first 8 basic eveolutions.csv");
-     int pkmnR = rand() % 7+1;
+     pkmnR = rand() % 7+1;
      std::cout << pkmnR;
      if (input.is_open()) {
              for (int i = 1; i <= pkmnR; i++) {
@@ -80,7 +74,7 @@ void viewMoves(std::string*pMoves) {
      }
       for (int c = 0; c < teamSize; c++) {
           input.open("Pokedex first 8 basic eveolutions.csv");
-          int pkmnR = rand() % 7 + 1;
+          pkmnR = rand() % 7 + 1;
           std::cout << pkmnR;
           if (input.is_open()) {
               std::string content;
@@ -121,73 +115,12 @@ void viewMoves(std::string*pMoves) {
           }
       }
  }
-     /*srand(time(NULL));
-     int* pokemonNums = new int[teamSize*2];
-     for (int i = 0; i < teamSize * 2;i++) {
-         pokemonNums[i] = rand() % 7;//Make this the number of lines in the pokemon csv
-         std::cout << pokemonNums[i];
-         //std::cin.get();
-         //std::cin.ignore();
-         for (int j = 0; j < i; j++) {
-             if (pokemonNums[i] == pokemonNums[j]) {
-                 pokemonNums[i] = rand() % 7; //There may still be duplicates with this method (check later)
-                 std::cout << "Duplicate detection triggered"; //Debug
-             }
-         }
-     }
-     std::ifstream input;
-     input.open("Pokedex first 8 basic eveolutions.csv");
-     std::string* pokemonNames = new std::string[teamSize*2];
-     std::string storage;
-         for (int k = 0;pokemonNames[(teamSize*2)-1] == ""; k++) { //only stops when all names are filled
-             for (int i = 0; i != pokemonNums[k];i++) { getline(input, storage); } //Iterates until the required line number
-             getline(input, pokemonNames[k], ','); 
-             std::cout << pokemonNames[k]; //Debug
-         }
-     int choice;
-     std::cout << "Your choices are:" << std::endl;
-     for (int k = 0;k < teamSize*2;k++) {
-         std::cout << k+1 << " " << pokemonNames[k]  << std::endl;
-     }
-     int teamPickNum =1; 
-     int team1Mons = 0;
-     int team2Mons = 0;
-         while (team2Mons !=teamSize) {
-             std::cout << "Team" << teamPickNum << "Choose a pokemon" <<std::endl;
-             std::cin >> choice;
-             if (choice < 0 || choice > teamSize*2) {
-                 std::cout << "That is not a valid pokemon choice, please try again" << std::endl;
-             }
-             else {
-                 if (teamPickNum == 1) {
-                     teamPickNum = 2;
-                     team1[team1Mons] = Pokemon(pokemonNames[choice - 1]);
-                     team1Mons++;
-                 }
-                 if (teamPickNum == 2) {
-                     teamPickNum = 1; 
-                     team2[team2Mons] = Pokemon(pokemonNames[choice - 1]);
-                     team2Mons++;
-                 }
-             }
-         }
-         std::cout << "Team successfully generated \n Press enter to continue...";
-         std::cin.get();
-         std::cin.ignore();
-         */ //Come back to this later
-     //Temporary hardcoding teams
-     /*std::ifstream input;
-     input.open("Pokedex first 8 basic eveolutions.csv");
-     for (int i = 0; i < teamSize;i++) {
-         //getline(input, team1[i], ',');
-     }
-     }*/
  void displayMenu(Pokemon *team1,Pokemon *team2,int teamSize,std::string *tMoves) {
      system("CLS");
      std::string enter;
      int choice;
      std::cout << "Welcome to the Pokoman™ Battler V0.6.0 " << std::endl << "Please Choose an option:" << std::endl;
-     std::cout << "[1] Start Battle(WIP)\n" << "[2]Generate Pokemon teams(WIP) \n" << "[3]View Teams(WIP) \n" << "[4]View all Pokemon(Maybe) \n" << "[5]View all Moves possible \n" << "[0]Exit \n";
+     std::cout << "[1] Start Battle(WIP)\n" << "[2]Generate Pokemon teams(WIP) and moves \n" << "[3]View Teams \n" << "[4]View all Pokemon(WIP) \n" << "[5]View all Moves possible \n" << "[0]Exit \n";
      std::cin >> choice;
      switch (choice) {
      case 1:
@@ -329,3 +262,71 @@ quu..__
     delete[] team2;
     delete[] tMoves;
 }
+    /*srand(time(NULL));
+   int* pokemonNums = new int[teamSize*2];
+   for (int i = 0; i < teamSize * 2;i++) {
+       pokemonNums[i] = rand() % 7;//Make this the number of lines in the pokemon csv
+       std::cout << pokemonNums[i];
+       //std::cin.get();
+       //std::cin.ignore();
+       for (int j = 0; j < i; j++) {
+           if (pokemonNums[i] == pokemonNums[j]) {
+               pokemonNums[i] = rand() % 7; //There may still be duplicates with this method (check later)
+               std::cout << "Duplicate detection triggered"; //Debug
+           }
+       }
+   }
+   std::ifstream input;
+   input.open("Pokedex first 8 basic eveolutions.csv");
+   std::string* pokemonNames = new std::string[teamSize*2];
+   std::string storage;
+       for (int k = 0;pokemonNames[(teamSize*2)-1] == ""; k++) { //only stops when all names are filled
+           for (int i = 0; i != pokemonNums[k];i++) { getline(input, storage); } //Iterates until the required line number
+           getline(input, pokemonNames[k], ',');
+           std::cout << pokemonNames[k]; //Debug
+       }
+   int choice;
+   std::cout << "Your choices are:" << std::endl;
+   for (int k = 0;k < teamSize*2;k++) {
+       std::cout << k+1 << " " << pokemonNames[k]  << std::endl;
+   }
+   int teamPickNum =1;
+   int team1Mons = 0;
+   int team2Mons = 0;
+       while (team2Mons !=teamSize) {
+           std::cout << "Team" << teamPickNum << "Choose a pokemon" <<std::endl;
+           std::cin >> choice;
+           if (choice < 0 || choice > teamSize*2) {
+               std::cout << "That is not a valid pokemon choice, please try again" << std::endl;
+           }
+           else {
+               if (teamPickNum == 1) {
+                   teamPickNum = 2;
+                   team1[team1Mons] = Pokemon(pokemonNames[choice - 1]);
+                   team1Mons++;
+               }
+               if (teamPickNum == 2) {
+                   teamPickNum = 1;
+                   team2[team2Mons] = Pokemon(pokemonNames[choice - 1]);
+                   team2Mons++;
+               }
+           }
+       }
+       std::cout << "Team successfully generated \n Press enter to continue...";
+       std::cin.get();
+       std::cin.ignore();
+       */ //Come back to this later
+       //Temporary hardcoding teams
+       /*std::ifstream input;
+       input.open("Pokedex first 8 basic eveolutions.csv");
+       for (int i = 0; i < teamSize;i++) {
+           //getline(input, team1[i], ',');
+       }
+       }*/
+       /* void generateRandom(int total) {
+
+       //Testing
+      // Pokemon p1(pkmnName, atk, def, spDef,spAtk, hp, spd);
+       //std::cout << p1.getName();
+       input.close();
+   }*/
