@@ -21,7 +21,7 @@ void viewMoves(std::string*pMoves) {
         std::cout << pMoves[i]<<std::endl;
     }
 }
- void startBattle(Pokemon* team1, Pokemon* team2, int teamSize) {
+ void startBattle(Pokemon* team1, Pokemon* team2, int teamSize) { //TODO NEXT
      std::cout << "Function not implemented yet";
  }
  void generateTeams(Pokemon* team1, Pokemon* team2, int teamSize,std::string *tMoves) {
@@ -38,10 +38,10 @@ void viewMoves(std::string*pMoves) {
      std::string content;
     srand(time(0));
       for (int c = 0; c < teamSize; c++) {
-          input.open("Pokedex first 8 basic eveolutions.csv");
-     int pkmnR = rand() % 7+1;
-     std::cout << pkmnR;
-     if (input.is_open()) {
+          input.open("Pokedex first 8 basic eveolutions.csv"); //Why is this inside the for loop?
+          int pkmnR = (rand() % 7)+1;
+          std::cout << pkmnR; //Debug
+         if (input.is_open()) {
              for (int i = 1; i <= pkmnR; i++) {
                  if (i == pkmnR) {//This checks to see if we are on the right pokemon
                      getline(input, content, ',');
@@ -78,7 +78,7 @@ void viewMoves(std::string*pMoves) {
              }
          }
      }
-      for (int c = 0; c < teamSize; c++) {
+      for (int c = 0; c < teamSize; c++) { //Makes team 2 by copying the process of team 1, may or may not be duplicate mons
           input.open("Pokedex first 8 basic eveolutions.csv");
           int pkmnR = rand() % 7 + 1;
           std::cout << pkmnR;
@@ -182,6 +182,7 @@ void viewMoves(std::string*pMoves) {
          //getline(input, team1[i], ',');
      }
      }*/
+ //Main runtime function
  void displayMenu(Pokemon *team1,Pokemon *team2,int teamSize,std::string *tMoves) {
      system("CLS");
      std::string enter;
@@ -298,12 +299,12 @@ quu..__
     //std::string name = "Squirtle";
     //Pokemon myMon(name);
     //myMon.printMoveset(); //Debug
-        int teamSize; //Change the maximum team size when we get more pokemon
+        int teamSize; //NOTE: Change the maximum team size when we get more pokemon
      
         std::cout << "How many pokemon on each team?(Max: 3)";
         std::cin >> teamSize;
         if (teamSize > 3 || teamSize <= 0) {
-            std::cout << "Nice try. The size of each team is now 3.";
+            std::cout << "Nice try. The size of each team is now 3." << std::endl << "Press Enter to Continue...";
             std::cin.get();
             std::cin.ignore();
             teamSize = 3;
@@ -311,19 +312,19 @@ quu..__
 
        Pokemon* team1 = new Pokemon[teamSize];
        Pokemon* team2 = new Pokemon[teamSize];
-       std::string* tMoves = new std::string[547];
+       std::string* tMoves = new std::string[547]; //Creates an array for moves of size 547
        std::ifstream moves;
        moves.open("PokemonMoves - Sheet1.csv");
        std::string content;
        if (moves.is_open()) {
-           for (int i = 0; i <= 546; i++) {
+           for (int i = 0; i <= 546; i++) { //Stores all move names sequentially in an array
                getline(moves, content, ',');
                tMoves[i] = content;
-               getline(moves, content);
+               getline(moves, content); //Iterates to the next line
            }
        }
        moves.close();
-        displayMenu(team1,team2,teamSize,tMoves);
+        displayMenu(team1,team2,teamSize,tMoves); //Start game loop
     //The below will never actually run
     delete[] team1;
     delete[] team2;
