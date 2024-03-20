@@ -16,11 +16,29 @@
     //std::cout << p1.getName();
     input.close();
 }*/
+void viewMoves() {
+    std::ifstream moves;
+    moves.open("PokemonMoves - Sheet1.csv");
+    std::string content;
+    std::string pMoves[547] = {};
+    if (moves.is_open()) {
+        for (int mp = 0; mp <= 546; mp++) {
+            getline(moves, content,',');
+            pMoves[mp] = content;
+            getline(moves, content);
+        }
+    }
+    for (int mp = 0; mp <= 546; mp++) {
+        std::cout << pMoves[mp]<<std::endl;
+    }
+    moves.close();
+}
  void startBattle(Pokemon* team1, Pokemon* team2, int teamSize) {
      std::cout << "Function not implemented yet";
  }
- void generateTeams(Pokemon *team1, Pokemon *team2, int teamSize) {
+ void generateTeams(Pokemon* team1, Pokemon* team2, int teamSize) {
      std::ifstream input;
+     std::ifstream moves;
      std::string pkmnName;
      int atk;
      int def;
@@ -29,13 +47,13 @@
      int hp;
      int spd;
      std::string possibleMoves[20];
-     srand(time(0));
+     std::string content;
+     srand(time(NULL));
       for (int c = 0; c < teamSize; c++) {
           input.open("Pokedex first 8 basic eveolutions.csv");
      int pkmnR = rand() % 7+1;
      std::cout << pkmnR;
      if (input.is_open()) {
-         std::string content;
              for (int i = 1; i <= pkmnR; i++) {
                  if (i == pkmnR) {//This checks to see if we are on the right pokemon
                      getline(input, content, ',');
@@ -57,7 +75,7 @@
                      //Block of getlines above is the only way I can think of
                      for (int j = 0; j <= 19 && getline(input, content, ','); j++) {
                          possibleMoves[j] = content;
-                         //std::cout << content << " " << i; //Debug
+                         std::cout << content << " " << i; //Debug
                      }
                      input.close();
                  }
@@ -214,7 +232,7 @@
          std::cin.ignore();
          break;
      case 5:
-         std::cout << "This function is not implemented yet";
+         viewMoves();
          std::cin.get();
          std::cin.ignore();
          break;
@@ -279,6 +297,7 @@ quu..__
     //Pokemon myMon(name);
     //myMon.printMoveset(); //Debug
         int teamSize; //Change the maximum team size when we get more pokemon
+     
         std::cout << "How many pokemon on each team?(Max: 3)";
         std::cin >> teamSize;
         if (teamSize > 3 || teamSize <= 0) {
