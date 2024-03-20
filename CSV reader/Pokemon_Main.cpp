@@ -1,4 +1,5 @@
-﻿// CSV reader.cpp : This file contains the 'main' function. Program execution begins and ends there.
+﻿// Pokemon Battler.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//Made by Brandon Simpson and Ryan Vaccarella
 #include <iostream>
 #include "Pokemon_Team.h"
 #include <cstdlib>
@@ -33,7 +34,7 @@ void viewMoves(std::string*pMoves) {
       for (int c = 0; c < teamSize; c++) {
           input.open("Pokedex first 8 basic eveolutions.csv");
      int pkmnR = rand() % 7+1;
-     std::cout << pkmnR;
+    //std::cout << pkmnR; //Debug
      if (input.is_open()) {
              for (int i = 1; i <= pkmnR; i++) {
                  if (i == pkmnR) {//This checks to see if we are on the right pokemon
@@ -80,7 +81,7 @@ void viewMoves(std::string*pMoves) {
       for (int c = 0; c < teamSize; c++) { //Makes team 2 by copying the process of team 1, may or may not be duplicate mons
           input.open("Pokedex first 8 basic eveolutions.csv");
           pkmnR = rand() % 7 + 1;
-          std::cout << pkmnR;
+          //std::cout << pkmnR; //Debug
           if (input.is_open()) {
               std::string content;
               for (int i = 1; i <= pkmnR; i++) {
@@ -145,6 +146,9 @@ void viewMoves(std::string*pMoves) {
          }
          else
              generateTeams(team1, team2, teamSize,tMoves);
+         std::cout << "Teams Generated successfully!" << std::endl << "Press Enter to Continue...";
+         std::cin.get();
+         std::cin.ignore();
          break;
      case 3:
          if (team1[0].getName() != "" || team2[0].getName() != "") {
