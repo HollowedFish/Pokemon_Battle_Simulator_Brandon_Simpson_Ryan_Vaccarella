@@ -84,11 +84,15 @@ void viewMoves(std::string*pMoves) {
      std::cin.ignore();//Debug */
 
      //Actual battle loop time, here we go!
-     std::cout << "" << "" << std::endl;
+     std::cout << "" << "" << std::endl;//Some sort of battle start message goes here?
      bool p1Win = false;
      bool p2Win = false;
+     int turnNum = 0;
      while (p1Win == false && p2Win == false) {
-         //Come back to this later
+         turnNum++;
+         system("CLS");
+         std::cout << "It is turn " << turnNum << "What action do you want to take " << p1 << "?\n";
+         //TODO: Complete this
      }
  }
  void generateTeams(Pokemon* team1, Pokemon* team2, int teamSize,std::string *tMoves) {
