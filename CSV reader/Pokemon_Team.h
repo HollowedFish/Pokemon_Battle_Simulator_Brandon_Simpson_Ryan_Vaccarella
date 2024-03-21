@@ -1,5 +1,6 @@
 #pragma once
 //Header file for the Pokemon class
+#include <iostream>
 #include <string>
 #include <fstream>
 //Functions are in camel case
@@ -15,11 +16,9 @@ private:
 	/*std::string type1;
 	std::string type2;*/
 	bool KO;
-	std::string possibleMoves[20]; //A container for the move names (string for now but could be the moves class which will be added later?)
-	std::string moveset[4];
 	//create an array for moves somewhere
-
 public:
+	class Moves;
 	Pokemon();
 	Pokemon(std::string pkmnName, int atk, int def, int hp, int spDef, int spAtk, int spd);
 	//Pokemon(std::string pkmnName);
@@ -48,7 +47,7 @@ public:
 	void printMoveset();
 	void printName();
 };
-class Moves {
+class Pokemon::Moves {
 private:
 	std::string nameMoves;
 	std::string typeMoves;
@@ -65,10 +64,9 @@ private:
 	bool flinchMoves;
 	bool chargeMoves;
 public:
-	Moves();
-	Moves(std::string nameMoves, std::string typeMoves, std::string categoryMoves, float powerMoves, int accuracyMoves, int powerPointsMoves, float healMoves, int hitTimesMoves, bool firstMoves,bool critMoves,bool instaMoves,bool dodgeMoves, bool flinchMoves, bool chargeMoves);
-
-	void setnameMoves(std::string nameMoves);
+	Pokemon::Moves();
+	Pokemon::Moves(std::string nameMoves, std::string typeMoves, std::string categoryMoves, float powerMoves, int accuracyMoves, int powerPointsMoves, float healMoves, int hitTimesMoves, bool firstMoves, bool critMoves, bool instaMoves, bool dodgeMoves, bool flinchMoves, bool chargeMoves);	
+	void setnameMoves(std::string nameMoves);	
 	void settypeMoves(std::string typeMoves);
 	void setcategoryMoves(std::string categoryMoves);
 	void setpowerMoves(float powerMoves);
@@ -96,5 +94,4 @@ public:
 	bool getdodgeMoves();
 	bool getflinchMoves();
 	bool getchargeMoves();
-	
 };

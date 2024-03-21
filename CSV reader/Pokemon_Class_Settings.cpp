@@ -26,10 +26,6 @@ Pokemon::Pokemon(std::string pkmnName, int atk, int def,int hp, int spDef, int s
 	this->hp = hp;
 	this ->spd = spd;
 }
-
-
-
-
 //Setter functions
 #pragma region
 void Pokemon::setAtk(int atk) {
@@ -95,14 +91,139 @@ bool Pokemon::isKO() {
 void Pokemon::setKO(bool KO_Value) {
 	KO = KO_Value;
 }
-void Pokemon::printMoveset() {
+/*void Pokemon::printMoveset() {
 	std::cout << pkmnName;
 	for (int i = 0;i < 4;i++) {
 		std::cout << std::endl << moveset[i];
 	}
-}
+}*/
 void Pokemon::printName() {
 	std::cout << pkmnName;
+}
+#pragma endregion
+//Setting for the Moves Class:
+//Constructors
+#pragma region
+Pokemon::Moves::Moves() {
+	nameMoves = "";
+	typeMoves = "";
+	categoryMoves = "";
+	powerMoves = 0.0;
+	accuracyMoves = 0;
+	powerPointsMoves = 0;
+	healMoves = 0;
+	hitTimesMoves = 0;
+	firstMoves = false;
+	critMoves = false;
+	instaMoves = false;
+	dodgeMoves = false;
+	flinchMoves = false;
+	chargeMoves = false;
+}
+Pokemon::Moves::Moves(std::string nameMoves, std::string typeMoves, std::string categoryMoves, float powerMoves,
+	int accuracyMoves, int powerPointsMoves, float healMoves, int hitTimesMoves, bool firstMoves, bool critMoves,
+	bool instaMoves, bool dodgeMoves, bool flinchMoves, bool chargeMoves) {
+	this->nameMoves = nameMoves;
+	this->typeMoves = typeMoves;
+	this->categoryMoves = categoryMoves;
+	this->powerMoves = powerMoves;
+	this->accuracyMoves = accuracyMoves;
+	this->powerPointsMoves = powerPointsMoves;
+	this->healMoves = healMoves;
+	this->hitTimesMoves = hitTimesMoves;
+	this->firstMoves = firstMoves;
+	this->critMoves = critMoves;
+	this->instaMoves = instaMoves;
+	this->dodgeMoves = dodgeMoves;
+	this->flinchMoves = flinchMoves;
+	this->chargeMoves = chargeMoves;
+}
+#pragma endregion
+//Setters
+#pragma region
+void Pokemon::Moves::setnameMoves(std::string nameMoves) {
+	this->nameMoves = nameMoves;
+}
+void Pokemon::Moves::settypeMoves(std::string typeMoves) {
+	this->typeMoves = typeMoves;
+}
+void Pokemon::Moves::setcategoryMoves(std::string categoryMoves) {
+	this->categoryMoves = categoryMoves;
+}
+void Pokemon::Moves::setpowerMoves(float powerMoves) {
+	this->powerMoves = powerMoves;
+}
+void Pokemon::Moves::setaccuracyMoves(int accuracyMoves) {
+	this->accuracyMoves = accuracyMoves;
+}
+void Pokemon::Moves::setpowerPointsMoves(int powerPointsMoves) {
+	this->powerPointsMoves = powerPointsMoves;
+}
+void Pokemon::Moves::sethealMoves(float healMoves) {
+	this->healMoves = healMoves;
+}
+void Pokemon::Moves::sethitTimeMoves(int hitTimesMoves) {
+	this->hitTimesMoves = hitTimesMoves;
+}
+void Pokemon::Moves::setfirstMoves(bool firstMoves) {
+	this->firstMoves = firstMoves;
+}
+void Pokemon::Moves::setcritMoves(bool critMoves) {
+	this->critMoves = critMoves;
+}
+void Pokemon::Moves::setinstaMoves(bool instaMoves) {
+	this->instaMoves = instaMoves;
+}
+void Pokemon::Moves::setdodgeMoves(bool dodgeMoves) {
+	this->dodgeMoves = dodgeMoves;
+}
+void Pokemon::Moves::setflinchMoves(bool flinchMoves) {
+	this->flinchMoves = flinchMoves;
+}
+void Pokemon::Moves::setchargeMoves(bool chargeMoves) {
+	this->chargeMoves = chargeMoves;
+}
+#pragma endregion
+//Getters
+#pragma region
+std::string Pokemon::Moves::getnameMoves() {
+	return nameMoves;
+}
+std::string Pokemon::Moves::gettypeMoves() {
+	return typeMoves;
+}
+std::string Pokemon::Moves::getcategoryMoves() {
+	return categoryMoves;
+}
+float Pokemon::Moves::getpowerMoves() {
+	return powerMoves;
+}
+int Pokemon::Moves::getaccuracyMoves() {
+	return accuracyMoves;
+}
+float Pokemon::Moves::gethealMoves() {
+	return healMoves;
+}
+int Pokemon::Moves::gethitTimesMoves() {
+	return hitTimesMoves;
+}
+bool Pokemon::Moves::getfirstMoves() {
+	return firstMoves;
+}
+bool Pokemon::Moves::getcritMoves() {
+	return critMoves;
+}
+bool Pokemon::Moves::getinstaMoves() {
+	return instaMoves;
+}
+bool Pokemon::Moves::getdodgeMoves() {
+	return dodgeMoves;
+}
+bool Pokemon::Moves::getflinchMoves() {
+	return flinchMoves;
+}
+bool Pokemon::Moves::getchargeMoves() {
+	return chargeMoves;
 }
 #pragma endregion
 //This only needs to have the name as input, for simplicity
@@ -173,129 +294,3 @@ void Pokemon::printName() {
 	}
 	input.close();
 }*/
-
-//Setting for the Moves Class:
-//Constructors
-#pragma region
-Moves::Moves() {
-	nameMoves = "";
-	typeMoves = "";
-	categoryMoves = "";
-	powerMoves = 0.0;
-	accuracyMoves = 0;
-	powerPointsMoves = 0;
-	healMoves = 0;
-	hitTimesMoves = 0;
-	firstMoves = false;
-	critMoves = false;
-	instaMoves = false;
-	dodgeMoves = false;
-	flinchMoves = false;
-	chargeMoves = false;
-}
-Moves::Moves(std::string nameMoves, std::string typeMoves, std::string categoryMoves, float powerMoves,
-	int accuracyMoves, int powerPointsMoves, float healMoves, int hitTimesMoves, bool firstMoves, bool critMoves,
-	bool instaMoves, bool dodgeMoves, bool flinchMoves, bool chargeMoves) {
-	this->nameMoves = nameMoves;
-	this->typeMoves = typeMoves;
-	this->categoryMoves = categoryMoves;
-	this->powerMoves = powerMoves;
-	this->accuracyMoves = accuracyMoves;
-	this->powerPointsMoves = powerPointsMoves;
-	this->healMoves = healMoves;
-	this->hitTimesMoves = hitTimesMoves;
-	this->firstMoves = firstMoves;
-	this->critMoves = critMoves;
-	this->instaMoves = instaMoves;
-	this->dodgeMoves = dodgeMoves;
-	this->flinchMoves = flinchMoves;
-	this->chargeMoves = chargeMoves;
-}
-#pragma endregion
-//Setters
-#pragma region
-void Moves::setnameMoves(std::string nameMoves) {
-	this->nameMoves = nameMoves;
-}
-void Moves::settypeMoves(std::string typeMoves) {
-	this->typeMoves = typeMoves;
-}
-void Moves::setcategoryMoves(std::string categoryMoves) {
-	this->categoryMoves = categoryMoves;
-}
-void Moves::setpowerMoves(float powerMoves) {
-	this->powerMoves = powerMoves;
-}
-void Moves::setaccuracyMoves(int accuracyMoves) {
-	this->accuracyMoves = accuracyMoves;
-}
-void Moves::setpowerPointsMoves(int powerPointsMoves) {
-	this->powerPointsMoves = powerPointsMoves;
-}
-void Moves::sethealMoves(float healMoves) {
-	this->healMoves = healMoves;
-}
-void Moves::sethitTimeMoves(int hitTimesMoves) {
-	this->hitTimesMoves = hitTimesMoves;
-}
-void Moves::setfirstMoves(bool firstMoves) {
-	this->firstMoves = firstMoves;
-}
-void Moves::setcritMoves(bool critMoves) {
-	this->critMoves = critMoves;
-}
-void Moves::setinstaMoves(bool instaMoves) {
-	this->instaMoves = instaMoves;
-}
-void Moves::setdodgeMoves(bool dodgeMoves) {
-	this->dodgeMoves = dodgeMoves;
-}
-void Moves::setflinchMoves(bool flinchMoves) {
-	this->flinchMoves = flinchMoves;
-}
-void Moves::setchargeMoves(bool chargeMoves) {
-	this->chargeMoves = chargeMoves;
-}
-#pragma endregion
-//Getters
-#pragma region
-std::string Moves::getnameMoves() {
-	return nameMoves;
-}
-std::string Moves::gettypeMoves() {
-	return typeMoves;
-}
-std::string Moves::getcategoryMoves() {
-	return categoryMoves;
-}
-float Moves::getpowerMoves() {
-	return powerMoves;
-}
-int Moves::getaccuracyMoves() {
-	return accuracyMoves;
-}
-float Moves::gethealMoves() {
-	return healMoves;
-}
-int Moves::gethitTimesMoves() {
-	return hitTimesMoves;
-}
-bool Moves::getfirstMoves() {
-	return firstMoves;
-}
-bool Moves::getcritMoves() {
-	return critMoves;
-}
-bool Moves::getinstaMoves() {
-	return instaMoves;
-}
-bool Moves::getdodgeMoves() {
-	return dodgeMoves;
-}
-bool Moves::getflinchMoves() {
-	return flinchMoves;
-}
-bool Moves::getchargeMoves() {
-	return chargeMoves;
-}
-#pragma endregion
