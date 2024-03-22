@@ -17,7 +17,7 @@ Pokemon::Pokemon() {
 	/*type1 = "";
 	type2 = "";*/ //These are for later
 }
-Pokemon::Pokemon(std::string pkmnName, int atk, int def,int hp, int spDef, int spAtk, int spd) {
+/*Pokemon::Pokemon(std::string pkmnName, int atk, int def, int hp, int spDef, int spAtk, int spd) {
 	this->pkmnName =pkmnName;
 	this->atk = atk;
 	this->def = def;
@@ -25,6 +25,96 @@ Pokemon::Pokemon(std::string pkmnName, int atk, int def,int hp, int spDef, int s
 	this->spAtk = spAtk;
 	this->hp = hp;
 	this ->spd = spd;
+}*/
+//This only needs to have the name as input, for simplicity
+Pokemon::Pokemon(int pkmnNum) {
+	std::ifstream input;
+	std::string usableMoves[547];
+	std::string storage;
+	input.open("PokemonMoves.csv");
+	for (int i = 0; i < 547;i++) {
+		getline(input, storage, ',');
+		usableMoves[i] = storage;
+		getline(input, storage);
+	} // Adds all usable moves to an array
+	input.close();
+	input.open("PokemonGens1-3.csv");
+	if (input.is_open()) {
+		//std::cout << "Input Opened\n";
+		std::string content;
+		for (int i = 1; i <= pkmnNum; i++) {
+			if (i == pkmnNum) {//This checks to see if we are on the right pokemon
+				getline(input, content, ',');
+				pkmnName = content;
+				std::cout << content << ":"; //debug
+				getline(input, content, ',');
+				hp = stoi(content);
+				getline(input, content, ',');
+				atk = stoi(content);
+				getline(input, content, ',');
+				def = stoi(content);
+				getline(input, content, ',');
+				spAtk = stoi(content);
+				getline(input, content, ',');
+				spDef = stoi(content);
+				getline(input, content, ',');
+				spd = stoi(content);
+				//Block of getlines above is the only way I can think of
+				bool moveIsPossible = false;
+				for (int j = 0; j < 30; j++) {
+					moveIsPossible = false; //Foretting to reset this mad ethis way harder than it needed to be
+					getline(input, content, ',');
+					possibleMoves[j] = content;
+					std::cout << possibleMoves[j] << std::endl;
+					for (int k = 0; k < 547;k++) {
+						//std::cout <<  possibleMoves[j] << "Vs. " << usableMoves[k] << std::endl;
+						if (possibleMoves[j] == usableMoves[k]) {
+							moveIsPossible = true;
+							std::cout << " Move is possible:" << possibleMoves[j] << std::endl;
+						}
+							//std::cout << "success"; //Debug
+					}//Makes sure all moves entered into possiblemoves are usable
+					//std::cout << content << " " << i; //Debug
+					if (moveIsPossible == false) {
+						possibleMoves[j] = "";
+						std::cout << " Move is NOT possible:" << possibleMoves[j] << std::endl;
+					}
+				}
+				input.close();
+			}
+			else {
+				getline(input, content); //This moves the cursor one line down while skipping the rest of the commas
+				if (input.eof()) {
+					std::cout << "Pokemon not found" << std::endl;
+					input.close();
+					exit(3);
+				}
+			}
+		}
+
+		//Random moveset name generation
+		std::string movesetS[4];
+		for (int i = 0;movesetS[3] == "" || movesetS[2] == "" || movesetS[1] == "" || movesetS[0] == ""; i++) //Keeps going until all moves are filled
+		{
+			int moveNumber = rand() % 30; //gives a random number
+			//std::cout << "Move number:" << moveNumber <<std::endl; //Debug
+			if (movesetS[i % 4] == "") {
+				//std::cout << i << "=>" << i % 4; //Debug
+				movesetS[i % 4] = possibleMoves[moveNumber];
+				//std::cout << "move set to: " << possibleMoves[moveNumber] << std::endl; //Debug
+			}
+			if (movesetS[i % 4] == movesetS[(i + 1) % 4] || movesetS[i % 4] == movesetS[(i - 1) % 4] || movesetS[i % 4] == movesetS[(i + 2) % 4]) { //This should hopefully not allow duplicate moves
+				movesetS[(i % 4)] = ""; //using i and modulo should save some space and allow wraparound of numbers when looping
+				//std::cout << "Duplicate move triggered" << std::endl; //Debug
+			}
+		}
+		input.close();
+		//Now that the names of the moves are all generated: time to set up the actual move data
+		for (int k = 0; k < 4;k++) {
+			Pokemon::moveSet[k] = Pokemon::Moves(movesetS[k]);
+			//std::cout << moveSet[k].getnameMoves() << " vs. " << movesetS[k] << std::endl; //Debug
+		}
+	}
 }
 //Setter functions
 #pragma region
@@ -138,6 +228,74 @@ Pokemon::Moves::Moves(std::string nameMoves, std::string typeMoves, std::string 
 	this->flinchMoves = flinchMoves;
 	this->chargeMoves = chargeMoves;
 }
+Pokemon::Moves::Moves(std::string moveName) {
+	std::cout << moveName << " "; //Debug
+	std::ifstream input;
+	input.open("PokemonMoves.csv");
+	if (input.is_open()) {
+		std::string content;
+		for (int i = 0; i < 547;i++) {
+			getline(input, content, ','); //Gets the name of the move at the line the cursor is on
+			//std::cout << content << " "; //Debug
+			if (content == moveName) { //If the cursor is on the right line
+				//Massive block of getlines to read all values needed
+				std::cout << content;
+				getline(input, content, ',');
+				typeMoves = content;
+				getline(input, content, ',');
+				categoryMoves = content;
+				getline(input, content, ',');
+				powerMoves = stof(content);
+				getline(input, content, ',');
+				accuracyMoves = stoi(content);
+				getline(input, content, ',');
+				powerPointsMoves = stoi(content);
+				getline(input, content, ',');
+				healMoves = stof(content);
+				getline(input, content, ',');
+				hitTimesMoves = stoi(content);
+				getline(input, content, ',');
+				if (content == "TRUE") {
+					firstMoves = true;
+				} //Don't need to check for false
+				getline(input, content, ',');
+				if (content == "TRUE") {
+					critMoves = true;
+				}
+				getline(input, content, ',');
+				instaMoves;
+				if (content == "TRUE") {
+					instaMoves = true;
+				}
+				getline(input, content, ',');
+				dodgeMoves;
+				if (content == "TRUE") {
+					dodgeMoves = true;
+				}
+				getline(input, content, ',');
+				flinchMoves;
+				if (content == "TRUE") {
+					flinchMoves = true;
+				}
+				getline(input, content, ',');
+				chargeMoves;
+				if (content == "TRUE") {
+					chargeMoves = true;
+				}
+			}
+			else {
+				getline(input, content); //Moves to the next line
+				if (input.eof() && categoryMoves == "") { //This single and comparison cost me so much time
+					std::cout << "Pokemon Move not found" << std::endl;
+					input.close();
+					exit(4);
+				}
+			}
+		}
+	}
+	else
+		std::cout << "File failed bro";
+}
 #pragma endregion
 //Setters
 #pragma region
@@ -226,71 +384,3 @@ bool Pokemon::Moves::getchargeMoves() {
 	return chargeMoves;
 }
 #pragma endregion
-//This only needs to have the name as input, for simplicity
-/*Pokemon::Pokemon(std::string pkmnName) {
-	std::ifstream input;
-	srand(time(NULL));
-	/*int pkmnR = rand() % 8;
-	if (pkmnR == 0) {
-		pkmnR = 1;
-	}
-	input.open("Pokedex first 8 basic eveolutions.csv");
-	if (input.is_open()) {
-		std::string content;
-				while (getline(input, content, ',')) {
-					std::cout << content; //Debug output
-					if (content == pkmnName) { //This checks to see if we are on the right pokemon
-						pkmnName = content; //If we are, read all other data from the pokemon line
-						getline(input, content, ',');
-						atk = stoi(content);
-						getline(input, content, ',');
-						def = stoi(content);
-						getline(input, content, ',');
-						hp = stoi(content);
-						getline(input, content, ',');
-						spAtk = stoi(content);
-						getline(input, content, ',');
-						spDef = stoi(content);
-						getline(input, content, ',');
-						spd = stoi(content);
-						//Block of getlines above is the only way I can think of
-						for (int i = 0; i < 19 && getline(input, content, ','); i++) {
-							possibleMoves[i] = content;
-							//std::cout << content << " " << i; //Debug
-						}
-						break;
-					}
-					else {
-						getline(input, content); //This moves the cursor one line down while skipping the rest of the commas
-						if (input.eof()) {
-							std::cout << "Pokemon not found" << std::endl;
-							exit(3);
-						}
-					}
-
-				}
-
-		//I am going to put the random moveset generation here, because I think it makes sense
-		srand(time(0));
-		for (int i = 0;moveset[3] == "" || moveset[2] == "" || moveset[1] == "" || moveset[0] == ""; i++) //Keeps going until all moves are filled
-		{
-			int moveNumber = rand() % 20; //gives a random number
-			//std::cout << "Move number:" << moveNumber <<std::endl; //Debug
-			if (moveset[i % 4] == "") {
-				//std::cout << i << "=>" << i % 4; //Debug
-				moveset[i % 4] = possibleMoves[moveNumber];
-				//std::cout << "move set to: " << possibleMoves[moveNumber] << std::endl; //Debug
-			}
-			if (moveset[i%4] == moveset[(i+1)%4] || moveset[i%4] == moveset[(i-1)%4] || moveset[i%4] == moveset[(i+2)%4]) { //This should hopefully not allow duplicate moves
-				moveset[(i%4)] = ""; //using i and modulo should save some space and allow wraparound of numbers when looping
-				//std::cout << "Duplicate move triggered" << std::endl; //Debug
-			}
-		}
-	}
-	else {
-		std::cout << "File failed to open" <<std::endl;
-		input.close();
-		exit(2);
-	}
-	input.close();
-}*/

@@ -15,13 +15,67 @@ private:
 	std::string pkmnName;
 	/*std::string type1;
 	std::string type2;*/
+	std::string possibleMoves[30];
 	bool KO;
-	//create an array for moves somewhere
 public:
-	class Moves;
+	//class Moves; We don't need a sepreate declaration if that is the case
+	//Ok, so this looks really weird, but it is NECESSARY for the array of moves to work
+	class Moves {
+	private:
+		std::string nameMoves;
+		std::string typeMoves;
+		std::string categoryMoves;
+		float powerMoves;
+		int accuracyMoves;
+		int powerPointsMoves;
+		float healMoves;
+		int hitTimesMoves;
+		bool firstMoves;
+		bool critMoves;
+		bool instaMoves;
+		bool dodgeMoves;
+		bool flinchMoves;
+		bool chargeMoves;
+	public:
+		Pokemon::Moves();
+		Pokemon::Moves(std::string nameMoves, std::string typeMoves, std::string categoryMoves, float powerMoves, int accuracyMoves, int powerPointsMoves, float healMoves, int hitTimesMoves, bool firstMoves, bool critMoves, bool instaMoves, bool dodgeMoves, bool flinchMoves, bool chargeMoves);
+		Pokemon::Moves(std::string moveName);
+		void setnameMoves(std::string nameMoves);
+		void settypeMoves(std::string typeMoves);
+		void setcategoryMoves(std::string categoryMoves);
+		void setpowerMoves(float powerMoves);
+		void setaccuracyMoves(int accuracyMoves);
+		void setpowerPointsMoves(int powerPointsMoves);
+		void sethealMoves(float healMoves);
+		void sethitTimeMoves(int hitTimesMoves);
+		void setfirstMoves(bool firstMoves);
+		void setcritMoves(bool critMoves);
+		void setinstaMoves(bool instaMoves);
+		void setdodgeMoves(bool dodgeMoves);
+		void setflinchMoves(bool flinchMoves);
+		void setchargeMoves(bool chargeMoves);
+
+		std::string getnameMoves();
+		std::string gettypeMoves();
+		std::string getcategoryMoves();
+		float getpowerMoves();
+		int getaccuracyMoves();
+		float gethealMoves();
+		int gethitTimesMoves();
+		bool getfirstMoves();
+		bool getcritMoves();
+		bool getinstaMoves();
+		bool getdodgeMoves();
+		bool getflinchMoves();
+		bool getchargeMoves();
+	};
+	//The array of moves need to be in public, unfortunately
+	Pokemon::Moves* moveSet = new Pokemon::Moves[4];
+
+
 	Pokemon();
-	Pokemon(std::string pkmnName, int atk, int def, int hp, int spDef, int spAtk, int spd);
-	//Pokemon(std::string pkmnName);
+	//Pokemon(std::string pkmnName, int atk, int def, int hp, int spDef, int spAtk, int spd);
+	Pokemon(int pkmnR);
 	//Setter functions
 	void setName(std::string pkmnName);
 	void setAtk(int atk);
@@ -44,54 +98,6 @@ public:
 	//Misc functions
 	bool isKO();
 	void setKO(bool KO_Value);
-	void printMoveset();
+	//void printMoveset(); //Debug for now
 	void printName();
-};
-class Pokemon::Moves {
-private:
-	std::string nameMoves;
-	std::string typeMoves;
-	std::string categoryMoves;
-	float powerMoves;
-	int accuracyMoves;
-	int powerPointsMoves;
-	float healMoves;
-	int hitTimesMoves;
-	bool firstMoves;
-	bool critMoves;
-	bool instaMoves;
-	bool dodgeMoves;
-	bool flinchMoves;
-	bool chargeMoves;
-public:
-	Pokemon::Moves();
-	Pokemon::Moves(std::string nameMoves, std::string typeMoves, std::string categoryMoves, float powerMoves, int accuracyMoves, int powerPointsMoves, float healMoves, int hitTimesMoves, bool firstMoves, bool critMoves, bool instaMoves, bool dodgeMoves, bool flinchMoves, bool chargeMoves);	
-	void setnameMoves(std::string nameMoves);	
-	void settypeMoves(std::string typeMoves);
-	void setcategoryMoves(std::string categoryMoves);
-	void setpowerMoves(float powerMoves);
-	void setaccuracyMoves(int accuracyMoves);
-	void setpowerPointsMoves(int powerPointsMoves);
-	void sethealMoves(float healMoves);
-	void sethitTimeMoves(int hitTimesMoves);
-	void setfirstMoves(bool firstMoves);
-	void setcritMoves(bool critMoves);
-	void setinstaMoves(bool instaMoves);
-	void setdodgeMoves(bool dodgeMoves);
-	void setflinchMoves(bool flinchMoves);
-	void setchargeMoves(bool chargeMoves);
-
-	std::string getnameMoves();
-	std::string gettypeMoves();
-	std::string getcategoryMoves();
-	float getpowerMoves();
-	int getaccuracyMoves();
-	float gethealMoves();
-	int gethitTimesMoves();
-	bool getfirstMoves();
-	bool getcritMoves();
-	bool getinstaMoves();
-	bool getdodgeMoves();
-	bool getflinchMoves();
-	bool getchargeMoves();
 };
