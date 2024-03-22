@@ -7,25 +7,16 @@
 #include <time.h>
 //Constructor functions
 Pokemon::Pokemon() {
-	pkmnName = "";
-	atk = 0;
-	def = 0;
-	spAtk = 0;
-	spDef = 0;
-	hp = 0;
-	spd = 0;
+	std::string pkmnName = "";
+	int atk = 0;
+	int def = 0;
+	int spAtk = 0;
+	int spDef = 0;
+	int hp = 0;
+	int spd = 0;
 	/*type1 = "";
 	type2 = "";*/ //These are for later
 }
-/*Pokemon::Pokemon(std::string pkmnName, int atk, int def, int hp, int spDef, int spAtk, int spd) {
-	this->pkmnName =pkmnName;
-	this->atk = atk;
-	this->def = def;
-	this->spDef = spDef;
-	this->spAtk = spAtk;
-	this->hp = hp;
-	this ->spd = spd;
-}*/
 //This only needs to have the name as input, for simplicity
 Pokemon::Pokemon(int pkmnNum) {
 	std::ifstream input;
@@ -60,9 +51,16 @@ Pokemon::Pokemon(int pkmnNum) {
 				getline(input, content, ',');
 				spd = stoi(content);
 				//Block of getlines above is the only way I can think of
+				this->pkmnName = pkmnName;
+				this->atk = atk;
+				this->def = def;
+				this->spDef = spDef;
+				this->spAtk = spAtk;
+				this->hp = hp;
+				this->spd = spd;
 				bool moveIsPossible = false;
 				for (int j = 0; j < 30; j++) {
-					moveIsPossible = false; //Foretting to reset this mad ethis way harder than it needed to be
+					moveIsPossible = false; //Foretting to reset this made this way harder than it needed to be
 					getline(input, content, ',');
 					possibleMoves[j] = content;
 					std::cout << possibleMoves[j] << std::endl;
@@ -157,6 +155,9 @@ int Pokemon::getDef() {
 int Pokemon::getSpAtk() {
 	return spAtk;
 }
+int Pokemon::gethp() {
+	return hp;
+}
 int Pokemon::getSpDef() {
 	return spDef;
 }
@@ -210,24 +211,6 @@ Pokemon::Moves::Moves() {
 	flinchMoves = false;
 	chargeMoves = false;
 }
-Pokemon::Moves::Moves(std::string nameMoves, std::string typeMoves, std::string categoryMoves, float powerMoves,
-	int accuracyMoves, int powerPointsMoves, float healMoves, int hitTimesMoves, bool firstMoves, bool critMoves,
-	bool instaMoves, bool dodgeMoves, bool flinchMoves, bool chargeMoves) {
-	this->nameMoves = nameMoves;
-	this->typeMoves = typeMoves;
-	this->categoryMoves = categoryMoves;
-	this->powerMoves = powerMoves;
-	this->accuracyMoves = accuracyMoves;
-	this->powerPointsMoves = powerPointsMoves;
-	this->healMoves = healMoves;
-	this->hitTimesMoves = hitTimesMoves;
-	this->firstMoves = firstMoves;
-	this->critMoves = critMoves;
-	this->instaMoves = instaMoves;
-	this->dodgeMoves = dodgeMoves;
-	this->flinchMoves = flinchMoves;
-	this->chargeMoves = chargeMoves;
-}
 Pokemon::Moves::Moves(std::string moveName) {
 	std::cout << moveName << " "; //Debug
 	std::ifstream input;
@@ -239,6 +222,7 @@ Pokemon::Moves::Moves(std::string moveName) {
 			//std::cout << content << " "; //Debug
 			if (content == moveName) { //If the cursor is on the right line
 				//Massive block of getlines to read all values needed
+				moveName = content;
 				std::cout << content;
 				getline(input, content, ',');
 				typeMoves = content;
@@ -308,6 +292,9 @@ void Pokemon::Moves::settypeMoves(std::string typeMoves) {
 void Pokemon::Moves::setcategoryMoves(std::string categoryMoves) {
 	this->categoryMoves = categoryMoves;
 }
+void Pokemon::Moves::setpowerPointsTotal(int powerPointsMovesTotal) {
+	this->powerPointsMoves=powerPointsMoves;
+}
 void Pokemon::Moves::setpowerMoves(float powerMoves) {
 	this->powerMoves = powerMoves;
 }
@@ -353,7 +340,13 @@ std::string Pokemon::Moves::gettypeMoves() {
 std::string Pokemon::Moves::getcategoryMoves() {
 	return categoryMoves;
 }
-float Pokemon::Moves::getpowerMoves() {
+int Pokemon::Moves::getpowerPointTotal() {
+	return powerPointsMovesTotal;
+}
+int Pokemon::Moves::getpowerPointMoves() {
+	return powerPointsMoves;
+}
+int Pokemon::Moves::getpowerMoves() {
 	return powerMoves;
 }
 int Pokemon::Moves::getaccuracyMoves() {
@@ -384,3 +377,4 @@ bool Pokemon::Moves::getchargeMoves() {
 	return chargeMoves;
 }
 #pragma endregion
+

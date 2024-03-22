@@ -34,10 +34,10 @@
     <None Include="PokedexFirstBasicEvolutionsType - Sheet1.csv">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="PokemonMoves.csv">
+    <None Include="PokemonGens1-3.csv">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="PokemonGens1-3.csv">
+    <None Include="PokemonMoves.csv">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

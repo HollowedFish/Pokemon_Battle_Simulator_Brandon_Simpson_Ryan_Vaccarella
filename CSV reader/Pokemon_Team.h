@@ -25,9 +25,10 @@ public:
 		std::string nameMoves;
 		std::string typeMoves;
 		std::string categoryMoves;
-		float powerMoves;
+		int powerMoves;
 		int accuracyMoves;
 		int powerPointsMoves;
+		int powerPointsMovesTotal;
 		float healMoves;
 		int hitTimesMoves;
 		bool firstMoves;
@@ -45,6 +46,7 @@ public:
 		void setcategoryMoves(std::string categoryMoves);
 		void setpowerMoves(float powerMoves);
 		void setaccuracyMoves(int accuracyMoves);
+		void setpowerPointsTotal(int powerPointsMovesTotal);
 		void setpowerPointsMoves(int powerPointsMoves);
 		void sethealMoves(float healMoves);
 		void sethitTimeMoves(int hitTimesMoves);
@@ -58,7 +60,9 @@ public:
 		std::string getnameMoves();
 		std::string gettypeMoves();
 		std::string getcategoryMoves();
-		float getpowerMoves();
+		int getpowerMoves();
+		int getpowerPointMoves();
+		int getpowerPointTotal();
 		int getaccuracyMoves();
 		float gethealMoves();
 		int gethitTimesMoves();
@@ -70,12 +74,11 @@ public:
 		bool getchargeMoves();
 	};
 	//The array of moves need to be in public, unfortunately
-	Pokemon::Moves* moveSet = new Pokemon::Moves[4];
-
+	Pokemon::Moves moveSet[4];
 
 	Pokemon();
 	//Pokemon(std::string pkmnName, int atk, int def, int hp, int spDef, int spAtk, int spd);
-	Pokemon(int pkmnR);
+	Pokemon(int pkmnNum);
 	//Setter functions
 	void setName(std::string pkmnName);
 	void setAtk(int atk);
@@ -84,11 +87,13 @@ public:
 	void setspDef(int spDef);
 	void setHp(int hp);
 	void setSpd(int spd);
+	void setmoveSet(Pokemon::Moves moveset);
 	//void setType1(std::string type1);
 	//void setType2(std::string type2);
 	//Getter functions
 	int getAtk();
 	int getDef();
+	int gethp();
 	int getSpAtk();
 	int getSpDef();
 	int getSpd();

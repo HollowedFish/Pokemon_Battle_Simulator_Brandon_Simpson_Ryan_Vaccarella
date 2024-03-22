@@ -8,6 +8,25 @@
 //Got tired lines 60-66 contain the ensenece for how it should go need to filter it to nested classes to work
 //This works...Need to find better way hmmm
 //Need to use a vector to store pokemon or a pointer
+int damageCalculator(int p1Atk,int moveAtk,int t2Def) {
+    int damage;
+    int randomNumber=rand()%100+1;
+    damage = ((((2*100/7)*p1Atk*moveAtk/t2Def)/50)+2)*randomNumber/100;
+    return damage;
+}
+void healthCalculator(int p1Health, int damage) {
+}
+void checkFaint(int p1Health,std::string p1Name) {
+    if (p1Health >= 0) {
+        std::cout << p1Name<<" fainted! (Hit Enter to Continue)";
+
+        std::cin.ignore();
+        system("CLS");
+    }
+}
+int subtractpowerPoint(int p_powerpoint) {
+    return 1;
+}
 void viewMoves(std::string*pMoves) {
     system("CLS");
     for (int i = 0; i <= 546; i++) {
@@ -45,12 +64,19 @@ void viewMoves(std::string*pMoves) {
          std::cout << "Trainer " << p1 << ": Choose who to send out first!\n";
          std::cout << "--------------------------------------------------\n"; //<--Copy paste this for formatting consistency later
          for (int i = 0; i < teamSize; i++) {
-             std::cout << i + 1 << ". " << team1[i].getName() << std::endl;
+             std::cout << i + 1 << ". " << team1[i].getName();
+             if (team1[i].isKO()==true) {
+                 std::cout << " is fainted" << std::endl;
+             }
+             else
+             {
+                 std::cout << std::endl;
+             }
          }
          int choice = 0;
          std::cout << "Please enter the number of the pokemon:";
          std::cin >> choice;
-         //std::cout << choice; //Debug
+         std::cout << choice; //Debug
          if (choice >= 1 && choice <= teamSize) { //Makes the active pokemon the chosen pokemon + Input validation
              t1Active = team1[choice - 1];
          }
@@ -59,6 +85,7 @@ void viewMoves(std::string*pMoves) {
              std::cin.ignore();
          }
      }
+    
      //2nd team initial pokemon choosing
      while (t2Active.getName() == "") {
          system("CLS");
@@ -87,12 +114,52 @@ void viewMoves(std::string*pMoves) {
      std::cout << "" << "" << std::endl;//Some sort of battle start message goes here?
      bool p1Win = false;
      bool p2Win = false;
-     int turnNum = 0;
+     int turnNumP1 = 0;
+     int turnNumP2 = 0;
+     int dmg = 0;
+     int movedmg = 0;
+     std::string t;
      while (p1Win == false && p2Win == false) {
-         turnNum++;
-         system("CLS");
-         std::cout << "It is turn " << turnNum << "What action do you want to take " << p1 << "?\n";
-         //TODO: Complete this
+         if (turnNumP1 <= turnNumP2) {
+             //Like the snakes and ladders game from last year
+             turnNumP1++;
+             int choice = 0;
+             system("CLS");
+             std::cout << "It is turn " << turnNumP1 << "What action do you want " << t1Active.getName() << " to take " << p1 << " ? \n";
+             std::cout << "Health" << t1Active.gethp() << std::endl;
+
+             for (int i = 0; i < 4; i++) {
+                 std::cout << i + 1 << "." << t1Active.moveSet[i].getnameMoves() << t1Active.moveSet[i].getpowerPointMoves() <<": "<<t1Active.moveSet[i].getpowerPointTotal()<< std::endl;
+             }
+             std::cin >> choice;
+             std::cin.ignore();
+             //std::cout << t1Active.moveSet[choice - 1].getpowerMoves();//Debug
+             movedmg=t1Active.moveSet[choice - 1].getpowerMoves();
+             t=t1Active.moveSet[choice - 1].getcategoryMoves();
+             if (t == "Physical")
+                 dmg=t1Active.getAtk();
+             else
+                 dmg=t1Active.getSpAtk();
+             
+         }
+         if (turnNumP1 > turnNumP2) {
+             turnNumP2++;
+             int choice = 0;
+             std::cout << "It is turn " << turnNumP2 << "What action do you want " << t2Active.getName() << " to take " << p2 << "?\n";
+             std::cout << "Health" << t2Active.gethp()<<std::endl;
+             for (int i = 0; i < 4; i++) {
+                 std::cout << i + 1 << "." << t2Active.moveSet[i].getnameMoves() << t2Active.moveSet[i].getpowerPointMoves() << ": " << t2Active.moveSet[i].getpowerPointTotal()<< std::endl;
+             }
+             std::cin >> choice;
+             std::cin.ignore();
+             movedmg = t2Active.moveSet[choice - 1].getpowerMoves();
+             t = t2Active.moveSet[choice - 1].getcategoryMoves();
+             if (t == "Physical")
+                 dmg = t2Active.getAtk();
+             else
+                 dmg = t2Active.getSpAtk();
+
+         }
      }
  }
  void generateTeams(Pokemon* team1, Pokemon* team2,/*Pokemon::Moves* moveSet,*/ int teamSize, std::string* tMoves) {
@@ -117,6 +184,7 @@ void viewMoves(std::string*pMoves) {
              pkmnR = 2; //This makes sure that we don't make a pokemon with the header line
              //Wasn't necessary before because the other csv didn't have one
          }
+         std::cout << pkmnR;
          //std::cout << pkmnR<< " 1\n"; //Debug
          //if (input.is_open()) {
              //for (int i = 1; i <= pkmnR; i++) {
@@ -170,10 +238,34 @@ void viewMoves(std::string*pMoves) {
              pkmnR = 2; //This makes sure that we don't make a pokemon with the header line
              //Wasn't necessary before because the other csv didn't have one
          }
+         std::cout << pkmnR;
          //std::cout << pkmnR<< " 2\n"; //Debug
          team2[c] = Pokemon(pkmnR);
          //std::cout << team2[c].getName(); //Debug
      }
+ }
+ void displayPokemonAvailable(Pokemon*team2) {
+     std::ifstream input;
+     input.open("PokemonGens1-3.csv");
+     std::string content;
+     int count = 0;
+     if (input.is_open()) {
+         while (getline(input, content)) {
+             count++;
+             if (count == 0)
+                 std::cout << std::endl;
+             else if (count == 387)
+                 break;
+             else {
+                 getline(input, content, ',');
+                 std::cout << count << "." << content << std::endl;
+                 getline(input, content, ',');
+             }
+         }
+     }
+     else if (!input.is_open())
+         std::cout << "Could not find file specified";
+     input.close();
  }
  
  void displayMenu(Pokemon *team1,Pokemon *team2,/*Pokemon::Moves* moveSet,*/ int teamSize, std::string* tMoves) {
@@ -181,7 +273,7 @@ void viewMoves(std::string*pMoves) {
      std::string enter;
      int choice;
      std::cout << "Welcome to the Pokoman™ Battler V0.6.0 " << std::endl << "Please Choose an option:" << std::endl;
-     std::cout << "[1] Start Battle(WIP)\n" << "[2]Generate Pokemon teams(WIP) and moves \n" << "[3]View Teams \n" << "[4]View all Pokemon(WIP) \n" << "[5]View all Moves possible \n" << "[0]Exit \n";
+     std::cout << "[1] Start Battle(WIP)\n" << "[2]Generate Pokemon teams(WIP) and moves \n" << "[3]View Teams \n" << "[4]View all Pokemon \n" << "[5]View all Moves possible \n" << "[0]Exit \n";
      std::cin >> choice;
      switch (choice) {
      case 1:
@@ -227,7 +319,7 @@ void viewMoves(std::string*pMoves) {
          }
          break;
      case 4:
-         std::cout << "This function is not impemented yet";
+         displayPokemonAvailable(team2);
          std::cin.get();
          std::cin.ignore();
          break;
@@ -301,22 +393,22 @@ quu..__
      
         std::cout << "How many pokemon on each team?(Max: 3)";
         std::cin >> teamSize;
-        if (teamSize > 3 || teamSize <= 0) {
+        /*if (teamSize > 3 || teamSize <= 0) {
             std::cout << "Nice try. The size of each team is now 3." << std::endl << "Press Enter to Continue...";
             std::cin.get();
             std::cin.ignore();
             teamSize = 3;
-        }
+        }*/
        Pokemon* team1 = new Pokemon[teamSize];
        Pokemon* team2 = new Pokemon[teamSize];
        //Pokemon::Moves* moveSet= new Pokemon::Moves[4];
        //Creates 4 moves per class
        std::string* tMoves = new std::string[547]; //Creates an array for moves of size 547
        std::ifstream moves;
-       moves.open("PokemonMoves - Sheet1.csv");
+       moves.open("PokemonMoves.csv");
        std::string content;
        if (moves.is_open()) {
-           for (int i = 0; i <= 546; i++) { //Stores all move names sequentially in an array
+           for (int i = 0; i < 547; i++) { //Stores all move names sequentially in an array
                getline(moves, content, ',');
                tMoves[i] = content;
                getline(moves, content); //Iterates to the next line
