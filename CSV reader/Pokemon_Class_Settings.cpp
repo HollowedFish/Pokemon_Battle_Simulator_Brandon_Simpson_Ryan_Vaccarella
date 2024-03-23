@@ -204,6 +204,7 @@ Pokemon::Moves::Moves() {
 	powerMoves = 0.0;
 	accuracyMoves = 0;
 	powerPointsMoves = 0;
+	powerPointsMovesTotal =0;
 	healMoves = 0;
 	hitTimesMoves = 0;
 	firstMoves = false;
@@ -291,16 +292,13 @@ Pokemon::Moves::Moves(std::string moveName) {
 //Setters
 #pragma region
 void Pokemon::Moves::setnameMoves(std::string nameMoves) {
-	this->nameMoves = nameMoves;
+	nameMoves = nameMoves;
 }
 void Pokemon::Moves::settypeMoves(std::string typeMoves) {
-	this->typeMoves = typeMoves;
+	typeMoves = typeMoves;
 }
 void Pokemon::Moves::setcategoryMoves(std::string categoryMoves) {
 	this->categoryMoves = categoryMoves;
-}
-void Pokemon::Moves::setpowerPointsTotal(int powerPointsMovesTotal) {
-	this->powerPointsMoves=powerPointsMoves;
 }
 void Pokemon::Moves::setpowerMoves(float powerMoves) {
 	this->powerMoves = powerMoves;
@@ -310,6 +308,9 @@ void Pokemon::Moves::setaccuracyMoves(int accuracyMoves) {
 }
 void Pokemon::Moves::setpowerPointsMoves(int powerPointsMoves) {
 	this->powerPointsMoves = powerPointsMoves;
+}
+void Pokemon::Moves::setpowerPointsTotal(int powerPointsMovesTotal) {
+	this-> powerPointsMovesTotal= powerPointsMoves;
 }
 void Pokemon::Moves::sethealMoves(float healMoves) {
 	this->healMoves = healMoves;
@@ -347,11 +348,11 @@ std::string Pokemon::Moves::gettypeMoves() {
 std::string Pokemon::Moves::getcategoryMoves() {
 	return categoryMoves;
 }
-int Pokemon::Moves::getpowerPointTotal() {
-	return powerPointsMovesTotal;
-}
 int Pokemon::Moves::getpowerPointMoves() {
 	return powerPointsMoves;
+}
+int Pokemon::Moves::getpowerPointMovesTotal() {
+	return powerPointsMovesTotal;
 }
 int Pokemon::Moves::getpowerMoves() {
 	return powerMoves;

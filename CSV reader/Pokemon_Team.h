@@ -39,15 +39,15 @@ public:
 		bool chargeMoves;
 	public:
 		Pokemon::Moves();
-		Pokemon::Moves(std::string nameMoves, std::string typeMoves, std::string categoryMoves, float powerMoves, int accuracyMoves, int powerPointsMoves, float healMoves, int hitTimesMoves, bool firstMoves, bool critMoves, bool instaMoves, bool dodgeMoves, bool flinchMoves, bool chargeMoves);
+		Pokemon::Moves(std::string nameMoves, std::string typeMoves, std::string categoryMoves, float powerMoves, int powerPointsMovesTotal,int accuracyMoves, int powerPointsMoves, float healMoves, int hitTimesMoves, bool firstMoves, bool critMoves, bool instaMoves, bool dodgeMoves, bool flinchMoves, bool chargeMoves);
 		Pokemon::Moves(std::string moveName);
 		void setnameMoves(std::string nameMoves);
 		void settypeMoves(std::string typeMoves);
 		void setcategoryMoves(std::string categoryMoves);
 		void setpowerMoves(float powerMoves);
 		void setaccuracyMoves(int accuracyMoves);
-		void setpowerPointsTotal(int powerPointsMovesTotal);
 		void setpowerPointsMoves(int powerPointsMoves);
+		void setpowerPointsTotal(int powerPointsMovesTotal);
 		void sethealMoves(float healMoves);
 		void sethitTimeMoves(int hitTimesMoves);
 		void setfirstMoves(bool firstMoves);
@@ -62,7 +62,7 @@ public:
 		std::string getcategoryMoves();
 		int getpowerMoves();
 		int getpowerPointMoves();
-		int getpowerPointTotal();
+		int getpowerPointMovesTotal();
 		int getaccuracyMoves();
 		float gethealMoves();
 		int gethitTimesMoves();
