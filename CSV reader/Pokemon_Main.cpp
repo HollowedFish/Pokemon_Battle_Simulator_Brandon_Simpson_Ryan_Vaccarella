@@ -17,8 +17,8 @@ int damageCalculator(int p1Atk,int moveAtk,int t2Def) {
 void healthCalculator(int p1Health, int damage) {
 }
 void checkFaint(int p1Health,std::string p1Name) {
-    if (p1Health >= 0) {
-        std::cout << p1Name<<" fainted! (Hit Enter to Continue)";
+    if (p1Health <= 0) {
+        std::cout << p1Name<<" fainted! (Press Enter to Continue)";
 
         std::cin.ignore();
         system("CLS");
@@ -45,6 +45,7 @@ void viewMoves(std::string*pMoves) {
  void startBattle(Pokemon* team1, Pokemon* team2,/*Pokemon::Moves* moveSet,*/ int teamSize) { //Ok, here we go on the main bit
      Pokemon t1Active; //Creates the objects for the active pokemon
      Pokemon t2Active; //Maybe make into pointers for direct value editing?
+     int ActiveMonNum; //Storage so you can actually change the stored pokemon's values (for hp and KO)
      std::string p1;//Player names
      std::string p2;
      system("CLS"); //Clears screen
@@ -64,19 +65,12 @@ void viewMoves(std::string*pMoves) {
          std::cout << "Trainer " << p1 << ": Choose who to send out first!\n";
          std::cout << "--------------------------------------------------\n"; //<--Copy paste this for formatting consistency later
          for (int i = 0; i < teamSize; i++) {
-             std::cout << i + 1 << ". " << team1[i].getName();
-             if (team1[i].isKO()==true) {
-                 std::cout << " is fainted" << std::endl;
-             }
-             else
-             {
-                 std::cout << std::endl;
-             }
+             std::cout << i + 1 << ". " << team1[i].getName() << std::endl;
          }
          int choice = 0;
          std::cout << "Please enter the number of the pokemon:";
          std::cin >> choice;
-         std::cout << choice; //Debug
+         //std::cout << choice; //Debug
          if (choice >= 1 && choice <= teamSize) { //Makes the active pokemon the chosen pokemon + Input validation
              t1Active = team1[choice - 1];
          }
@@ -111,7 +105,7 @@ void viewMoves(std::string*pMoves) {
      std::cin.ignore();//Debug */
 
      //Actual battle loop time, here we go!
-     std::cout << "" << "" << std::endl;//Some sort of battle start message goes here?
+     //std::cout << "" << "" << std::endl;//Some sort of battle start message goes here?
      bool p1Win = false;
      bool p2Win = false;
      int turnNumP1 = 0;
@@ -122,11 +116,20 @@ void viewMoves(std::string*pMoves) {
      while (p1Win == false && p2Win == false) {
          if (turnNumP1 <= turnNumP2) {
              //Like the snakes and ladders game from last year
+             if (t1Active.isKO() == true) {//MOVE SOMEHWERE ELSE, THIS IS JUST A TEMPORARY PLACE TO PUT THIS
+                 std::cout << " is fainted" << std::endl;
+             }
+             else
+             {
+                 std::cout << std::endl;
+             }
              turnNumP1++;
              int choice = 0;
              system("CLS");
+             std::cout << "--------------------------------------------------\n";
              std::cout << "It is turn " << turnNumP1 << "What action do you want " << t1Active.getName() << " to take " << p1 << " ? \n";
-             std::cout << "Health" << t1Active.gethp() << std::endl;
+             std::cout << "--------------------------------------------------\n";
+             std::cout << "Health:" << t1Active.gethp() << std::endl << "Moves:" << std::endl;
 
              for (int i = 0; i < 4; i++) {
                  std::cout << i + 1 << "." << t1Active.moveSet[i].getnameMoves() << t1Active.moveSet[i].getpowerPointMoves() <<": "<<t1Active.moveSet[i].getpowerPointTotal()<< std::endl;
@@ -145,6 +148,13 @@ void viewMoves(std::string*pMoves) {
          if (turnNumP1 > turnNumP2) {
              turnNumP2++;
              int choice = 0;
+             if (t2Active.isKO() == true) {
+                 std::cout << " is fainted" << std::endl;
+             }
+             else
+             {
+                 std::cout << std::endl;
+             }
              std::cout << "It is turn " << turnNumP2 << "What action do you want " << t2Active.getName() << " to take " << p2 << "?\n";
              std::cout << "Health" << t2Active.gethp()<<std::endl;
              for (int i = 0; i < 4; i++) {
@@ -163,7 +173,7 @@ void viewMoves(std::string*pMoves) {
      }
  }
  void generateTeams(Pokemon* team1, Pokemon* team2,/*Pokemon::Moves* moveSet,*/ int teamSize, std::string* tMoves) {
-     srand(time(0));
+     srand(time(NULL));
      //std::ifstream input;
      /*std::ifstream moves;
      int atk;
@@ -184,7 +194,7 @@ void viewMoves(std::string*pMoves) {
              pkmnR = 2; //This makes sure that we don't make a pokemon with the header line
              //Wasn't necessary before because the other csv didn't have one
          }
-         std::cout << pkmnR;
+         //std::cout << pkmnR; //Debug
          //std::cout << pkmnR<< " 1\n"; //Debug
          //if (input.is_open()) {
              //for (int i = 1; i <= pkmnR; i++) {
@@ -238,7 +248,7 @@ void viewMoves(std::string*pMoves) {
              pkmnR = 2; //This makes sure that we don't make a pokemon with the header line
              //Wasn't necessary before because the other csv didn't have one
          }
-         std::cout << pkmnR;
+         //std::cout << pkmnR; //Debug
          //std::cout << pkmnR<< " 2\n"; //Debug
          team2[c] = Pokemon(pkmnR);
          //std::cout << team2[c].getName(); //Debug
@@ -391,13 +401,13 @@ quu..__
     //myMon.printMoveset(); //Debug
         int teamSize; //NOTE: Change the maximum team size when we get more pokemon
      
-        std::cout << "How many pokemon on each team?(Max: 3)";
+        std::cout << "How many pokemon on each team?(Max: 6)";
         std::cin >> teamSize;
-        /*if (teamSize > 3 || teamSize <= 0) {
-            std::cout << "Nice try. The size of each team is now 3." << std::endl << "Press Enter to Continue...";
+        /*if (teamSize > 6 || teamSize <= 0) {
+            std::cout << "Nice try. The size of each team is now 6." << std::endl << "Press Enter to Continue...";
             std::cin.get();
             std::cin.ignore();
-            teamSize = 3;
+            teamSize = 6;
         }*/
        Pokemon* team1 = new Pokemon[teamSize];
        Pokemon* team2 = new Pokemon[teamSize];

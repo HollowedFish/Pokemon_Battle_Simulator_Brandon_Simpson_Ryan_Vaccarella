@@ -7,20 +7,20 @@
 #include <time.h>
 //Constructor functions
 Pokemon::Pokemon() {
-	std::string pkmnName = "";
-	int atk = 0;
-	int def = 0;
-	int spAtk = 0;
-	int spDef = 0;
-	int hp = 0;
-	int spd = 0;
+	pkmnName = "";
+	atk = 0;
+	def = 0;
+	spAtk = 0;
+	spDef = 0;
+	hp = 0;
+	spd = 0;
 	/*type1 = "";
 	type2 = "";*/ //These are for later
 }
 //This only needs to have the name as input, for simplicity
 Pokemon::Pokemon(int pkmnNum) {
 	std::ifstream input;
-	std::string usableMoves[547];
+	std::string* usableMoves = new std::string[547];
 	std::string storage;
 	input.open("PokemonMoves.csv");
 	for (int i = 0; i < 547;i++) {
@@ -37,7 +37,7 @@ Pokemon::Pokemon(int pkmnNum) {
 			if (i == pkmnNum) {//This checks to see if we are on the right pokemon
 				getline(input, content, ',');
 				pkmnName = content;
-				std::cout << content << ":"; //debug
+				//std::cout << content << ":"; //debug
 				getline(input, content, ',');
 				hp = stoi(content);
 				getline(input, content, ',');
@@ -51,31 +51,32 @@ Pokemon::Pokemon(int pkmnNum) {
 				getline(input, content, ',');
 				spd = stoi(content);
 				//Block of getlines above is the only way I can think of
-				this->pkmnName = pkmnName;
-				this->atk = atk;
-				this->def = def;
-				this->spDef = spDef;
-				this->spAtk = spAtk;
-				this->hp = hp;
-				this->spd = spd;
 				bool moveIsPossible = false;
+				int possibleMovesNum = 0;
 				for (int j = 0; j < 30; j++) {
 					moveIsPossible = false; //Foretting to reset this made this way harder than it needed to be
 					getline(input, content, ',');
 					possibleMoves[j] = content;
-					std::cout << possibleMoves[j] << std::endl;
+					//std::cout << possibleMoves[j] << std::endl; //Debug
 					for (int k = 0; k < 547;k++) {
 						//std::cout <<  possibleMoves[j] << "Vs. " << usableMoves[k] << std::endl;
 						if (possibleMoves[j] == usableMoves[k]) {
 							moveIsPossible = true;
-							std::cout << " Move is possible:" << possibleMoves[j] << std::endl;
+							//std::cout << " Move is possible:" << possibleMoves[j] << std::endl; //Debug
+							possibleMovesNum++;
 						}
 							//std::cout << "success"; //Debug
 					}//Makes sure all moves entered into possiblemoves are usable
 					//std::cout << content << " " << i; //Debug
 					if (moveIsPossible == false) {
+						//std::cout << " Move is NOT possible:" << possibleMoves[j] << std::endl; //Debug
 						possibleMoves[j] = "";
-						std::cout << " Move is NOT possible:" << possibleMoves[j] << std::endl;
+					}
+					if (possibleMovesNum < 4) {//Makes sure to always generate a valid pokemon moveset
+						possibleMoves[16] = "Tackle";
+							possibleMoves[17] = "Quick Attack";
+							possibleMoves[18] = "Scratch";
+							possibleMoves[19] = "Double Hit";
 					}
 				}
 				input.close();
@@ -113,6 +114,7 @@ Pokemon::Pokemon(int pkmnNum) {
 			//std::cout << moveSet[k].getnameMoves() << " vs. " << movesetS[k] << std::endl; //Debug
 		}
 	}
+	delete[] usableMoves;
 }
 //Setter functions
 #pragma region
@@ -212,7 +214,7 @@ Pokemon::Moves::Moves() {
 	chargeMoves = false;
 }
 Pokemon::Moves::Moves(std::string moveName) {
-	std::cout << moveName << " "; //Debug
+	//std::cout << moveName << " "; //Debug
 	std::ifstream input;
 	input.open("PokemonMoves.csv");
 	if (input.is_open()) {
@@ -222,21 +224,28 @@ Pokemon::Moves::Moves(std::string moveName) {
 			//std::cout << content << " "; //Debug
 			if (content == moveName) { //If the cursor is on the right line
 				//Massive block of getlines to read all values needed
-				moveName = content;
-				std::cout << content;
+				nameMoves = moveName; //Sets the move name
+				//std::cout << content; //Debug
 				getline(input, content, ',');
+				//std::cout << content << " "; //Debug
 				typeMoves = content;
 				getline(input, content, ',');
+				//std::cout << content << " "; //Debug
 				categoryMoves = content;
 				getline(input, content, ',');
-				powerMoves = stof(content);
+				//std::cout << content << " "; //Debug
+				powerMoves = stoi(content);
 				getline(input, content, ',');
+				//std::cout << content << " "; //Debug
 				accuracyMoves = stoi(content);
 				getline(input, content, ',');
+				//std::cout << content << " "; //Debug
 				powerPointsMoves = stoi(content);
 				getline(input, content, ',');
+				//std::cout << content << " "; //Debug
 				healMoves = stof(content);
 				getline(input, content, ',');
+				//std::cout << content << " "; //Debug
 				hitTimesMoves = stoi(content);
 				getline(input, content, ',');
 				if (content == "TRUE") {
@@ -247,12 +256,10 @@ Pokemon::Moves::Moves(std::string moveName) {
 					critMoves = true;
 				}
 				getline(input, content, ',');
-				instaMoves;
 				if (content == "TRUE") {
 					instaMoves = true;
 				}
 				getline(input, content, ',');
-				dodgeMoves;
 				if (content == "TRUE") {
 					dodgeMoves = true;
 				}
@@ -262,10 +269,10 @@ Pokemon::Moves::Moves(std::string moveName) {
 					flinchMoves = true;
 				}
 				getline(input, content, ',');
-				chargeMoves;
 				if (content == "TRUE") {
 					chargeMoves = true;
 				}
+				//std::cout << std::endl; //Debug
 			}
 			else {
 				getline(input, content); //Moves to the next line
