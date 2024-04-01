@@ -6,7 +6,7 @@
 #include <time.h>
 //Got tired lines 60-66 contain the ensenece for how it should go need to filter it to nested classes to work
 //This works...Need to find better way hmmm
-//Need to use a vector to store pokemon or a pointer
+//Need to use a vector to store pokemon or a pointerasdf
 void winscreen() {
 #pragma region
     //Funny pikacu took an hour well spent
