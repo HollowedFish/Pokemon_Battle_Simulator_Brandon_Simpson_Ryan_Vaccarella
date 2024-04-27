@@ -31,7 +31,6 @@ Pokemon::Pokemon(int pkmnNum) {
 	input.close();
 	input.open("PokemonGens1-3.csv");
 	if (input.is_open()) {
-		//std::cout << "Input Opened\n";
 		std::string content;
 		for (int i = 1; i <= pkmnNum; i++) {
 			if (i == pkmnNum) {//This checks to see if we are on the right pokemon
@@ -54,12 +53,12 @@ Pokemon::Pokemon(int pkmnNum) {
 				bool moveIsPossible = false;
 				int possibleMovesNum = 0;
 				for (int j = 0; j < 30; j++) {
-					moveIsPossible = false; //Foretting to reset this made this way harder than it needed to be
+					moveIsPossible = false; //Forgetting to reset this made this way harder than it needed to be
 					getline(input, content, ',');
 					possibleMoves[j] = content;
 					//std::cout << possibleMoves[j] << std::endl; //Debug
 					for (int k = 0; k < 547;k++) {
-						//std::cout <<  possibleMoves[j] << "Vs. " << usableMoves[k] << std::endl;
+						//std::cout <<  possibleMoves[j] << "Vs. " << usableMoves[k] << std::endl; //Debug
 						if (possibleMoves[j] == usableMoves[k]) {
 							moveIsPossible = true;
 							//std::cout << " Move is possible:" << possibleMoves[j] << std::endl; //Debug
@@ -95,7 +94,7 @@ Pokemon::Pokemon(int pkmnNum) {
 		std::string movesetS[4];
 		for (int i = 0;movesetS[3] == "" || movesetS[2] == "" || movesetS[1] == "" || movesetS[0] == ""; i++) //Keeps going until all moves are filled
 		{
-			int moveNumber = rand() % 30; //gives a random number
+			int moveNumber = rand() % 30;
 			//std::cout << "Move number:" << moveNumber <<std::endl; //Debug
 			if (movesetS[i % 4] == "") {
 				//std::cout << i << "=>" << i % 4; //Debug
@@ -194,6 +193,7 @@ void Pokemon::printName() {
 	std::cout << pkmnName;
 }
 #pragma endregion
+
 //Setting for the Moves Class:
 //Constructors
 #pragma region

@@ -6,37 +6,36 @@
 //Functions are in camel case
 class Pokemon {
 private:
-	int atk;
-	int def;
-	int spAtk;
-	int spDef;
-	int hp;
-	int spd;
-	std::string pkmnName;
-	/*std::string type1;
-	std::string type2;*/
+	int atk = 0;
+	int def = 0;
+	int spAtk = 0;
+	int spDef = 0;
+	int hp = 0;
+	int spd = 0;
+	std::string pkmnName = "";
+	/*std::string type1 = "";
+	std::string type2 = "";*/
 	std::string possibleMoves[30];
-	bool KO;
+	bool KO = false;
 public:
-	//class Moves; We don't need a sepreate declaration if that is the case
-	//Ok, so this looks really weird, but it is NECESSARY for the array of moves to work
+	//Ok, so this looks really weird, but it is NECESSARY for the array of moves to work afaik
 	class Moves {
 	private:
-		std::string nameMoves;
-		std::string typeMoves;
-		std::string categoryMoves;
-		int powerMoves;
-		int accuracyMoves;
-		int powerPointsMoves;
-		int powerPointsMovesTotal;
-		float healMoves;
-		int hitTimesMoves;
-		bool firstMoves;
-		bool critMoves;
-		bool instaMoves;
-		bool dodgeMoves;
-		bool flinchMoves;
-		bool chargeMoves;
+		std::string nameMoves ="";
+		std::string typeMoves = "";
+		std::string categoryMoves = "";
+		int powerMoves = 0;
+		int accuracyMoves = 0;
+		int powerPointsMoves = 0;
+		int powerPointsMovesTotal = 0;
+		float healMoves = 0;
+		int hitTimesMoves = 0;
+		bool firstMoves = false;
+		bool critMoves = false;
+		bool instaMoves = false;
+		bool dodgeMoves = false;
+		bool flinchMoves = false;
+		bool chargeMoves = false;
 	public:
 		Pokemon::Moves();
 		Pokemon::Moves(std::string nameMoves, std::string typeMoves, std::string categoryMoves, float powerMoves, int powerPointsMovesTotal,int accuracyMoves, int powerPointsMoves, float healMoves, int hitTimesMoves, bool firstMoves, bool critMoves, bool instaMoves, bool dodgeMoves, bool flinchMoves, bool chargeMoves);

@@ -21,9 +21,15 @@
     <ClCompile Include="Pokemon_Class_Settings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Items_Class_Settings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pokemon_Team.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Items.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

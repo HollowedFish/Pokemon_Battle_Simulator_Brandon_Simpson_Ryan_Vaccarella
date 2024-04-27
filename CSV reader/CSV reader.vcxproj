@@ -140,10 +140,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Items_Class_Settings.cpp" />
     <ClCompile Include="Pokemon_Main.cpp" />
     <ClCompile Include="Pokemon_Class_Settings.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Items.h" />
     <ClInclude Include="Pokemon_Team.h" />
   </ItemGroup>
   <ItemGroup>
