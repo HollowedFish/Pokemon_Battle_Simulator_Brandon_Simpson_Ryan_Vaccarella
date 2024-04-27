@@ -1,8 +1,0 @@
-Pokemon,Attack,Defense,Hp,Sp.Atk,Sp.Def,Speed,Move1,Move2,Move3,Move4,Move5,Move6,Move7,Move8,Move9,Move10,Move11,Move12,Move13,Move14,Move15,Move16,Move17,Move18,Move19,Move20,Type1,Type2
-Bulbasaur,92,92,200,121,121,85,Growl,Tackle,Vine Whip,Growth,Leech Seed,Razor Leaf,Posion Powder,Sleep Powder,SeedBomb,Take Down,Sweet Scent,Synthesis,Worry Seed,Power Whip,Solar Beam,,,,,,Grass,Poison
-Charmander,98,81,188,112,94,121,Growl,Scratch,Ember,Smokescreen,Dragon Breath,Fire Fang,Slash,Flamethrower,Scary Face,Fire Spin,Inferno,Flare Blitz,,,,,,,,,Fire,None
-Squirtle,90,121,198,94,119,81,Tackle,Tail Whip,Water Gun,With draw,Rapid Spin,Bite,Water Pulse,Protect,Rain Dance,Aqua Tail,Shell Smash,Iron Defense,Hydro Pump,Wave Crash,,,,,,,Water,None
-Caterpie,58,67,200,40,40,85,String Shot,Tackle,Bug Bite,,,,,,,,,,,,,,,,,,Bug,None
-Weedle,67,58,190,40,40,94,Poison Sting,String Shot,Bug Bite,,,,,,,,,,,,,,,,,,Bug,Poison
-Pidgey,85,76,190,67,67,105,Tackle,Sand Attack,Gust,Quick Attack,Whirlwind,Twister,Feather Dance,Agility,Wing Attack,Roost,Tailwind,Aerial Ace,Air Slash,Hurricane,,,,,,,Normal,Flying
-Rattata,105,67,170,49,67,134,Tackle,Tail Whip,Quick Attack,Focus Energy,Bite,Laser Focus,Take Down,Assurance,Crunch,Sucker Punch,Super Fang,Double Edge,Endeavor,,,,,,,,Normal,None

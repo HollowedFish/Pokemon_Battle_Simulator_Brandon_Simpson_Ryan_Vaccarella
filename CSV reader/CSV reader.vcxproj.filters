@@ -34,12 +34,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Pokedex first 8 basic eveolutions.csv">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="PokedexFirstBasicEvolutionsType - Sheet1.csv">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="PokemonGens1-3.csv">
       <Filter>Resource Files</Filter>
     </None>
