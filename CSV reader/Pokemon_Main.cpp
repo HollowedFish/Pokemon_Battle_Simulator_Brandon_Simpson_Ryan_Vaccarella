@@ -99,7 +99,7 @@ void fightMoves(Pokemon*Attacker,Pokemon*Defender){
         std::cout << "What would you like " << Attacker->getName() << " To attack with?" << std::endl;
         for (int i = 0; i <= 3; i++) {
             powerPointsLeft[i] = Attacker->moveSet[i].getpowerPointMoves();
-            powerPointsTotal[i] = Attacker->moveSet[i].getpowerPointMovesTotal();
+            powerPointsTotal[i] = Attacker->moveSet[i].getpowerPointMoves();
             std::cout << i + 1 << ". " << Attacker->moveSet[i].getnameMoves() << " PP" <<powerPointsLeft[i] <<" / "<<powerPointsTotal[i]<<std::endl;
         }
         std::cin >> u_choice;
@@ -110,6 +110,7 @@ void fightMoves(Pokemon*Attacker,Pokemon*Defender){
                 bug--;
             }
             else {
+                powerPointsLeft[0] - 1;
                 damageCalculator(Attacker, Defender, u_choice);
             }
         break;
@@ -119,6 +120,7 @@ void fightMoves(Pokemon*Attacker,Pokemon*Defender){
                 bug--;
             }
             else {
+                powerPointsLeft[1] - 1;
                 damageCalculator(Attacker, Defender, u_choice);
             }
         break;
@@ -128,6 +130,7 @@ void fightMoves(Pokemon*Attacker,Pokemon*Defender){
                 bug--;
             }
             else {
+                powerPointsLeft[2] - 1;
                 damageCalculator(Attacker, Defender, u_choice);
             }
         break;
@@ -137,6 +140,7 @@ void fightMoves(Pokemon*Attacker,Pokemon*Defender){
                 bug--;
             }
             else {
+                powerPointsLeft[3] - 1;
                 damageCalculator(Attacker, Defender, u_choice);
             }
         break;
