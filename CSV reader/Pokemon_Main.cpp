@@ -86,10 +86,12 @@ void damageCalculator(Pokemon* Attacker,Pokemon*Defender,int u_choice) {
     Defender->setHp(Defender->getHp() - damage);
 }
 void swapPokemon() {
-    //figure this out later-stretch goal
+    std::cout << "You don't have anymore Pokemon!" << std::endl;
+    std::cin.ignore();
 }
 void bag() {
-
+    std::cout << "You are out of items!" << std::endl;
+    std::cin.ignore();
 }
 void fightMoves(Pokemon*Attacker,Pokemon*Defender){
     system("CLS");
