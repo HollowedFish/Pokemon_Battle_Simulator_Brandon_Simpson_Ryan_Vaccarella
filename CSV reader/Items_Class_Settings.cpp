@@ -23,7 +23,7 @@ void item::printItem() { std::cout << " Base Item print function used. \n This s
 int potion::getHealVal(){return healVal; }
 void potion::setHealVal(int healVal) { this->healVal = healVal; }
 void potion::use(Pokemon* pokemon) {
-	pokemon->setHp(pokemon->gethp() + healVal);
+	pokemon->setHp(pokemon->getHp() + healVal);
 }
 void potion::printItem(){}
 #pragma endregion
@@ -32,7 +32,17 @@ void potion::printItem(){}
 #pragma region
 int ether::getPPRV() { return PP_RestoreVal; }
 void ether::setPPRV(int PP_RestoreVal) { this->PP_RestoreVal = PP_RestoreVal; }
-void ether::use() {
+void ether::use(Pokemon* pokemon) {
+	int choice = 0;
+	system("CLR");
+	std::cout << "Please choose which move to use the ether on:\n";
+	std::cout << "1." << pokemon->moveSet[0].getnameMoves() << pokemon->moveSet[0].getpowerPointMoves() << "/" << pokemon->moveSet[0].getpowerPointMovesTotal() << std::endl;
+	std::cout << "2." << pokemon->moveSet[1].getnameMoves() << pokemon->moveSet[1].getpowerPointMoves() << "/" << pokemon->moveSet[1].getpowerPointMovesTotal() << std::endl;
+	std::cout << "3." << pokemon->moveSet[2].getnameMoves() << pokemon->moveSet[2].getpowerPointMoves() << "/" << pokemon->moveSet[2].getpowerPointMovesTotal() << std::endl;
+	std::cout << "4." << pokemon->moveSet[3].getnameMoves() << pokemon->moveSet[3].getpowerPointMoves() << "/" << pokemon->moveSet[3].getpowerPointMovesTotal() << std::endl;
+	std::cin >> choice;
+	std::cin.ignore();
+
 
 }
 void ether::printItem(){}

@@ -35,7 +35,7 @@ private:
 public:
 	int getPPRV();
 	void setPPRV(int PP_RestoreVal);// You can make the abbreviation longer if you want
-	void use();
+	void use(Pokemon* pokemon);
 	void printItem();
 };
 
