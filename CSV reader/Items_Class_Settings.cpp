@@ -42,8 +42,13 @@ void ether::use(Pokemon* pokemon) {
 	std::cout << "4." << pokemon->moveSet[3].getnameMoves() << pokemon->moveSet[3].getpowerPointMoves() << "/" << pokemon->moveSet[3].getpowerPointMovesTotal() << std::endl;
 	std::cin >> choice;
 	std::cin.ignore();
-
-
+	pokemon->moveSet[choice - 1].setpowerPointsMoves(pokemon->moveSet[choice - 1].getpowerPointMoves() + PP_RestoreVal);
+	if (pokemon->moveSet[choice - 1].getpowerPointMoves() > pokemon->moveSet[choice - 1].getpowerPointMovesTotal()) {
+		pokemon->moveSet[choice - 1].setpowerPointsMoves(pokemon->moveSet[choice - 1].getpowerPointMovesTotal());
+	}
+	std::cout << "New PP Total is " << pokemon->moveSet[choice - 1].getpowerPointMoves() << "/" << pokemon->moveSet[choice - 1].getpowerPointMovesTotal();
+	std::cout << "Press enter to continue...";
+	std::cin.ignore();
 }
 void ether::printItem(){}
 #pragma endregion

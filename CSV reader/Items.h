@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "Pokemon_Class_Settings.cpp"
+#include "Pokemon_Team.h"
 
 class item {
 protected:
