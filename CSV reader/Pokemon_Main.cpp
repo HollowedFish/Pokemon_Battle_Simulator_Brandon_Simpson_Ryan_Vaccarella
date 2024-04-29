@@ -5,6 +5,8 @@
 #include "Items.h"
 #include <cstdlib>
 #include <time.h>
+#include <iterator>
+#include <vector>
 //This works...Need to find better way hmmm
 //Need to use a vector to store pokemon or a pointerasdf
 void winscreen() {
@@ -70,20 +72,50 @@ bool checkFaint(Pokemon Active,int hp) {
     }
     return ko;
 }
-void viewMoves(std::string*pMoves) {
+void viewMoves() {
     system("CLS");
-    for (int i = 0; i <= 546; i++) {
-        std::cout <<i+1<<". "<< pMoves[i] << std::endl;
-        if (i == 249) { //Rudimentary page system so it actually displays all moves properly
-            std::cout << "Page 1/2" << std::endl << "Press enter to move to next page when ready...";
-            std::cin.get();
-            std::cin.ignore();
-            system("CLS");
+    std::string content;
+    std::ifstream output;
+    std::vector < std::string> moves = {};
+    std::vector<std::string> ::iterator it = moves.begin();
+    output.open("PokemonMoves.csv");
+    if (output.is_open()) {
+        /*for (int i = 0; i <= 546; i++) {
+            std::cout <<i+1<<". "<< pMoves[i] << std::endl;
+            if (i == 249) { //Rudimentary page system so it actually displays all moves properly
+                std::cout << "Page 1/2" << std::endl << "Press enter to move to next page when ready...";
+                std::cin.get();
+                std::cin.ignore();
+                system("CLS");
+            }
+            if (i == 546) {
+                std::cout << "Page 2/2" << std::endl << "Press enter to continue...";
+            }
+        }*/
+        while (std::getline(output, content, ',')) {
+            moves.push_back(content);
+            std::getline(output, content);
         }
-        if (i == 546) {
-            std::cout << "Page 2/2" << std::endl << "Press enter to continue...";
+       for (int i = 1; it < moves.end(); it++, i++) {
+            std::cout << i << ". " << *it << std::endl;
+            if (i %100 ==0) {
+                std::cout << "Please press enter to continue";
+                std::cin.get();
+                std::cin.ignore();
+                system("CLS");
+            }
+        }
+
+        while (!moves.empty()) {
+            moves.pop_back();
         }
     }
+    else if (!output.is_open()) {
+        std::cout << "Operation failed" << std::endl << "Press enter to continue";
+        std::cin.get();
+        std::cin.ignore();
+    }
+    output.close();
 }
  void startBattle(Pokemon* team1, Pokemon* team2,/*Pokemon::Moves* moveSet,*/ int teamSize) {
      Pokemon t1Active; //Creates the objects for the active pokemon
@@ -105,9 +137,9 @@ void viewMoves(std::string*pMoves) {
      std::cin.ignore();
      //1st team initial pokemon choosing
      t1Active = team1[0];
-     ActiveMonNum1=t1Active.gethp();
+     ActiveMonNum1=t1Active.getHp();
              t2Active = team2[0];
-             ActiveMonNum2 = t2Active.gethp();
+             ActiveMonNum2 = t2Active.getHp();
 
      /*std::cout << "Starting active pokemon are: " << T1Active.getName() << " " << T2Active.getName(); //Debug
      std::cin.get(); //Debug
@@ -140,7 +172,7 @@ void viewMoves(std::string*pMoves) {
                  }
                  else if(count1<=teamSize){
                  t1Active = team1[count1];
-                 ActiveMonNum1 = t1Active.gethp();
+                 ActiveMonNum1 = t1Active.getHp();
                  }
              }
              else
@@ -195,7 +227,7 @@ void viewMoves(std::string*pMoves) {
                  }
                  else if (count2 <= teamSize) {
                      t2Active = team2[count2];
-                     ActiveMonNum2 = t2Active.gethp();
+                     ActiveMonNum2 = t2Active.getHp();
                  }
              }
              else
@@ -337,7 +369,7 @@ void viewMoves(std::string*pMoves) {
          std::cin.ignore();
          break;
      case 5:
-         viewMoves(tMoves);
+         viewMoves();
          //std::cin.get(); //Maybe don't need this this one time?
          std::cin.ignore();
          break;
