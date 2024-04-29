@@ -316,7 +316,7 @@ void Pokemon::Moves::setaccuracyMoves(int accuracyMoves) {
 void Pokemon::Moves::setpowerPointsMoves(int powerPointsMoves) {
 	this->powerPointsMoves = powerPointsMoves;
 }
-void Pokemon::Moves::setpowerPointsTotal(int powerPointsMovesTotal) {
+void Pokemon::Moves::setpowerPointsTotal(int powerPointsMoves) {
 	this-> powerPointsMovesTotal= powerPointsMoves;
 }
 void Pokemon::Moves::sethealMoves(float healMoves) {

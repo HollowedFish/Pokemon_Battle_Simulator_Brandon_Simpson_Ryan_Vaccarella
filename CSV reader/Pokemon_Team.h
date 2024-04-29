@@ -47,7 +47,7 @@ public:
 		void setpowerMoves(float powerMoves);
 		void setaccuracyMoves(int accuracyMoves);
 		void setpowerPointsMoves(int powerPointsMoves);
-		void setpowerPointsTotal(int powerPointsMovesTotal);
+		void setpowerPointsTotal(int powerPointsMoves);
 		void sethealMoves(float healMoves);
 		void sethitTimeMoves(int hitTimesMoves);
 		void setfirstMoves(bool firstMoves);
