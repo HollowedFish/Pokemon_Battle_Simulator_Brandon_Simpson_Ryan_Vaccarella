@@ -56,18 +56,18 @@ quu..__
     //exit(1); Don't put an exit at the end of this, ootherwise the deletes after this function is calledd will not be used
 
 }
-int damageCalculator(Pokemon Active,int p1Atk, int moveAtk, int t2Def,int Activemon) {
+int damageCalculator(Pokemon *Active,int p1Atk, int moveAtk, int t2Def,int Activemon) {
     int damage;
     int randomNumber=rand()%100+85;
     damage = ((((2*100/7)*p1Atk*moveAtk/t2Def)/50)+2)*randomNumber/100;
-    std::cout << Active.getName() << " Took " << damage;
+    std::cout << Active->getName() << " Took " << damage;
     Activemon -= damage;
     return Activemon;
 }
-bool checkFaint(Pokemon Active,int hp) {
+bool checkFaint(Pokemon* Active,int hp) {
     bool ko = false;
     if (hp<= 0) {
-        std::cout << Active.getName() << " fainted!";
+        std::cout << Active->getName() << " fainted!";
         ko = true;
     }
     return ko;
@@ -120,13 +120,14 @@ void viewMoves() {
     }
     output.close();
 }
- void startBattle(Pokemon* team1, Pokemon* team2,/*Pokemon::Moves* moveSet,*/ int teamSize) {
-     Pokemon t1Active; //Creates the objects for the active pokemon
-     Pokemon t2Active; //Maybe make into pointers for direct value editing?
+ void startBattle(Pokemon* team1, Pokemon* team2, int teamSize) {
+     Pokemon* t1Active; //Active pokemon pointers
+     Pokemon* t2Active;
      std::string p1;//Player names
      std::string p2;
-     int ActiveMonNum1;
-     int ActiveMonNum2;//Storage so you can actually change the stored pokemon's values (for hp and KO)
+     //int ActiveMonNum1;
+     //int ActiveMonNum2;//Storage so you can actually change the stored pokemon's values (for hp and KO)
+     //Stolen for HP values lol
      system("CLS"); //Clears screen
      std::cout << "Enter the name for player 1:" << std::endl;
      std::cin.ignore(); //This needs to be here otherwise it skips
@@ -139,10 +140,10 @@ void viewMoves() {
      std::cin.get();
      std::cin.ignore();
      //1st team initial pokemon choosing
-     t1Active = team1[0];
-     ActiveMonNum1=t1Active.getHp();
-             t2Active = team2[0];
-             ActiveMonNum2 = t2Active.getHp();
+     t1Active = &team1[0];
+     //ActiveMonNum1=t1Active->getHp();
+             t2Active = &team2[0];
+             //ActiveMonNum2 = t2Active->getHp();
 
      /*std::cout << "Starting active pokemon are: " << T1Active.getName() << " " << T2Active.getName(); //Debug
      std::cin.get(); //Debug
@@ -164,7 +165,7 @@ void viewMoves() {
          if (turnNumP1 <= turnNumP2) {
              //Like the snakes and ladders game from last year
 
-             if (checkFaint(t1Active,ActiveMonNum1)==true) {//MOVE SOMEHWERE ELSE, THIS IS JUST A TEMPORARY PLACE TO PUT THIS
+             if (checkFaint(t1Active,t1Active->getHp())==true) {
                  std::cout << " is fainted" << std::endl;
                  std::cout<<"Swapping Pokemon"<<std::endl;
                  count1++;
@@ -174,8 +175,8 @@ void viewMoves() {
                      winscreen();
                  }
                  else if(count1<=teamSize){
-                 t1Active = team1[count1];
-                 ActiveMonNum1 = t1Active.getHp();
+                 t1Active = &team1[count1];
+                 //ActiveMonNum1 = t1Active->getHp();
                  }
              }
              else
@@ -186,12 +187,12 @@ void viewMoves() {
              int choice = 0;
              system("CLS");
              std::cout << "--------------------------------------------------\n";
-             std::cout << "It is turn " << turnNumP1 << " What action do you want " << t1Active.getName() << " to take " << p1 << " ? \n";
+             std::cout << "It is turn " << turnNumP1 << " What action do you want " << t1Active->getName() << " to take " << p1 << " ? \n";
              std::cout << "--------------------------------------------------\n";
-             std::cout << "Health:" << ActiveMonNum1 << std::endl << "Moves:" << std::endl;
+             std::cout << "Health:" << t1Active->getHp() << std::endl << "Moves:" << std::endl;
 
              for (int i = 0; i < 4; i++) {
-                 std::cout << i + 1 << "." << t1Active.moveSet[i].getnameMoves() << " " << t1Active.moveSet[i].getpowerPointMoves() << std::endl;
+                 std::cout << i + 1 << "." << t1Active->moveSet[i].getnameMoves() << " " << t1Active->moveSet[i].getpowerPointMoves() << std::endl;
              }
              std::cin >> choice;
              if (choice > 4 || choice <= 0) {
@@ -201,23 +202,23 @@ void viewMoves() {
                      std::cin.ignore();
                  }
              }
-             std::cout << t1Active.moveSet[choice - 1].getpowerMoves();//Debug
-             movedmg = t1Active.moveSet[choice - 1].getpowerMoves();
-             typeAtk1 = t1Active.moveSet[choice - 1].getcategoryMoves();
+             std::cout << t1Active->moveSet[choice - 1].getpowerMoves();//Debug
+             movedmg = t1Active->moveSet[choice - 1].getpowerMoves();
+             typeAtk1 = t1Active->moveSet[choice - 1].getcategoryMoves();
              if (typeAtk1 == "Physical") {
-                 dmg = t1Active.getAtk();
-                 def = t2Active.getDef();
+                 dmg = t1Active->getAtk();
+                 def = t2Active->getDef();
              }
              else {
-                 dmg = t1Active.getSpAtk();
-                 def = t2Active.getDef();
+                 dmg = t1Active->getSpAtk();
+                 def = t2Active->getDef();
             }
          }
-         ActiveMonNum2=damageCalculator(t2Active,dmg,movedmg,def,ActiveMonNum2);
+         t2Active->setHp(damageCalculator(t2Active,dmg,movedmg,def,t2Active->getHp()));
          if (turnNumP1 > turnNumP2) {
              turnNumP2++;
              int choice = 0;
-             if (checkFaint(t2Active,ActiveMonNum2)==true) {
+             if (checkFaint(t2Active,t2Active->getHp())==true) {
                  std::cout << " is fainted" << std::endl;
                  std::cout << "sending out next pokemon";
                  std::cout << " is fainted" << std::endl;
@@ -229,18 +230,18 @@ void viewMoves() {
                      winscreen();
                  }
                  else if (count2 <= teamSize) {
-                     t2Active = team2[count2];
-                     ActiveMonNum2 = t2Active.getHp();
+                     t2Active = &team2[count2];
+                     //ActiveMonNum2 = t2Active->getHp();
                  }
              }
              else
              {
                  std::cout << std::endl;
              }
-             std::cout << "It is turn " << turnNumP2 << " What action do you want " << t2Active.getName() << " to take " << p2 << "?\n";
-             std::cout << "Health" << ActiveMonNum2 << std::endl;
+             std::cout << "It is turn " << turnNumP2 << " What action do you want " << t2Active->getName() << " to take " << p2 << "?\n";
+             std::cout << "Health" << t2Active->getHp() << std::endl;
              for (int i = 0; i < 4; i++) {
-                 std::cout << i + 1 << "." << t2Active.moveSet[i].getnameMoves() << " " << t2Active.moveSet[i].getpowerPointMoves() << ": " << t2Active.moveSet[i].getpowerPointMovesTotal() << std::endl;
+                 std::cout << i + 1 << "." << t2Active->moveSet[i].getnameMoves() << " " << t2Active->moveSet[i].getpowerPointMoves() << ": " << t2Active->moveSet[i].getpowerPointMovesTotal() << std::endl;
              }
              std::cin >> choice;
              if (choice > 4 || choice <= 0) {
@@ -250,19 +251,19 @@ void viewMoves() {
                      std::cin.ignore();
                  }
              }
-             movedmg = t2Active.moveSet[choice - 1].getpowerMoves();
-             typeAtk2 = t2Active.moveSet[choice - 1].getcategoryMoves();
+             movedmg = t2Active->moveSet[choice - 1].getpowerMoves();
+             typeAtk2 = t2Active->moveSet[choice - 1].getcategoryMoves();
 
              if (typeAtk2 == "Physical") {
-                 dmg = t2Active.getAtk();
-                 def = t1Active.getDef();
+                 dmg = t2Active->getAtk();
+                 def = t1Active->getDef();
              }
              else {
-                 dmg = t2Active.getSpAtk();
-                 def = t1Active.getDef();
+                 dmg = t2Active->getSpAtk();
+                 def = t1Active->getDef();
              }
          }
-        ActiveMonNum1= damageCalculator(t1Active, dmg, movedmg, def,ActiveMonNum1);
+        t1Active->setHp(damageCalculator(t1Active, dmg, movedmg, def,t1Active->getHp()));
      }
      exit(1);
  }
