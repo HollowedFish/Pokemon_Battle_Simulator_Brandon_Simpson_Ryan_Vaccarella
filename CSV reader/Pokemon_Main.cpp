@@ -77,7 +77,7 @@ void viewMoves() {
     std::string content;
     std::ifstream output;
     std::vector < std::string> moves = {};
-    std::vector<std::string> ::iterator it = moves.begin();
+    
     output.open("PokemonMoves.csv");
     if (output.is_open()) {
         /*for (int i = 0; i <= 546; i++) {
@@ -96,16 +96,19 @@ void viewMoves() {
             moves.push_back(content);
             std::getline(output, content);
         }
+        std::vector<std::string> ::iterator it = moves.begin();
        for (int i = 1; it < moves.end(); it++, i++) {
             std::cout << i << ". " << *it << std::endl;
             if (i %100 ==0) {
+                if (i == 100) {
+                    std::cin.ignore();
+               }
                 std::cout << "Please press enter to continue";
                 std::cin.get();
-                std::cin.ignore();
                 system("CLS");
             }
         }
-
+        std::cout << "Press enter to continue";
         while (!moves.empty()) {
             moves.pop_back();
         }
