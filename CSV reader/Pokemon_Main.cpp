@@ -53,7 +53,9 @@ quu..__
               `',:                 :    .'
                                    `:.:' )" << std::endl;
 #pragma endregion
-    //exit(1); Don't put an exit at the end of this, ootherwise the deletes after this function is calledd will not be used
+    std::cin.ignore();
+    exit(1);
+    //Don't put an exit at the end of this, ootherwise the deletes after this function is calledd will not be used
 
 }
 void damageCalculator(Pokemon* Attacker,Pokemon*Defender,int u_choice) {
@@ -99,8 +101,8 @@ void fightMoves(Pokemon*Attacker,Pokemon*Defender){
         std::cout << "What would you like " << Attacker->getName() << " To attack with?" << std::endl;
         for (int i = 0; i <= 3; i++) {
             powerPointsLeft[i] = Attacker->moveSet[i].getpowerPointMoves();
-            powerPointsTotal[i] = Attacker->moveSet[i].getpowerPointMoves();
-            std::cout << i + 1 << ". " << Attacker->moveSet[i].getnameMoves() << " PP" <<powerPointsLeft[i] <<" / "<<powerPointsTotal[i]<<std::endl;
+            powerPointsTotal[i] = Attacker->moveSet[i].getpowerPointMovesTotal();
+            std::cout << i + 1 << ". " << Attacker->moveSet[i].getnameMoves() << " PP " <<powerPointsLeft[i] <<" / "<<powerPointsTotal[i]<<std::endl;
         }
         std::cin >> u_choice;
         switch (u_choice) {
@@ -110,7 +112,7 @@ void fightMoves(Pokemon*Attacker,Pokemon*Defender){
                 bug--;
             }
             else {
-                powerPointsLeft[0] - 1;
+                Attacker->moveSet[0].setpowerPointsMoves(powerPointsLeft[0] - 1);
                 damageCalculator(Attacker, Defender, u_choice);
             }
         break;
@@ -120,7 +122,7 @@ void fightMoves(Pokemon*Attacker,Pokemon*Defender){
                 bug--;
             }
             else {
-                powerPointsLeft[1] - 1;
+                Attacker->moveSet[1].setpowerPointsMoves(powerPointsLeft[1] - 1); 
                 damageCalculator(Attacker, Defender, u_choice);
             }
         break;
@@ -130,7 +132,7 @@ void fightMoves(Pokemon*Attacker,Pokemon*Defender){
                 bug--;
             }
             else {
-                powerPointsLeft[2] - 1;
+                Attacker->moveSet[2].setpowerPointsMoves(powerPointsLeft[2] - 1);
                 damageCalculator(Attacker, Defender, u_choice);
             }
         break;
@@ -140,7 +142,7 @@ void fightMoves(Pokemon*Attacker,Pokemon*Defender){
                 bug--;
             }
             else {
-                powerPointsLeft[3] - 1;
+                Attacker->moveSet[3].setpowerPointsMoves(powerPointsLeft[3] - 1);
                 damageCalculator(Attacker, Defender, u_choice);
             }
         break;
@@ -193,11 +195,15 @@ void battleMenu(Pokemon*Attacker,Pokemon*Defender,std::string playerName) {
     }
 }
 
-bool checkFaint(Pokemon* Active,int hp) {
+bool checkFaint(Pokemon* Active,std::string  trainer,std::string trainer_2) {
+     int hp= Active->getHp();
     bool ko = false;
     if (hp<= 0) {
+        
         std::cout << Active->getName() << " fainted!";
-        ko = true;
+        std::cout << trainer_2 << "You are out of Pokemon" << std::endl;
+        std::cout << trainer << "You Win!"<<std::endl;
+        winscreen();
     }
     return ko;
 }
@@ -292,7 +298,7 @@ std::cin.ignore();//Debug */
         if (turnNumP1 <= turnNumP2) {
             //Like the snakes and ladders game from last year
 
-            if (checkFaint(t1Active, t1Active->getHp()) == true) {
+            if (checkFaint(t1Active,p1,p2)){
                 std::cout << " is fainted" << std::endl;
                 std::cout << "Swapping Pokemon" << std::endl;
                 count1++;
@@ -309,6 +315,7 @@ std::cin.ignore();//Debug */
             else
             {
                 battleMenu(t1Active, t2Active, p1);
+                checkFaint(t1Active, p1, p2);
             }
             turnNumP1++;
             int choice = 0;
@@ -317,7 +324,7 @@ std::cin.ignore();//Debug */
         if (turnNumP1 > turnNumP2) {
             turnNumP2++;
             int choice = 0;
-            if (checkFaint(t2Active, t2Active->getHp()) == true) {
+            if (checkFaint(t2Active,p2,p1)) {
                 std::cout << " is fainted" << std::endl;
                 std::cout << "sending out next pokemon";
                 std::cout << " is fainted" << std::endl;
@@ -336,6 +343,7 @@ std::cin.ignore();//Debug */
             else
             {
                 battleMenu(t2Active, t1Active, p2);
+                checkFaint(t1Active, p2, p1);
             }
 
         }

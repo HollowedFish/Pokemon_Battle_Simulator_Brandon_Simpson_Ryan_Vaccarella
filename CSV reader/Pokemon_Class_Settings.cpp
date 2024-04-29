@@ -249,6 +249,7 @@ Pokemon::Moves::Moves(std::string moveName) {
 				getline(input, content, ',');
 				//std::cout << content << " "; //Debug
 				powerPointsMoves = stoi(content);
+				powerPointsMovesTotal = powerPointsMoves;
 				getline(input, content, ',');
 				//std::cout << content << " "; //Debug
 				healMoves = stof(content);
@@ -316,8 +317,8 @@ void Pokemon::Moves::setaccuracyMoves(int accuracyMoves) {
 void Pokemon::Moves::setpowerPointsMoves(int powerPointsMoves) {
 	this->powerPointsMoves = powerPointsMoves;
 }
-void Pokemon::Moves::setpowerPointsTotal(int powerPointsMoves) {
-	this-> powerPointsMovesTotal= powerPointsMoves;
+void Pokemon::Moves::setpowerPointsTotal(int powerPointsMovesTotal) {
+	this-> powerPointsMovesTotal= powerPointsMovesTotal;
 }
 void Pokemon::Moves::sethealMoves(float healMoves) {
 	this->healMoves = healMoves;
