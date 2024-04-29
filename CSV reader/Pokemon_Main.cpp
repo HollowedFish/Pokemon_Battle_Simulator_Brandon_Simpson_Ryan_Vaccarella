@@ -80,7 +80,7 @@ void damageCalculator(Pokemon* Attacker,Pokemon*Defender,int u_choice) {
         def = Defender->getDef();
     }
     damage = ((((2 * 100 / 7) * dmg * movedmg / def) / 50) + 2) * randomNumber / 100;
-    std::cout << Defender->getName() << " Took " << damage;
+    std::cout << Defender->getName() << " Took " << damage<<" damage";
     std::cin.ignore();
     std::cin.get();
     Defender->setHp(Defender->getHp() - damage);
