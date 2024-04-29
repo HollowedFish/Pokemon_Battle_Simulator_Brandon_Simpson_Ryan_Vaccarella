@@ -22,8 +22,8 @@ void item::printItem() { std::cout << " Base Item print function used. \n This s
 #pragma region
 int potion::getHealVal(){return healVal; }
 void potion::setHealVal(int healVal) { this->healVal = healVal; }
-void potion::use() {
-
+void potion::use(Pokemon* pokemon) {
+	pokemon->setHp(pokemon->gethp() + healVal);
 }
 void potion::printItem(){}
 #pragma endregion

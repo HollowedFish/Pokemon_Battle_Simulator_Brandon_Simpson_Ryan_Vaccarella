@@ -156,7 +156,7 @@ int Pokemon::getDef() {
 int Pokemon::getSpAtk() {
 	return spAtk;
 }
-int Pokemon::gethp() {
+int Pokemon::getHp() {
 	return hp;
 }
 int Pokemon::getSpDef() {

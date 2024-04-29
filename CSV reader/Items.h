@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "Pokemon_Class_Settings.cpp"
 
 class item {
 protected:
@@ -21,13 +22,10 @@ public:
 class potion :public item {
 private:
 	int healVal = 0;
-	float healValPercent = 0.0; //Percent will be formatted as such: 50% = 0.5, 100% = 1.0, 25% = 0.25, etc.
-	//Used for possible full restore? 
-	//If so, it doesn't need getters and setters, just make it a part of the use function to be 1.0
 public:
 	int getHealVal();
 	void setHealVal(int healVal);
-	void use();
+	void use(Pokemon* pokemon);
 	void printItem();
 };
 

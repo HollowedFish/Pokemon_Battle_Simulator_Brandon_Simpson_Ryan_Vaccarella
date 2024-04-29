@@ -92,7 +92,7 @@ public:
 	//Getter functions
 	int getAtk();
 	int getDef();
-	int gethp();
+	int getHp();
 	int getSpAtk();
 	int getSpDef();
 	int getSpd();
