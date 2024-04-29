@@ -45,6 +45,6 @@ private:
 public:
 	float getResHealPercent();
 	void setResHealPercent(float resHealPercent);
-	void use();
+	void use(Pokemon* pokemon);
 	void printItem();
 };

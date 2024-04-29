@@ -57,7 +57,12 @@ void ether::printItem(){}
 #pragma region
 float revive::getResHealPercent() { return resHealPercent; }
 void revive::setResHealPercent(float resHealPercent) { this->resHealPercent = resHealPercent; }
-void revive::use() {
+void revive::use(Pokemon* pokemon) {
+	if (pokemon->isKO() == true) {
+		pokemon->setKO(false);
+		pokemon->setHp(pokemon->getMaxHP() * resHealPercent);
+	}
+	else std::cout << "This pokemon is still alive, use this on a KO'd pokemon instead.";
 
 }
 void revive::printItem(){}

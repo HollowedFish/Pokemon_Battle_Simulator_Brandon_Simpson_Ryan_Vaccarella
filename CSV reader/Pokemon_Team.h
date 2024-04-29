@@ -11,6 +11,7 @@ private:
 	int spAtk = 0;
 	int spDef = 0;
 	int hp = 0;
+	int maxHP = 0;
 	int spd = 0;
 	std::string pkmnName = "";
 	/*std::string type1 = "";
@@ -85,6 +86,7 @@ public:
 	void setSpAtk(int spAtk);
 	void setspDef(int spDef);
 	void setHp(int hp);
+	void setMaxHP(int maxHP);
 	void setSpd(int spd);
 	void setmoveSet(Pokemon::Moves moveset);
 	//void setType1(std::string type1);
@@ -93,6 +95,7 @@ public:
 	int getAtk();
 	int getDef();
 	int getHp();
+	int getMaxHP();
 	int getSpAtk();
 	int getSpDef();
 	int getSpd();

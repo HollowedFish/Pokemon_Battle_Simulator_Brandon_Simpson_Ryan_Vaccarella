@@ -39,6 +39,7 @@ Pokemon::Pokemon(int pkmnNum) {
 				//std::cout << content << ":"; //debug
 				getline(input, content, ',');
 				hp = stoi(content);
+				maxHP = stoi(content);
 				getline(input, content, ',');
 				atk = stoi(content);
 				getline(input, content, ',');
@@ -132,6 +133,9 @@ void Pokemon::setspDef(int spDef) {
 void Pokemon::setHp(int hp) {
 	this->hp = hp;
 }
+void Pokemon::setMaxHP(int maxHP) {
+	this->maxHP = maxHP;
+}
 void Pokemon::setSpd(int spd) {
 	this->spd = spd;
 }
@@ -158,6 +162,9 @@ int Pokemon::getSpAtk() {
 }
 int Pokemon::getHp() {
 	return hp;
+}
+int Pokemon::getMaxHP() {
+	return maxHP;
 }
 int Pokemon::getSpDef() {
 	return spDef;
