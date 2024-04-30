@@ -165,7 +165,7 @@ void battleMenu(Pokemon*Attacker,Pokemon*Defender,std::string playerName) {
     int u_choice = 0;
     while (choice == 0) {
         std::cout << Attacker->getName() << " Has " << Attacker->getHp() << " / " << Attacker->getMaxHP()<<std::endl;
-        std::cout << "1.Fight" << std::endl << "2.Bag" << std::endl << "3.Swap current Pokemon" << std::endl <<"4.Run "<<std::endl<<"Enter number here : ";
+        std::cout << "1.Fight" << std::endl << "2.Bag(WIP)" << std::endl << "3.Swap current Pokemon(WIP)" << std::endl <<"4.Run "<<std::endl<<"Enter number here : ";
         std::cin >> u_choice;
         switch (u_choice) {
         case 1:
@@ -351,7 +351,7 @@ std::cin.ignore();//Debug */
         }
     }
 }
- void generateTeams(Pokemon* team1, Pokemon* team2, int teamSize, std::string* tMoves) {
+ void generateTeams(Pokemon* team1, Pokemon* team2, int teamSize) {
      srand(time(NULL));
      std::string pkmnName;
      int pkmnR;
@@ -411,7 +411,7 @@ std::cin.ignore();//Debug */
      output.close();
  }
  
- void displayMenu(Pokemon *team1,Pokemon *team2, int teamSize, std::string* tMoves) {
+ void displayMenu(Pokemon *team1,Pokemon *team2, int teamSize) {
      system("CLS");
      std::string enter;
      int choice;
@@ -436,7 +436,7 @@ std::cin.ignore();//Debug */
              std::cin.ignore(); //Both of these are needed for this to work
          }
          else {
-             generateTeams(team1, team2, teamSize, tMoves);
+             generateTeams(team1, team2, teamSize);
              std::cout << "Teams Generated successfully!" << std::endl << "Press Enter to Continue...";
              std::cin.get();
              std::cin.ignore();
@@ -479,13 +479,12 @@ std::cin.ignore();//Debug */
          //All deletes need to go here
          delete[] team1;
          delete[] team2;
-         delete[] tMoves;
          exit(0);
          break;
      default:
          std::cout << "invalid input" <<std::endl << "Press enter to continue";
      }
-     displayMenu(team1, team2, teamSize, tMoves); //Calls itself for an infinite loop
+     displayMenu(team1, team2, teamSize); //Calls itself for an infinite loop
  }
     int main() {
         int teamSize;
@@ -500,24 +499,9 @@ std::cin.ignore();//Debug */
         }
        Pokemon* team1 = new Pokemon[teamSize];
        Pokemon* team2 = new Pokemon[teamSize];
-       std::string* tMoves = new std::string[547]; //Creates an array for moves of size 547
-       //Perhaps change this, just in case we add more moves
-       std::ifstream moves;
-       moves.open("PokemonMoves.csv");
-       std::string content;
-       if (moves.is_open()) {
-           for (int i = 0; i < 547; i++) { //Stores all move names sequentially in an array
-              std::getline(moves, content, ',');
-               tMoves[i] = content;
-               std::getline(moves, content); //Iterates to the next line
-           }
-       }
-       moves.close();
-       
-        displayMenu(team1,team2,teamSize,tMoves); //Start game loop
+        displayMenu(team1,team2,teamSize); //Start game loop
     //The below will never actually run
     delete[] team1;
     delete[] team2;
-    delete[] tMoves;
     //delete[] moveSet;
 }
