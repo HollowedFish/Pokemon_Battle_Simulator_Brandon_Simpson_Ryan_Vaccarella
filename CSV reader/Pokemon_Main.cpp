@@ -1,6 +1,7 @@
 ﻿// Pokemon Battler.cpp : This file contains the 'main' function. Program execution begins and ends here.
 //Made by Brandon Simpson and Ryan Vaccarella
 #include <iostream>
+#include <string> //Funny thing, this line wasn't here until WELL after it should have been (5/3/2024)
 #include "Pokemon_Team.h"
 #include "Items.h"
 #include <cstdlib>
@@ -55,7 +56,6 @@ quu..__
 #pragma endregion
     std::cin.ignore();
     exit(1);
-    //Don't put an exit at the end of this, ootherwise the deletes after this function is calledd will not be used
 
 }
 float SameTypeAttackBonus (Pokemon * Attacker, int u_choice) {
@@ -209,7 +209,7 @@ float WeaknessorResistance(Pokemon* Attacker, Pokemon* Defender, int u_choice) {
                 effectiveness *= 2;
             }
             else if (defendingType[i] == "Fire" || defendingType[i] == "Water" || defendingType[i] == "Ice" || defendingType[i] == "Steel") {
-                effectiveness / 2;
+                effectiveness /= 2;
             }
         }
         else if (attackingMoveType == "Dragon") {
@@ -287,9 +287,83 @@ void swapPokemon() {
     std::cout << "You don't have anymore Pokemon!" << std::endl;
     std::cin.ignore();
 }
-void bag() {
-    std::cout << "You are out of items!" << std::endl;
-    std::cin.ignore();
+bool bag(Pokemon* team, item* itemBag, bool bagSuccess,int teamSize) {
+    int emptyBagSlots = 0;
+    int choice1 = 0;
+    int choice2 = 0;
+    std::string choiceS;
+    for (int i = 0; i < 7; i++) { //This assumes that there are 7 bag slots, CHANGE THIS IF WE ADD MORE ITEMS
+        if (itemBag[i].getQuantity() == 0) { emptyBagSlots++; }
+        //It actually doens't matter that this treats them all like base items, because quantity is inherent to item
+        //I will need to do some dynamic cast black magic later though
+    }
+    if (emptyBagSlots == 7) {
+        std::cout << "You are out of items!" << std::endl;
+        std::cout << "Press enter to go back to the menu...";
+        std::cin.ignore();
+        return false;
+    }
+    std::cout << "Choose which item you want to use:" << std::endl;
+    for (int i = 0; i < 7; i++) {
+        std::cout << i+1 << ". " << itemBag[i].getName() << " X " << itemBag[i].getQuantity() << std::endl;
+        std::cout << "  -" << itemBag[i].getDescription() << std::endl;
+    }
+    std::cout << "0. Exit Menu" <<std::endl;
+    std::cout << "--------------------------" << std::endl;
+    std::cin >> choice1;
+    switch (choice1){//This is an astoudingly terrible solution, not scalable in the slightest, but whatever
+    case 0:
+        return false;
+        break;
+    case 1://potions
+    case 2:
+    case 3:
+        std::cout << "Choose which pokemon you want to use this item on:" << std::endl;
+        for (int i = 0; i < teamSize; i++) {//Had to import teamSize just for this
+            std::cout << i+1 << ". " << team[i].getName() << std::endl;
+        }
+        std::cout << "--------------------------\n";
+        std::cin >> choice2;
+        if (potion* I = dynamic_cast<potion*>(&itemBag[choice1 - 1])) {//Yikes
+            I->use(&team[choice2 - 1]); //Dear god this is cursed
+        }
+        bagSuccess = true;
+        std::cin.ignore();
+        break;
+    case 4://ethers
+    case 5:
+        std::cout << "Choose which pokemon you want to use this item on:";
+        for (int i = 0; i < teamSize; i++) {//Had to import teamSize just for this
+            std::cout << i << ". " << team[i].getName();
+        }
+        std::cout << "--------------------------\n";
+        std::cin >> choice2;
+        if (ether* I = dynamic_cast<ether*>(&itemBag[choice1 - 1])) {//Yikes
+            I->use(&team[choice2 - 1]); //Dear god this is cursed
+        }
+        bagSuccess = true;
+        std::cin.ignore();
+        break;
+    case 6://revives
+    case 7:
+        std::cout << "Choose which pokemon you want to use this item on:";
+        for (int i = 0; i < teamSize; i++) {//Had to import teamSize just for this
+            std::cout << i << ". " << team[i].getName();
+        }
+        std::cout << "--------------------------\n";
+        std::cin >> choice2;
+        if (revive* I = dynamic_cast<revive*>(&itemBag[choice1 - 1])) {//Yikes
+            I->use(&team[choice2 - 1]); //Dear god this is cursed
+        }
+        bagSuccess = true;
+        std::cin.ignore();
+        break;
+    default:
+        std::cout << "Invalid choice, try again.";
+        bool storage = bag(team, itemBag, bagSuccess, teamSize);
+        break;
+    }
+    return bagSuccess;
 }
 void fightMoves(Pokemon*Attacker,Pokemon*Defender){
     system("CLS");
@@ -357,8 +431,9 @@ void fightMoves(Pokemon*Attacker,Pokemon*Defender){
     }
 
 }
-void battleMenu(Pokemon*Attacker,Pokemon*Defender,std::string playerName) {
+void battleMenu(Pokemon*attackingTeam,Pokemon*Attacker,item*itemBag,Pokemon*Defender,std::string playerName,int teamSize) {
     system("CLS");
+    bool bagSuccess = false;
     int choice = 0;
     int u_choice = 0;
     while (choice == 0) {
@@ -372,7 +447,9 @@ void battleMenu(Pokemon*Attacker,Pokemon*Defender,std::string playerName) {
             break;
         case 2:
             //bag
-            bag();
+            if (bag(attackingTeam, itemBag, bagSuccess,teamSize) == false) {
+                choice--;
+            }
             break;
         case 3:
             swapPokemon();
@@ -401,8 +478,8 @@ bool checkFaint(Pokemon* Active,std::string  trainer,std::string trainer_2) {
     if (hp<= 0) {
         
         std::cout << Active->getName() << " fainted!";
-        std::cout << trainer_2 << "You are out of Pokemon" << std::endl;
-        std::cout << trainer << "You Win!"<<std::endl;
+        std::cout << trainer_2 << " You are out of Pokemon" << std::endl;
+        std::cout << trainer << " You Win!"<<std::endl;
         winscreen();
     }
     return ko;
@@ -456,7 +533,7 @@ void viewMoves() {
     }
     output.close();
 }
-void startBattle(Pokemon* team1, Pokemon* team2, int teamSize) {
+void startBattle(Pokemon* team1,item* bag1, Pokemon* team2,item* bag2, int teamSize) {
     Pokemon* t1Active; //Active pokemon pointers
     Pokemon* t2Active;
     std::string p1;//Player names
@@ -467,7 +544,7 @@ void startBattle(Pokemon* team1, Pokemon* team2, int teamSize) {
     system("CLS"); //Clears screen
     std::cout << "Enter the name for player 1:" << std::endl;
     std::cin.ignore(); //This needs to be here otherwise it skips
-    std::getline(std::cin, p1);
+    std::getline(std::cin, p1); //<--I have no idea what is going on here, I will just continue coding, and I will hope you know
     std::cout << "Enter the name for player 2:" << std::endl;
     std::getline(std::cin, p2);
     system("CLS");
@@ -477,9 +554,7 @@ void startBattle(Pokemon* team1, Pokemon* team2, int teamSize) {
     std::cin.ignore();
     //1st team initial pokemon choosing
     t1Active = &team1[0];
-    //ActiveMonNum1=t1Active->getHp();
     t2Active = &team2[0];
-    //ActiveMonNum2 = t2Active->getHp();
 
 /*std::cout << "Starting active pokemon are: " << T1Active.getName() << " " << T2Active.getName(); //Debug
 std::cin.get(); //Debug
@@ -505,7 +580,10 @@ std::cin.ignore();//Debug */
                 if (count1 > teamSize) {
                     std::cout << "YOU'RE OUT OF POKEMON " << p1;
                     std::cout << "You Win!\n" << p2;
+                    std::cout << "Press enter to continue...";
+                    std::cin.ignore();
                     winscreen();
+
                 }
                 else if (count1 <= teamSize) {
                     t1Active = &team1[count1];
@@ -514,7 +592,7 @@ std::cin.ignore();//Debug */
             }
             else
             {
-                battleMenu(t1Active, t2Active, p1);
+                battleMenu(team1,t1Active, bag1, t2Active, p1,teamSize);
                 checkFaint(t1Active, p1, p2);
             }
             turnNumP1++;
@@ -528,11 +606,13 @@ std::cin.ignore();//Debug */
                 std::cout << " is fainted" << std::endl;
                 std::cout << "sending out next pokemon";
                 std::cout << " is fainted" << std::endl;
-                std::cout << "Swaping Pokemon" << std::endl;
+                std::cout << "Swapping Pokemon" << std::endl;
                 count2++;
                 if (count2 > teamSize) {
                     std::cout << "NO POKEMON LEFT" << p2;
-                    std::cout << "You Win!" << p1;
+                    std::cout << "You Win!" << p1 << std::endl;
+                    std::cout << "Press enter to continue...";
+                    std::cin.ignore();
                     winscreen();
                 }
                 else if (count2 <= teamSize) {
@@ -542,7 +622,7 @@ std::cin.ignore();//Debug */
             }
             else
             {
-                battleMenu(t2Active, t1Active, p2);
+                battleMenu(team2,t2Active,bag2, t1Active, p2,teamSize);
                 checkFaint(t1Active, p2, p1);
             }
 
@@ -609,12 +689,12 @@ std::cin.ignore();//Debug */
      output.close();
  }
  
- void displayMenu(Pokemon *team1,Pokemon *team2, int teamSize) {
+ void displayMenu(Pokemon *team1,item* bag1,Pokemon *team2,item* bag2, int teamSize) {
      system("CLS");
      std::string enter;
      int choice;
      std::cout << "Welcome to the Pokoman™ Battler V0.6.0 " << std::endl << "Please Choose an option:" << std::endl;
-     std::cout << "[1] Start Battle(WIP)\n" << "[2]Generate Pokemon teams(WIP) and moves \n" << "[3]View Teams \n" << "[4]View all Pokemon \n" << "[5]View all Moves possible \n" << "[0]Exit \n";
+     std::cout << "[1] Start Battle\n" << "[2]Generate Pokemon teams and moves \n" << "[3]View Teams \n" << "[4]View all Pokemon \n" << "[5]View all Moves possible \n" << "[0]Exit \n";
      std::cin >> choice;
 
      switch (choice) {
@@ -625,7 +705,7 @@ std::cin.ignore();//Debug */
              std::cin.ignore();
          }
          else
-            startBattle(team1, team2, teamSize);
+            startBattle(team1,bag1, team2,bag2, teamSize);
          break;
      case 2:
          if (team1[0].getName() != "" || team2[0].getName() != "") {
@@ -644,12 +724,12 @@ std::cin.ignore();//Debug */
          if (team1[0].getName() != "" || team2[0].getName() != "") {
              std::cout << "On team 1 we have..." << std::endl;
              for (int i = 0; i < teamSize; i++) {
-                 std::cout << i + 1 << ". " << team1[i].getName()<<" They are a" << team1[i].getType1() << " " << team1[i].getType2()<<" type(s)";
+                 std::cout << i + 1 << ". " << team1[i].getName()<<" They are " << team1[i].getType1() << " " << team1[i].getType2()<<" type(s)";
                  std::cout<<std::endl;
              }
              std::cout << "On team 2 we have.." << std::endl;
              for (int i = 0; i < teamSize; i++) {
-                 std::cout << i + 1 << ". " << team2[i].getName() << " They are a " << team2[i].getType1() << " " << team2[i].getType2() << " type(s)";
+                 std::cout << i + 1 << ". " << team2[i].getName() << " They are " << team2[i].getType1() << " " << team2[i].getType2() << " type(s)";
                  std::cout << std::endl;
              }
              std::cout << "\n Press Enter to Continue...";
@@ -675,16 +755,16 @@ std::cin.ignore();//Debug */
      case 0:
          system("CLS");
          winscreen();
-
-         //All deletes need to go here
          delete[] team1;
+         delete[] bag1;
          delete[] team2;
+         delete[] bag2;
          exit(0);
          break;
      default:
          std::cout << "invalid input" <<std::endl << "Press enter to continue";
      }
-     displayMenu(team1, team2, teamSize); //Calls itself for an infinite loop
+     displayMenu(team1,bag1, team2,bag2, teamSize); //Calls itself for an infinite loop
  }
     int main() {
         int teamSize;
@@ -698,8 +778,26 @@ std::cin.ignore();//Debug */
             teamSize = 6;
         }
        Pokemon* team1 = new Pokemon[teamSize];
+       item* bag1 = new item[7]{//I chose not to include regular potions, because on level 100's it wouldn't do anything bu waste a move
+           potion("Super Potion","Heals pokemon by 50 HP.",5,50),
+           potion("Hyper Potion","Heals pokemon by 200 HP.",2,200),
+           potion("Max Potion", "Heals one poekmon to full hp",2,9001), //ITS OVER 9000
+           ether("Ether","Restores 10 PP to one move.",5,10),
+           ether("Max Ether","Restores all PP to one move.",2,100),
+           revive("Revive","Removes faint from one pokemon and restores them to 50% hp.",2,0.5),
+           revive("Max revive","Removes faint from one pokemon and restores them to 100% HP",1,1)
+       };
        Pokemon* team2 = new Pokemon[teamSize];
-        displayMenu(team1,team2,teamSize); //Start game loop
+       item* bag2 = new item[7]{//I chose not to include regular potions, because on level 100's it wouldn't do anything bu waste a move
+           potion("Super Potion","Heals pokemon by 50 HP.",5,50),
+           potion("Hyper Potion","Heals pokemon by 200 HP.",2,200),
+           potion("Max Potion", "Heals one poekmon to full hp",2,9001), //ITS OVER 9000
+           ether("Ether","Restores 10 PP to one move.",5,10),
+           ether("Max Ether","Restores all PP to one move.",2,100),
+           revive("Revive","Removes faint from one pokemon and restores them to 50% hp.",2,0.5),
+           revive("Max revive","Removes faint from one pokemon and restores them to 100% HP",1,1) 
+       }; //I chose to hardcode the bags because it was way easier than randomizing it
+        displayMenu(team1,bag1,team2,bag2,teamSize); //Start game loop
     //The below will never actually run
     delete[] team1;
     delete[] team2;
