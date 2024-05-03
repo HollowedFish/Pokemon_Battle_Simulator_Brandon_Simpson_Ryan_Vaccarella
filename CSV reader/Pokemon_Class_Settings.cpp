@@ -14,8 +14,8 @@ Pokemon::Pokemon() {
 	spDef = 0;
 	hp = 0;
 	spd = 0;
-	/*type1 = "";
-	type2 = "";*/ //These are for later
+	pokemonType1 = "";
+	pokemonType2 = ""; //These are for later
 }
 //This only needs to have the name as input, for simplicity
 Pokemon::Pokemon(int pkmnNum) {
@@ -79,6 +79,10 @@ Pokemon::Pokemon(int pkmnNum) {
 							possibleMoves[19] = "Double Hit";
 					}
 				}
+				getline(input, content, ',');
+					pokemonType1 = content;
+					getline(input, content);
+					pokemonType2 = content;
 				input.close();
 			}
 			else {
@@ -142,12 +146,12 @@ void Pokemon::setSpd(int spd) {
 void Pokemon::setName(std::string pkmnName) {
 	this->pkmnName = pkmnName;
 }
-/*void Pokemon::setType1(std::string type1) {
-	this->type1 = type1;
+void Pokemon::setType1(std::string pokemonType1) {
+	this->pokemonType1 = pokemonType1;
 }
-void Pokemon::setType2(std::string type2) {
-	this->type2 = type2;
-}*/
+void Pokemon::setType2(std::string pokemonType2) {
+	this->pokemonType2 = pokemonType2;
+}
 #pragma endregion
 //Getter functions
 #pragma region
@@ -175,12 +179,12 @@ int Pokemon::getSpd() {
 std::string Pokemon::getName() {
 	return pkmnName;
 }
-/*std::string Pokemon::getType1() {
-	return type1;
+std::string Pokemon::getType1() {
+	return pokemonType1;
 }
 std::string Pokemon::getType2() {
-	return type2;
-}*/
+	return pokemonType2;
+}
 #pragma endregion
 //Misc functions
 #pragma region

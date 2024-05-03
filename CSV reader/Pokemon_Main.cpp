@@ -58,6 +58,203 @@ quu..__
     //Don't put an exit at the end of this, ootherwise the deletes after this function is calledd will not be used
 
 }
+float SameTypeAttackBonus (Pokemon * Attacker, int u_choice) {
+    if (Attacker->getType1() == Attacker->moveSet[u_choice-1].gettypeMoves()) {
+        return 1.5;
+    }
+    else if (Attacker->getType2() == Attacker->moveSet[u_choice-1].gettypeMoves()) {
+        return 1.5;
+    }
+    else
+    return 1;
+}
+float WeaknessorResistance(Pokemon* Attacker, Pokemon* Defender, int u_choice) {
+    std::string attackingMoveType = Attacker->moveSet[u_choice - 1].gettypeMoves();
+    std::string defendingType[2] = { Defender->getType1(),Defender->getType2() };
+    float effectiveness = 1;
+    int count = 1;
+    if (defendingType[1] != "") {
+        count = 2;
+    }
+    for (int i = 0; i < count; i++) {
+        if (attackingMoveType == "Normal") {
+            if (defendingType[i] == "Rock" || defendingType[i] == "Steel"){
+                effectiveness /= 2;
+            }
+            else if (defendingType[i] == "Ghost" || defendingType[i + 1] == "Ghost") {
+                effectiveness = 0;
+                return effectiveness;
+            }
+
+        }
+        else if (attackingMoveType == "Psychic") {
+         
+            if (defendingType[i] == "Fighting" || defendingType[i] == "Poison") {
+                effectiveness *= 2;
+            }
+            else if (defendingType[i] == "Psychic" || defendingType[i] == "Steel") {
+                effectiveness /= 2;
+            }
+            else if (defendingType[i] == "Dark" || defendingType[i + 1] == "Dark") {
+                effectiveness = 0;
+                return effectiveness;
+            }
+        }
+        else if (attackingMoveType == "Grass") {
+            if (defendingType[i] == "Water" || defendingType[i] == "Ground" || defendingType[i] == "Rock") {
+                effectiveness *= 2;
+            }
+            else if (defendingType[i]=="Fire"|| defendingType[i]=="Grass"||defendingType[i]=="Poison"||defendingType[i]=="Flying"||defendingType[i]=="Bug"||defendingType[i]=="Dragon"||defendingType[i]=="Steel") {
+                effectiveness /= 2;
+            }
+        }
+        else if (attackingMoveType == "Fighting") {
+            if (defendingType[i] == "Normal" || defendingType[i] == "Ice" || defendingType[i] == "Rock" || defendingType[i] == "Dark" || defendingType[i] == "Steel") {
+                effectiveness *= 2;
+            }
+            else if (defendingType[i] == "Poison" || defendingType[i] == "Flying" || defendingType[i] == "Psychic" || defendingType[i] == "Bug" || defendingType[i] == "Fairy") {
+                effectiveness /= 2;
+            }
+            else if (defendingType[i] == "Ghost" || defendingType[i + 1] == "Ghost") {
+                effectiveness = 0;
+                return effectiveness;
+            }
+        }
+        else if (attackingMoveType == "Water") {
+            if (defendingType[i] == "Fire" || defendingType[i] == "Ground" || defendingType[i] == "Rock") {
+                effectiveness *= 2;
+            }
+            else if (defendingType[i] == "Water" || defendingType[i] == "Grass" || defendingType[i] == "Dragon") {
+                effectiveness /= 2;
+            }
+        }
+        else if (attackingMoveType == "Dark") {
+            if (defendingType[i] == "Psychic" || defendingType[i] == "Ghost") {
+                effectiveness *= 2;
+            }
+            else if (defendingType[i] == "Fighting" || defendingType[i] == "Dark" || defendingType[i] == "Fairy") {
+                effectiveness /= 2;
+            }
+        }
+        else if (attackingMoveType == "Electric") {  
+            if (defendingType[i] == "Water" || defendingType[i] == "Flying") {
+                effectiveness *=2;
+            }
+            else if (defendingType[i] == "Electric" || defendingType[i] == "Grass" || defendingType[i] == "Dragon") {
+                effectiveness /=2;
+            }
+            else if (defendingType[i] == "Ground" || defendingType[i + 1] == "Ground") {
+                effectiveness = 0;
+                return 0;
+            }
+        }
+        else if (attackingMoveType == "Fire") {
+            if (defendingType[i] == "Grass" || defendingType[i] == "Ice" || defendingType[i] == "Bug" || defendingType[i] == "Steel") {
+                effectiveness *=2;
+            }
+            else if (defendingType[i] == "Fire" || defendingType[i] == "Water" || defendingType[i] == "Rock" || defendingType[i] == "Dragon") {
+                effectiveness /=2;
+            }
+        }
+        else if (attackingMoveType == "Steel") {
+            if (defendingType[i] == "Ice" || defendingType[i] == "Rock" || defendingType[i] == "Fairy") {
+                effectiveness *=2;
+            }
+            else if (defendingType[i] == "Fire" || defendingType[i] == "Water" || defendingType[i] == "Electric" || defendingType[i] == "Steel") {
+                effectiveness /=2;
+            }
+        }
+        else if (attackingMoveType == "Poison") {
+            if (defendingType[i] == "Grass" || defendingType[i] == "Fairy") {
+                effectiveness *=2;
+            }
+            else if (defendingType[i] == "Poison" || defendingType[i] == "Ground" || defendingType[i] == "Rock" || defendingType[i] == "Ghost") {
+                effectiveness /=2;
+            }
+            else if (defendingType[i] == "Steel" || defendingType[i + 1] == "Steel") {
+                effectiveness = 0;
+                return 0;
+            }
+        }
+        else if (attackingMoveType == "Bug") {
+            if (defendingType[i] == "Grass" || defendingType[i] == "Psychic" ||defendingType[i]=="Dark")  {
+                effectiveness *=2;
+            }
+            else if (defendingType[i] == "Fire" || defendingType[i] == "Fighting" || defendingType[i] == "Poison" || defendingType[i] == "Flying" || defendingType[i] == "Ghost" || defendingType[i] == "Steel" || defendingType[i] == "Fairy") {
+                effectiveness /=2;
+            }
+        }
+        else if (attackingMoveType == "Fairy") {
+            if (defendingType[i] == "Fighting" || defendingType[i] == "Dragon" || defendingType[i] == "Dark") {
+            effectiveness *=2;
+            }
+            else if (defendingType[i] == "Fire" || defendingType[i] == "Poison" || defendingType[i] == "Steel") {
+                effectiveness /=2;
+            }
+        }
+        else if (attackingMoveType == "Ghost") {
+            if (defendingType[i] == "Psychic" || defendingType[i] == "Ghost") {
+            effectiveness *= 2;
+            }
+            else if (defendingType[i] == "Dark") {
+                effectiveness /= 2;
+            }
+            else if (defendingType[i] == "Normal" || defendingType[i + 1] == "Normal") {
+              effectiveness = 0;
+              return 0;
+            }
+        }
+        else if (attackingMoveType == "Ice") {
+            if (defendingType[i] == "Grass" || defendingType[i] == "Ground" || defendingType[i] == "Flying" || defendingType[i] == "Dragon") {
+                effectiveness *= 2;
+            }
+            else if (defendingType[i] == "Fire" || defendingType[i] == "Water" || defendingType[i] == "Ice" || defendingType[i] == "Steel") {
+                effectiveness / 2;
+            }
+        }
+        else if (attackingMoveType == "Dragon") {
+            if (defendingType[i] == "Dragon") {
+                effectiveness *= 2;
+            }
+            else if (defendingType[i] == "Steel") {
+                effectiveness /= 2;
+            }
+            else if (defendingType[i] == "Fairy" || defendingType[i + 1] == "Fairy") {
+                effectiveness = 0;
+                return effectiveness;
+            }
+        }
+        else if (attackingMoveType == "Ground") {
+            if (defendingType[i] == "Fire" || defendingType[i] == "Electric" || defendingType[i] == "Poison" || defendingType[i] == "Rock" || defendingType[i] == "Steel") {
+                effectiveness *= 2;
+            }
+            else if (defendingType[i] == "Grass" || defendingType[i] == "Bug") {
+                effectiveness /= 2;
+            }
+            else if (defendingType[i] == "Flying" || defendingType[i + 1] == "Flying") {
+                effectiveness = 0;
+                return effectiveness;
+            }
+        }
+        else if (attackingMoveType == "Flying") {
+            if (defendingType[i] == "Grass" || defendingType[i] == "Fighting" || defendingType[i] == "Bug") {
+                effectiveness *= 2;
+            }
+            else if (defendingType[i] == "Electric" || defendingType[i] == "Rock" || defendingType[i] == "Steel") {
+                effectiveness /= 2;
+            }
+        }
+        else if (attackingMoveType == "Rock") {
+            if (defendingType[i] == "Fire" || defendingType[i] == "Ice" || defendingType[i] == "Flying" || defendingType[i] == "Bug") {
+                effectiveness *= 2;
+            }
+            else if (defendingType[i] == "Fighting" || defendingType[i] == "Ground" || defendingType[i] == "Steel") {
+                effectiveness /= 2;
+            }
+        }
+    }
+    return effectiveness;
+}
 void damageCalculator(Pokemon* Attacker,Pokemon*Defender,int u_choice) {
     //std::cout << Attacker->moveSet[u_choice].getpowerMoves();//Debug
     system("CLS");
@@ -66,20 +263,21 @@ void damageCalculator(Pokemon* Attacker,Pokemon*Defender,int u_choice) {
     std::cin.get();
     system("CLS");
     int movedmg = Attacker->moveSet[u_choice - 1].getpowerMoves();
-    std::string typeAtk1 = Attacker->moveSet[u_choice - 1].getcategoryMoves();
-    int dmg;
-    int def;
+    std::string categoryAtk = Attacker->moveSet[u_choice - 1].getcategoryMoves();
+    int aDmg;
+    int dDef;
     int damage;
-    int randomNumber = rand() % 100 + 85;
-    if (typeAtk1 == "Physical") {
-        dmg = Attacker->getAtk();
-        def = Defender->getDef();
+    int randomNumber = rand() % 15+85+rand()%2;
+    if (categoryAtk == "Physical") {
+        aDmg = Attacker->getAtk();
+        dDef = Defender->getDef();
     }
     else {
-        dmg = Attacker->getSpAtk();
-        def = Defender->getDef();
+        aDmg = Attacker->getSpAtk();
+        dDef = Defender->getDef();
     }
-    damage = ((((2 * 100 / 7) * dmg * movedmg / def) / 50) + 2) * randomNumber / 100;
+    // Actual damage calculator = ((((2 * Level / 5 + 2) * AttackStat * AttackPower / DefenseStat) / 50) + 2) * STAB * Weakness / Resistance * RandomNumber / 100
+    damage = (((((2 * 100 / 7) * aDmg * movedmg / dDef) / 50) + 2) * SameTypeAttackBonus(Attacker,u_choice)*WeaknessorResistance(Attacker,Defender,u_choice)*randomNumber) / 100;
     std::cout << Defender->getName() << " Took " << damage<<" damage";
     std::cin.ignore();
     std::cin.get();
@@ -104,7 +302,7 @@ void fightMoves(Pokemon*Attacker,Pokemon*Defender){
         for (int i = 0; i <= 3; i++) {
             powerPointsLeft[i] = Attacker->moveSet[i].getpowerPointMoves();
             powerPointsTotal[i] = Attacker->moveSet[i].getpowerPointMovesTotal();
-            std::cout << i + 1 << ". " << Attacker->moveSet[i].getnameMoves() << " PP " <<powerPointsLeft[i] <<" / "<<powerPointsTotal[i]<<std::endl;
+            std::cout << i + 1 << ". " << Attacker->moveSet[i].getnameMoves() << " PP " <<powerPointsLeft[i] <<" / "<<powerPointsTotal[i]<< " Type "<<Attacker->moveSet[i].gettypeMoves()<<std::endl;
         }
         std::cin >> u_choice;
         switch (u_choice) {
@@ -446,11 +644,13 @@ std::cin.ignore();//Debug */
          if (team1[0].getName() != "" || team2[0].getName() != "") {
              std::cout << "On team 1 we have..." << std::endl;
              for (int i = 0; i < teamSize; i++) {
-                 std::cout << i + 1 << ". " << team1[i].getName() << std::endl;
+                 std::cout << i + 1 << ". " << team1[i].getName()<<" They are a" << team1[i].getType1() << " " << team1[i].getType2()<<" type(s)";
+                 std::cout<<std::endl;
              }
              std::cout << "On team 2 we have.." << std::endl;
              for (int i = 0; i < teamSize; i++) {
-                 std::cout << i + 1 << ". " << team2[i].getName() << std::endl;
+                 std::cout << i + 1 << ". " << team2[i].getName() << " They are a " << team2[i].getType1() << " " << team2[i].getType2() << " type(s)";
+                 std::cout << std::endl;
              }
              std::cout << "\n Press Enter to Continue...";
              std::cin.get();  

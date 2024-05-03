@@ -14,8 +14,8 @@ private:
 	int maxHP = 0;
 	int spd = 0;
 	std::string pkmnName = "";
-	/*std::string type1 = "";
-	std::string type2 = "";*/
+	std::string pokemonType1 = "";
+	std::string pokemonType2 = "";
 	std::string possibleMoves[30];
 	bool KO = false;
 public:
@@ -88,6 +88,8 @@ public:
 	void setHp(int hp);
 	void setMaxHP(int maxHP);
 	void setSpd(int spd);
+	void setType1(std::string pokemonType1);
+	void setType2(std::string pokemonType2);
 	void setmoveSet(Pokemon::Moves moveset);
 	//void setType1(std::string type1);
 	//void setType2(std::string type2);
@@ -100,8 +102,8 @@ public:
 	int getSpDef();
 	int getSpd();
 	std::string getName();
-	//std::string getType1();
-	//std::string getType2();
+	std::string getType1();
+	std::string getType2();
 	//Misc functions
 	bool isKO();
 	void setKO(bool KO_Value);
