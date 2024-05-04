@@ -283,7 +283,7 @@ void damageCalculator(Pokemon* Attacker,Pokemon*Defender,int u_choice) {
     std::cin.get();
     Defender->setHp(Defender->getHp() - damage);
 }
-void swapPokemon(Pokemon* team,Pokemon* activeMon, int teamSize, int* choice) {
+Pokemon* swapPokemon(Pokemon* team,Pokemon* activeMon, int teamSize, int* choice) {
     system("CLS");
     std::cout << "Which Pokemon would you like to swap to?" << std::endl;
     std::string faintCheck = "";
@@ -295,12 +295,13 @@ void swapPokemon(Pokemon* team,Pokemon* activeMon, int teamSize, int* choice) {
         else faintCheck = "FAINTED";
         std::cout << i + 1 << ". " << faintCheck << " " << team[i].getName() << std::endl;
     }
-    std::cout << "0. Exit Menu" << std::endl << "--------------------------" << std::endl;
+    std::cout << "--------------------------" << std::endl;
     std::cin >> choice1;
-    if (choice1 == 0) { choice--; return; }
-    activeMon = &team[choice1 - 1];
-    std::cout << "Active pokemon is now: " << activeMon->getName();
+    std::cout << "Active pokemon is now: " << team[choice1-1].getName();
+    std::cin.get();
     std::cin.ignore();
+    return &team[choice1 - 1];
+    
 }
 bool bag(Pokemon* team, item** itemBag, bool bagSuccess,int teamSize) {
     int emptyBagSlots = 0;
@@ -470,7 +471,7 @@ void battleMenu(Pokemon*attackingTeam,Pokemon*Attacker,item** itemBag,Pokemon*De
             }
             break;
         case 3:
-            swapPokemon(attackingTeam,Attacker,teamSize, &choice);
+            Attacker = swapPokemon(attackingTeam,Attacker,teamSize, &choice);
             break;
         case 4:
             //run
@@ -548,11 +549,11 @@ void viewMoves() {
     }
     output.close();
 }
-void startBattle(Pokemon* team1,item** bag1, Pokemon* team2,item** bag2, int teamSize) {
+void startBattle(Pokemon* team1, item** bag1, Pokemon* team2, item** bag2, int teamSize) {
     Pokemon* t1Active; //Active pokemon pointers
     Pokemon* t2Active;
-    item** t1bag= bag1;
-    item** t2bag=bag2;
+    item** t1bag = bag1;
+    item** t2bag = bag2;
     std::string p1;//Player names
     std::string p2;
     //int ActiveMonNum1;
@@ -567,17 +568,16 @@ void startBattle(Pokemon* team1,item** bag1, Pokemon* team2,item** bag2, int tea
     system("CLS");
     std::cout << "Trainer " << p1 << " challenges Trainer " << p2 << " to a Battle!" << std::endl;
     std::cout << "Press Enter to continue...";
-    std::cin.get();
     std::cin.ignore();
     //1st team initial pokemon choosing
-    t1Active = &team1[0];
-    t2Active = &team2[0];
+    t1Active = swapPokemon(team1,&team1[0],teamSize,0);
+    t2Active = swapPokemon(team2,&team2[0],teamSize,0);
 
-/*std::cout << "Starting active pokemon are: " << T1Active.getName() << " " << T2Active.getName(); //Debug
-std::cin.get(); //Debug
-std::cin.ignore();//Debug */
+    /*std::cout << "Starting active pokemon are: " << T1Active.getName() << " " << T2Active.getName(); //Debug
+    std::cin.get(); //Debug
+    std::cin.ignore();//Debug */
 
-//Actual battle loop time, here we go!
+    //Actual battle loop time, here we go!
     bool p1Win = false;
     bool p2Win = false;
     int turnNumP1 = 0;
@@ -585,12 +585,14 @@ std::cin.ignore();//Debug */
     int count1 = 1;
     int count2 = 1;
     std::string typeAtk1, typeAtk2;
+    std::cout << "Flag 1\n"; //Debug
     while (p1Win == false && p2Win == false) {
 
         if (turnNumP1 <= turnNumP2) {
+            turnNumP1++;
             //Like the snakes and ladders game from last year
-
-            if (checkFaint(t1Active,p1,p2)){
+            std::cout << "Flag 2\n";//Debug
+            if (checkFaint(t1Active, p1, p2)) {
                 std::cout << " is fainted" << std::endl;
                 count1++;
                 if (count1 > teamSize) {
@@ -598,53 +600,56 @@ std::cin.ignore();//Debug */
                     std::cout << "You Win!\n" << p2;
                     std::cout << "Press enter to continue...";
                     std::cin.ignore();
+                    delete[] team1;
+                    delete[] team2;
+                    delete t1Active;
+                    delete t2Active;
+                    for (int i = 0; i < 7; i++) {
+                        delete t1bag[i];
+                        delete t2bag[i];
+                    }
+                    delete t1bag;
+                    delete t2bag;
                     winscreen();
 
                 }
                 else if (count1 <= teamSize) { //Team swapping when fainted
-                    int strge = 0;
-                    while (strge == 0) {
-                        strge++;
-                        swapPokemon(team1, t1Active, teamSize, &strge);
+                    t1Active = swapPokemon(team1, t1Active, teamSize, 0);
+                }
+                else
+                {
+                    battleMenu(team1, t1Active, t1bag, t2Active, p1, teamSize);
+                    checkFaint(t1Active, p1, p2);
+                }
+                int choice = 0;
+                system("CLS");
+            }
+            if (turnNumP1 > turnNumP2) {
+                std::cout << "Flag 3\n";
+                turnNumP2++;
+                int choice = 0;
+                if (checkFaint(t2Active, p2, p1)) {
+                    std::cout << " is fainted" << std::endl;
+                    count2++;
+                    if (count2 > teamSize) {
+                        std::cout << "NO POKEMON LEFT" << p2;
+                        std::cout << "You Win!" << p1 << std::endl;
+                        std::cout << "Press enter to continue...";
+                        std::cin.ignore();
+                        winscreen();
                     }
-                }
-            }
-            else
-            {
-                battleMenu(team1,t1Active, t1bag, t2Active, p1,teamSize);
-                checkFaint(t1Active, p1, p2);
-            }
-            turnNumP1++;
-            int choice = 0;
-            system("CLS");
-        }
-        if (turnNumP1 > turnNumP2) {
-            turnNumP2++;
-            int choice = 0;
-            if (checkFaint(t2Active,p2,p1)) {
-                std::cout << " is fainted" << std::endl;
-                count2++;
-                if (count2 > teamSize) {
-                    std::cout << "NO POKEMON LEFT" << p2;
-                    std::cout << "You Win!" << p1 << std::endl;
-                    std::cout << "Press enter to continue...";
-                    std::cin.ignore();
-                    winscreen();
-                }
-                else if (count2 <= teamSize) {
-                    int strge = 0;
-                    while (strge == 0) {
-                        strge++;
-                        swapPokemon(team2, t2Active, teamSize, &strge);
-                    }
-                }
-            }
-            else
-            {
-                battleMenu(team2,t2Active,t2bag, t1Active, p2,teamSize);
-                checkFaint(t1Active, p2, p1);
-            }
+                    else if (count2 <= teamSize) {
+                        t2Active = swapPokemon(team2, t2Active, teamSize, 0);
 
+                    }
+                }
+                else
+                {
+                    battleMenu(team2, t2Active, t2bag, t1Active, p2, teamSize);
+                    checkFaint(t1Active, p2, p1);
+                }
+
+            }
         }
     }
 }
