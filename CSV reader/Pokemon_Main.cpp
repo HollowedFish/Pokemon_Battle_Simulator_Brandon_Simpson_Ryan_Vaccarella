@@ -283,7 +283,7 @@ void damageCalculator(Pokemon* Attacker,Pokemon*Defender,int u_choice) {
     std::cin.get();
     Defender->setHp(Defender->getHp() - damage);
 }
-void swapPokemon(Pokemon* team,Pokemon* activeMon, int teamSize, int* choice) {
+Pokemon* swapPokemon(Pokemon* team,Pokemon* activeMon, int teamSize, int* choice) {
     system("CLS");
     std::cout << "Which Pokemon would you like to swap to?" << std::endl;
     std::string faintCheck = "";
@@ -456,7 +456,7 @@ void battleMenu(Pokemon*attackingTeam,Pokemon*Attacker,item** itemBag,Pokemon*De
     int u_choice = 0;
     while (choice == 0) {
         std::cout << Attacker->getName() << " Has " << Attacker->getHp() << " / " << Attacker->getMaxHP()<<std::endl;
-        std::cout << "1.Fight" << std::endl << "2.Bag(WIP)" << std::endl << "3.Swap current Pokemon(WIP)" << std::endl <<"4.Run "<<std::endl<<"Enter number here : ";
+        std::cout << "1.Fight" << std::endl << "2.Bag" << std::endl << "3.Swap current Pokemon(WIP)" << std::endl <<"4.Run "<<std::endl<<"Enter number here : ";
         std::cin >> u_choice;
         switch (u_choice) {
         case 1:
@@ -470,7 +470,8 @@ void battleMenu(Pokemon*attackingTeam,Pokemon*Attacker,item** itemBag,Pokemon*De
             }
             break;
         case 3:
-            swapPokemon(attackingTeam,Attacker,teamSize, &choice);
+            std::cout << "Not implemented in this version";
+            //Attacker = swapPokemon(attackingTeam,Attacker,teamSize, &choice);
             break;
         case 4:
             //run
@@ -790,7 +791,7 @@ std::cin.ignore();//Debug */
     int main() {
         int teamSize;
      
-        std::cout << "How many pokemon on each team?(Max: 6)";
+        std::cout << "How many pokemon on each team?(Max: 1)";
         std::cin >> teamSize;
         if (teamSize > 6 || teamSize <= 0) {
             std::cout << "Nice try. The size of each team is now 6." << std::endl << "Press Enter to Continue...";
