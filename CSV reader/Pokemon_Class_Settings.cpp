@@ -29,7 +29,7 @@ Pokemon::Pokemon(int pkmnNum) {
 		getline(input, storage);
 	} // Adds all usable moves to an array
 	input.close();
-	input.open("PokemonGens1-3.csv");
+	input.open("PokemonGens 1-5 - Sheet1.csv");
 	if (input.is_open()) {
 		std::string content;
 		for (int i = 1; i <= pkmnNum; i++) {

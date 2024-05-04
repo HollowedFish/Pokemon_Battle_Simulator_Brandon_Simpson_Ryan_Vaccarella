@@ -657,7 +657,7 @@ std::cin.ignore();//Debug */
      int pkmnR;
      std::string content;
      for (int c = 0; c < teamSize; c++) {
-         pkmnR = (rand() % 387) + 1;
+         pkmnR = (rand() % 653) + 1;
          if (pkmnR == 1) {
              pkmnR = 2; //This makes sure that we don't make a pokemon with the header line
              //Wasn't necessary before because the other csv didn't have one
@@ -666,7 +666,7 @@ std::cin.ignore();//Debug */
      }
 
      for (int c = 0; c < teamSize; c++) { //Makes team 2 by copying the process of team 1, may or may not be duplicate mons
-         pkmnR = (rand() % 387) + 1;
+         pkmnR = (rand() % 653) + 1;
          if (pkmnR == 1) {
              pkmnR = 2; //This makes sure that we don't make a pokemon with the header line
              //Wasn't necessary before because the other csv didn't have one
@@ -679,7 +679,7 @@ std::cin.ignore();//Debug */
  }
  void displayPokemonAvailable() {
      std::ifstream output;
-     output.open("PokemonGens1-3.csv");
+     output.open("PokemonGens 1-5 - Sheet1.csv");
      std::string content;
      if (output.is_open()) {
          std::vector<std::string> pokemonAvailable = {};
