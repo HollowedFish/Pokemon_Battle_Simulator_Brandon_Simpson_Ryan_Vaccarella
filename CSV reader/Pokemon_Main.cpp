@@ -295,12 +295,12 @@ Pokemon* swapPokemon(Pokemon* team,Pokemon* activeMon, int teamSize, int* choice
         else faintCheck = "FAINTED";
         std::cout << i + 1 << ". " << faintCheck << " " << team[i].getName() << std::endl;
     }
-    std::cout << "0. Exit Menu" << std::endl << "--------------------------" << std::endl;
+    std::cout/* << "0. Exit Menu" */<< std::endl << "--------------------------" << std::endl;
     std::cin >> choice1;
-    if (choice1 == 0) { choice--; return; }
-    return &team[choice1 - 1];
+    //if (choice1 == 0) { choice--; return; }
     std::cout << "Active pokemon is now: " << activeMon->getName();
     std::cin.ignore();
+    return &team[choice1 - 1];
 }
 bool bag(Pokemon* team, item** itemBag, bool bagSuccess,int teamSize) {
     int emptyBagSlots = 0;
