@@ -654,7 +654,7 @@ std::cin.ignore();//Debug */
      int pkmnR;
      std::string content;
      for (int c = 0; c < teamSize; c++) {
-         pkmnR = (rand() % 387) + 1;
+         pkmnR = (rand() % 653) + 1;
          if (pkmnR == 1) {
              pkmnR = 2; //This makes sure that we don't make a pokemon with the header line
              //Wasn't necessary before because the other csv didn't have one
@@ -663,7 +663,7 @@ std::cin.ignore();//Debug */
      }
 
      for (int c = 0; c < teamSize; c++) { //Makes team 2 by copying the process of team 1, may or may not be duplicate mons
-         pkmnR = (rand() % 387) + 1;
+         pkmnR = (rand() % 653) + 1;
          if (pkmnR == 1) {
              pkmnR = 2; //This makes sure that we don't make a pokemon with the header line
              //Wasn't necessary before because the other csv didn't have one
@@ -676,7 +676,7 @@ std::cin.ignore();//Debug */
  }
  void displayPokemonAvailable() {
      std::ifstream output;
-     output.open("PokemonGens1-3.csv");
+     output.open("PokemonGens 1-5 - Sheet1.csv");
      std::string content;
      if (output.is_open()) {
          std::vector<std::string> pokemonAvailable = {};
@@ -818,7 +818,7 @@ std::cin.ignore();//Debug */
        }; //I chose to hardcode the bags because it was way easier than randomizing it
         displayMenu(team1,bag1,team2,bag2,teamSize); //Start game loop
     //The below will never actually run
-    delete[] team1;
-    delete[] team2;
+        delete[] team1;
+        delete[] team2;
     //delete[] moveSet;
 }
