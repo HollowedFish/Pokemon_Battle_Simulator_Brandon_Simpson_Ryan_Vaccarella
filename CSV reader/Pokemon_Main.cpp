@@ -591,7 +591,6 @@ void startBattle(Pokemon* team1, item** bag1, Pokemon* team2, item** bag2, int t
         if (turnNumP1 <= turnNumP2) {
             turnNumP1++;
             //Like the snakes and ladders game from last year
-            std::cout << "Flag 2\n";//Debug
             if (checkFaint(t1Active, p1, p2)) {
                 std::cout << " is fainted" << std::endl;
                 count1++;
@@ -625,7 +624,6 @@ void startBattle(Pokemon* team1, item** bag1, Pokemon* team2, item** bag2, int t
                 system("CLS");
             }
             if (turnNumP1 > turnNumP2) {
-                std::cout << "Flag 3\n";
                 turnNumP2++;
                 int choice = 0;
                 if (checkFaint(t2Active, p2, p1)) {
