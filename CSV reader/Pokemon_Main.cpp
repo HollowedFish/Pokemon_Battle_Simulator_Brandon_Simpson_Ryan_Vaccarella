@@ -494,8 +494,10 @@ bool checkFaint(Pokemon* Active,std::string  trainer,std::string trainer_2) {
      int hp = Active->getHp();
     bool ko = false;
     if (hp<= 0) {
-        ko = true;
-        Active->setHp(0);
+        std::cout << Active->getName() << " fainted!";
+        std::cout << trainer_2 << " You are out of Pokemon" << std::endl;
+        std::cout << trainer << " You Win!" << std::endl;
+        winscreen();
     }
     return ko;
 }
