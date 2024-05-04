@@ -31,10 +31,14 @@ potion::potion(std::string name, std::string description, int quantity, int heal
 int potion::getHealVal(){return healVal; }
 void potion::setHealVal(int healVal) { this->healVal = healVal; }
 void potion::use(Pokemon* pokemon) {
+	std::cout << name << " " << healVal <<std::endl;//Debug
+	std::cout << description << " " << quantity << std::endl;//Debug
 	pokemon->setHp(pokemon->getHp() + healVal);
-	if (pokemon->getHp() > pokemon->getMaxHP()) { pokemon->setHp(pokemon->getMaxHP()); }
-	std::cout << "New hp total is: " << pokemon->getHp();
-	std::cin.get();
+	if (pokemon->getHp() > pokemon->getMaxHP() || pokemon->getHp() <= 0) { pokemon->setHp(pokemon->getMaxHP()); }
+	std::cout << "New hp total is: " << pokemon->getHp() << "/" << pokemon->getMaxHP();
+	quantity--;
+	//std::cout << "Item used"; //Debug
+	//exit(10); //Debug
 	std::cin.ignore();
 }
 void potion::printItem(){}
@@ -49,12 +53,11 @@ int ether::getPPRV() { return PP_RestoreVal; }
 void ether::setPPRV(int PP_RestoreVal) { this->PP_RestoreVal = PP_RestoreVal; }
 void ether::use(Pokemon* pokemon) {
 	int choice = 0;
-	system("CLR");
 	std::cout << "Please choose which move to use the ether on:\n";
-	std::cout << "1." << pokemon->moveSet[0].getnameMoves() << pokemon->moveSet[0].getpowerPointMoves() << "/" << pokemon->moveSet[0].getpowerPointMovesTotal() << std::endl;
-	std::cout << "2." << pokemon->moveSet[1].getnameMoves() << pokemon->moveSet[1].getpowerPointMoves() << "/" << pokemon->moveSet[1].getpowerPointMovesTotal() << std::endl;
-	std::cout << "3." << pokemon->moveSet[2].getnameMoves() << pokemon->moveSet[2].getpowerPointMoves() << "/" << pokemon->moveSet[2].getpowerPointMovesTotal() << std::endl;
-	std::cout << "4." << pokemon->moveSet[3].getnameMoves() << pokemon->moveSet[3].getpowerPointMoves() << "/" << pokemon->moveSet[3].getpowerPointMovesTotal() << std::endl;
+	std::cout << "1." << pokemon->moveSet[0].getnameMoves() << " " << pokemon->moveSet[0].getpowerPointMoves() << "/" << pokemon->moveSet[0].getpowerPointMovesTotal() << std::endl;
+	std::cout << "2." << pokemon->moveSet[1].getnameMoves() << " " << pokemon->moveSet[1].getpowerPointMoves() << "/" << pokemon->moveSet[1].getpowerPointMovesTotal() << std::endl;
+	std::cout << "3." << pokemon->moveSet[2].getnameMoves() << " " << pokemon->moveSet[2].getpowerPointMoves() << "/" << pokemon->moveSet[2].getpowerPointMovesTotal() << std::endl;
+	std::cout << "4." << pokemon->moveSet[3].getnameMoves() << " " << pokemon->moveSet[3].getpowerPointMoves() << "/" << pokemon->moveSet[3].getpowerPointMovesTotal() << std::endl;
 	std::cin >> choice;
 	std::cin.ignore();
 	pokemon->moveSet[choice - 1].setpowerPointsMoves(pokemon->moveSet[choice - 1].getpowerPointMoves() + PP_RestoreVal);
@@ -63,7 +66,6 @@ void ether::use(Pokemon* pokemon) {
 	}
 	std::cout << "New PP Total is " << pokemon->moveSet[choice - 1].getpowerPointMoves() << "/" << pokemon->moveSet[choice - 1].getpowerPointMovesTotal();
 	std::cout << "Press enter to continue...";
-	std::cin.get();
 	std::cin.ignore();
 }
 void ether::printItem(){}

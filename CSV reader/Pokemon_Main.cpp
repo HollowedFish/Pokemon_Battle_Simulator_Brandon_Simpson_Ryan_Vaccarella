@@ -283,18 +283,33 @@ void damageCalculator(Pokemon* Attacker,Pokemon*Defender,int u_choice) {
     std::cin.get();
     Defender->setHp(Defender->getHp() - damage);
 }
-void swapPokemon() {
-    std::cout << "You don't have anymore Pokemon!" << std::endl;
+void swapPokemon(Pokemon* team,Pokemon* activeMon, int teamSize, int* choice) {
+    system("CLS");
+    std::cout << "Which Pokemon would you like to swap to?" << std::endl;
+    std::string faintCheck = "";
+    int choice1 = 0;
+    for (int i = 0; i < teamSize; i++) {
+        if (team[i].isKO() == false) {
+            faintCheck = "ALIVE";
+        }
+        else faintCheck = "FAINTED";
+        std::cout << i + 1 << ". " << faintCheck << " " << team[i].getName() << std::endl;
+    }
+    std::cout << "0. Exit Menu" << std::endl << "--------------------------" << std::endl;
+    std::cin >> choice1;
+    if (choice1 == 0) { choice--; return; }
+    activeMon = &team[choice1 - 1];
+    std::cout << "Active pokemon is now: " << activeMon->getName();
     std::cin.ignore();
 }
-bool bag(Pokemon* team, item* itemBag, bool bagSuccess,int teamSize) {
+bool bag(Pokemon* team, item** itemBag, bool bagSuccess,int teamSize) {
     int emptyBagSlots = 0;
     int choice1 = 0;
     int choice2 = 0;
     std::string choiceS;
     for (int i = 0; i < 7; i++) { //This assumes that there are 7 bag slots, CHANGE THIS IF WE ADD MORE ITEMS
-        if (itemBag[i].getQuantity() == 0) { emptyBagSlots++; }
-        //It actually doens't matter that this treats them all like base items, because quantity is inherent to item
+        if (itemBag[i]->getQuantity() == 0) { emptyBagSlots++; }
+        //It actually doesn't matter that this treats them all like base items, because quantity is inherent to item
         //I will need to do some dynamic cast black magic later though
     }
     if (emptyBagSlots == 7) {
@@ -305,8 +320,8 @@ bool bag(Pokemon* team, item* itemBag, bool bagSuccess,int teamSize) {
     }
     std::cout << "Choose which item you want to use:" << std::endl;
     for (int i = 0; i < 7; i++) {
-        std::cout << i+1 << ". " << itemBag[i].getName() << " X " << itemBag[i].getQuantity() << std::endl;
-        std::cout << "  -" << itemBag[i].getDescription() << std::endl;
+        std::cout << i+1 << ". " << itemBag[i]->getName() << " X " << itemBag[i]->getQuantity() << std::endl;
+        std::cout << "  -" << itemBag[i]->getDescription() << std::endl;
     }
     std::cout << "0. Exit Menu" <<std::endl;
     std::cout << "--------------------------" << std::endl;
@@ -324,21 +339,24 @@ bool bag(Pokemon* team, item* itemBag, bool bagSuccess,int teamSize) {
         }
         std::cout << "--------------------------\n";
         std::cin >> choice2;
-        if (potion* I = dynamic_cast<potion*>(&itemBag[choice1 - 1])) {//Yikes
+        if (potion* I = dynamic_cast<potion*>(itemBag[choice1 - 1])) {//Yikes
             I->use(&team[choice2 - 1]); //Dear god this is cursed
+            std::cout << team[choice2 - 1].getName();
         }
+        else exit(20);
         bagSuccess = true;
+        std::cin.get();
         std::cin.ignore();
         break;
     case 4://ethers
     case 5:
-        std::cout << "Choose which pokemon you want to use this item on:";
+        std::cout << "Choose which pokemon you want to use this item on:" << std::endl;
         for (int i = 0; i < teamSize; i++) {//Had to import teamSize just for this
-            std::cout << i << ". " << team[i].getName();
+            std::cout << i+1 << ". " << team[i].getName() << " HP:" << team[i].getHp() << "/" << team[i] .getMaxHP() << std::endl;
         }
         std::cout << "--------------------------\n";
         std::cin >> choice2;
-        if (ether* I = dynamic_cast<ether*>(&itemBag[choice1 - 1])) {//Yikes
+        if (ether* I = dynamic_cast<ether*>(itemBag[choice1 - 1])) {//Yikes
             I->use(&team[choice2 - 1]); //Dear god this is cursed
         }
         bagSuccess = true;
@@ -346,13 +364,13 @@ bool bag(Pokemon* team, item* itemBag, bool bagSuccess,int teamSize) {
         break;
     case 6://revives
     case 7:
-        std::cout << "Choose which pokemon you want to use this item on:";
+        std::cout << "Choose which pokemon you want to use this item on:"<< std::endl;
         for (int i = 0; i < teamSize; i++) {//Had to import teamSize just for this
-            std::cout << i << ". " << team[i].getName();
+            std::cout << i+1 << ". " << team[i].getName() << std::endl;
         }
         std::cout << "--------------------------\n";
         std::cin >> choice2;
-        if (revive* I = dynamic_cast<revive*>(&itemBag[choice1 - 1])) {//Yikes
+        if (revive* I = dynamic_cast<revive*>(itemBag[choice1 - 1])) {//Yikes
             I->use(&team[choice2 - 1]); //Dear god this is cursed
         }
         bagSuccess = true;
@@ -360,7 +378,7 @@ bool bag(Pokemon* team, item* itemBag, bool bagSuccess,int teamSize) {
         break;
     default:
         std::cout << "Invalid choice, try again.";
-        bool storage = bag(team, itemBag, bagSuccess, teamSize);
+        return bag(team, itemBag, bagSuccess, teamSize); //This calls itself and I think it might work?
         break;
     }
     return bagSuccess;
@@ -431,7 +449,7 @@ void fightMoves(Pokemon*Attacker,Pokemon*Defender){
     }
 
 }
-void battleMenu(Pokemon*attackingTeam,Pokemon*Attacker,item*itemBag,Pokemon*Defender,std::string playerName,int teamSize) {
+void battleMenu(Pokemon*attackingTeam,Pokemon*Attacker,item** itemBag,Pokemon*Defender,std::string playerName,int teamSize) {
     system("CLS");
     bool bagSuccess = false;
     int choice = 0;
@@ -452,7 +470,7 @@ void battleMenu(Pokemon*attackingTeam,Pokemon*Attacker,item*itemBag,Pokemon*Defe
             }
             break;
         case 3:
-            swapPokemon();
+            swapPokemon(attackingTeam,Attacker,teamSize, &choice);
             break;
         case 4:
             //run
@@ -473,14 +491,11 @@ void battleMenu(Pokemon*attackingTeam,Pokemon*Attacker,item*itemBag,Pokemon*Defe
 }
 
 bool checkFaint(Pokemon* Active,std::string  trainer,std::string trainer_2) {
-     int hp= Active->getHp();
+     int hp = Active->getHp();
     bool ko = false;
     if (hp<= 0) {
-        
-        std::cout << Active->getName() << " fainted!";
-        std::cout << trainer_2 << " You are out of Pokemon" << std::endl;
-        std::cout << trainer << " You Win!"<<std::endl;
-        winscreen();
+        ko = true;
+        Active->setHp(0);
     }
     return ko;
 }
@@ -533,9 +548,11 @@ void viewMoves() {
     }
     output.close();
 }
-void startBattle(Pokemon* team1,item* bag1, Pokemon* team2,item* bag2, int teamSize) {
+void startBattle(Pokemon* team1,item** bag1, Pokemon* team2,item** bag2, int teamSize) {
     Pokemon* t1Active; //Active pokemon pointers
     Pokemon* t2Active;
+    item** t1bag= bag1;
+    item** t2bag=bag2;
     std::string p1;//Player names
     std::string p2;
     //int ActiveMonNum1;
@@ -575,7 +592,6 @@ std::cin.ignore();//Debug */
 
             if (checkFaint(t1Active,p1,p2)){
                 std::cout << " is fainted" << std::endl;
-                std::cout << "Swapping Pokemon" << std::endl;
                 count1++;
                 if (count1 > teamSize) {
                     std::cout << "YOU'RE OUT OF POKEMON " << p1;
@@ -585,14 +601,17 @@ std::cin.ignore();//Debug */
                     winscreen();
 
                 }
-                else if (count1 <= teamSize) {
-                    t1Active = &team1[count1];
-                    //ActiveMonNum1 = t1Active->getHp();
+                else if (count1 <= teamSize) { //Team swapping when fainted
+                    int strge = 0;
+                    while (strge == 0) {
+                        strge++;
+                        swapPokemon(team1, t1Active, teamSize, &strge);
+                    }
                 }
             }
             else
             {
-                battleMenu(team1,t1Active, bag1, t2Active, p1,teamSize);
+                battleMenu(team1,t1Active, t1bag, t2Active, p1,teamSize);
                 checkFaint(t1Active, p1, p2);
             }
             turnNumP1++;
@@ -604,9 +623,6 @@ std::cin.ignore();//Debug */
             int choice = 0;
             if (checkFaint(t2Active,p2,p1)) {
                 std::cout << " is fainted" << std::endl;
-                std::cout << "sending out next pokemon";
-                std::cout << " is fainted" << std::endl;
-                std::cout << "Swapping Pokemon" << std::endl;
                 count2++;
                 if (count2 > teamSize) {
                     std::cout << "NO POKEMON LEFT" << p2;
@@ -616,13 +632,16 @@ std::cin.ignore();//Debug */
                     winscreen();
                 }
                 else if (count2 <= teamSize) {
-                    t2Active = &team2[count2];
-                    //ActiveMonNum2 = t2Active->getHp();
+                    int strge = 0;
+                    while (strge == 0) {
+                        strge++;
+                        swapPokemon(team2, t2Active, teamSize, &strge);
+                    }
                 }
             }
             else
             {
-                battleMenu(team2,t2Active,bag2, t1Active, p2,teamSize);
+                battleMenu(team2,t2Active,t2bag, t1Active, p2,teamSize);
                 checkFaint(t1Active, p2, p1);
             }
 
@@ -689,7 +708,7 @@ std::cin.ignore();//Debug */
      output.close();
  }
  
- void displayMenu(Pokemon *team1,item* bag1,Pokemon *team2,item* bag2, int teamSize) {
+ void displayMenu(Pokemon *team1,item** bag1,Pokemon *team2,item** bag2, int teamSize) {
      system("CLS");
      std::string enter;
      int choice;
@@ -778,24 +797,24 @@ std::cin.ignore();//Debug */
             teamSize = 6;
         }
        Pokemon* team1 = new Pokemon[teamSize];
-       item* bag1 = new item[7]{//I chose not to include regular potions, because on level 100's it wouldn't do anything bu waste a move
-           potion("Super Potion","Heals pokemon by 50 HP.",5,50),
-           potion("Hyper Potion","Heals pokemon by 200 HP.",2,200),
-           potion("Max Potion", "Heals one poekmon to full hp",2,9001), //ITS OVER 9000
-           ether("Ether","Restores 10 PP to one move.",5,10),
-           ether("Max Ether","Restores all PP to one move.",2,100),
-           revive("Revive","Removes faint from one pokemon and restores them to 50% hp.",2,0.5),
-           revive("Max revive","Removes faint from one pokemon and restores them to 100% HP",1,1)
+       item** bag1 = new item*[7]{//I chose not to include regular potions, because on level 100's it wouldn't do anything but waste a move
+          new potion("Super Potion","Heals pokemon by 50 HP.",5,50),
+          new potion("Hyper Potion","Heals pokemon by 200 HP.",2,200),
+          new potion("Max Potion", "Heals one poekmon to full hp",2,9001), //ITS OVER 9000
+          new ether("Ether","Restores 10 PP to one move.",5,10),
+          new ether("Max Ether","Restores all PP to one move.",2,100),
+          new revive("Revive","Removes faint from one pokemon and restores them to 50% hp.",2,0.5),
+          new revive("Max revive","Removes faint from one pokemon and restores them to 100% HP",1,1)
        };
        Pokemon* team2 = new Pokemon[teamSize];
-       item* bag2 = new item[7]{//I chose not to include regular potions, because on level 100's it wouldn't do anything bu waste a move
-           potion("Super Potion","Heals pokemon by 50 HP.",5,50),
-           potion("Hyper Potion","Heals pokemon by 200 HP.",2,200),
-           potion("Max Potion", "Heals one poekmon to full hp",2,9001), //ITS OVER 9000
-           ether("Ether","Restores 10 PP to one move.",5,10),
-           ether("Max Ether","Restores all PP to one move.",2,100),
-           revive("Revive","Removes faint from one pokemon and restores them to 50% hp.",2,0.5),
-           revive("Max revive","Removes faint from one pokemon and restores them to 100% HP",1,1) 
+       item** bag2 = new item*[7]{//I chose not to include regular potions, because on level 100's it wouldn't do anything but waste a move
+          new potion("Super Potion","Heals pokemon by 50 HP.",5,50),
+          new potion("Hyper Potion","Heals pokemon by 200 HP.",2,200),
+          new potion("Max Potion", "Heals one poekmon to full hp",2,9001), //ITS OVER 9000
+          new ether("Ether","Restores 10 PP to one move.",5,10),
+          new ether("Max Ether","Restores all PP to one move.",2,100),
+          new revive("Revive","Removes faint from one pokemon and restores them to 50% hp.",2,0.5),
+          new revive("Max revive","Removes faint from one pokemon and restores them to 100% HP",1,1)
        }; //I chose to hardcode the bags because it was way easier than randomizing it
         displayMenu(team1,bag1,team2,bag2,teamSize); //Start game loop
     //The below will never actually run

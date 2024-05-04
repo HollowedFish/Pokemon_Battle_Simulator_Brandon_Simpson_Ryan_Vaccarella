@@ -20,8 +20,8 @@ public:
 	virtual void printItem();
 };
 
-class potion :public item {
-private:
+class potion :virtual public item {
+protected:
 	int healVal = 0;
 public:
 	potion(std::string name, std::string description, int quantity, int healVal);
@@ -31,8 +31,8 @@ public:
 	void printItem();
 };
 
-class ether :public item {
-private:
+class ether :virtual public item {
+protected:
 	int PP_RestoreVal = 0;
 public:
 	ether(std::string name, std::string description, int quantity, int PP_RestoreVal);
@@ -42,8 +42,8 @@ public:
 	void printItem();
 };
 
-class revive :public item {
-private:
+class revive :public virtual item {
+protected:
 	float resHealPercent = 0.0; //Percent will be formatted as such: 50% = 0.5, 100% = 1.0, 25% = 0.25, etc.
 public:
 	revive(std::string name, std::string description, int quantity, float resHealPercent);
