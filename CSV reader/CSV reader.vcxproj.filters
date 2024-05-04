@@ -40,5 +40,8 @@
     <None Include="PokemonMoves.csv">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="PokemonGens 1-5 - Sheet1.csv">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -598,6 +598,16 @@ std::cin.ignore();//Debug */
                     std::cout << "You Win!\n" << p2;
                     std::cout << "Press enter to continue...";
                     std::cin.ignore();
+                    delete[] team1;
+                    delete[] team2;
+                    delete t1Active;
+                    delete t2Active;
+                    for (int i = 0; i < 7; i++) {
+                        delete t1bag[i];
+                        delete t2bag[i];
+                    }
+                    delete t1bag;
+                    delete t2bag;
                     winscreen();
 
                 }
@@ -629,6 +639,16 @@ std::cin.ignore();//Debug */
                     std::cout << "You Win!" << p1 << std::endl;
                     std::cout << "Press enter to continue...";
                     std::cin.ignore();
+                    delete[] team1;
+                    delete[] team2;
+                    delete t1Active;
+                    delete t2Active;
+                    for (int i = 0; i < 7; i++) {
+                        delete t1bag[i];
+                        delete t2bag[i];
+                    }
+                    delete t1bag;
+                    delete t2bag;
                     winscreen();
                 }
                 else if (count2 <= teamSize) {
@@ -818,7 +838,7 @@ std::cin.ignore();//Debug */
        }; //I chose to hardcode the bags because it was way easier than randomizing it
         displayMenu(team1,bag1,team2,bag2,teamSize); //Start game loop
     //The below will never actually run
-    delete[] team1;
-    delete[] team2;
+        delete[] team1;
+        delete[] team2;
     //delete[] moveSet;
 }

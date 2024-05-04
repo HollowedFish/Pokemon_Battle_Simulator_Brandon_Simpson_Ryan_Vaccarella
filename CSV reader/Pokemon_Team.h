@@ -109,4 +109,5 @@ public:
 	void setKO(bool KO_Value);
 	//void printMoveset(); //Debug for now
 	void printName();
+	virtual ~Pokemon() {};
 };

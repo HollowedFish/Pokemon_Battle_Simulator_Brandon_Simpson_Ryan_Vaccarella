@@ -149,6 +149,7 @@
     <ClInclude Include="Pokemon_Team.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="PokemonGens 1-5 - Sheet1.csv" />
     <None Include="PokemonGens1-3.csv" />
     <None Include="PokemonMoves.csv" />
   </ItemGroup>

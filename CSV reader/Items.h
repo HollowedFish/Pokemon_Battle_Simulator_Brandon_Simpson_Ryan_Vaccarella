@@ -18,6 +18,7 @@ public:
 	void setQuantity(int quantity);
 	virtual void use();
 	virtual void printItem();
+	virtual ~item() {};
 };
 
 class potion :virtual public item {
@@ -29,6 +30,7 @@ public:
 	void setHealVal(int healVal);
 	void use(Pokemon* pokemon);
 	void printItem();
+	virtual ~potion() {};
 };
 
 class ether :virtual public item {
@@ -40,6 +42,7 @@ public:
 	void setPPRV(int PP_RestoreVal);// You can make the abbreviation longer if you want
 	void use(Pokemon* pokemon);
 	void printItem();
+	virtual ~ether() {};
 };
 
 class revive :public virtual item {
@@ -51,4 +54,5 @@ public:
 	void setResHealPercent(float resHealPercent);
 	void use(Pokemon* pokemon);
 	void printItem();
+	virtual ~revive(){};
 };
