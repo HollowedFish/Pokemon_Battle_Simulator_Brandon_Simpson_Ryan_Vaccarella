@@ -298,7 +298,7 @@ Pokemon* swapPokemon(Pokemon* team,Pokemon* activeMon, int teamSize, int* choice
     std::cout << "0. Exit Menu" << std::endl << "--------------------------" << std::endl;
     std::cin >> choice1;
     if (choice1 == 0) { choice--; return; }
-    activeMon = &team[choice1 - 1];
+    return &team[choice1 - 1];
     std::cout << "Active pokemon is now: " << activeMon->getName();
     std::cin.ignore();
 }
